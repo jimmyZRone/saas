@@ -1,0 +1,207 @@
+
+
+<!--财务管理-列表 s-->
+{{if $view == 'template'}}
+<div class="finance_list list">
+	<div class="list-head">
+		<b>本月应收：<span>{{if !empty($current_month_serial)}}{{$current_month_serial}}{{else}}{{$current_month_serial|default:'0.00'}}{{/if}}</span>元</b>
+		<b>本月已收：<span>{{if isset($already_total_rent.final_money)}}{{$already_total_rent.final_money|default:'0.00'}}{{else}}0.00{{/if}}</span>元</b>
+		<b>本月应支：<span class="list-pay">{{if isset($current_expend_rent.lc_total_money)}}{{$current_expend_rent.lc_total_money|default:'0.00'}}{{else}}0.00{{/if}}</span>元</b>
+		<b>本月已支：<span class="list-pay">{{if isset($already_expend_rent.total_final_money)}}{{$already_expend_rent.total_final_money|default:'0.00'}}{{else}}0.00{{/if}}</span>元</b>
+	</div>
+	<div class="list-con finance-search" time="17">
+		<div class="list-col">
+			<b>起止时间：</b>
+			<input type="text" class="ipt ipt-100 date deal-time" readonly="readonly" name="cost_start_time" />
+			<span class="ml5 mr5">--</span>
+			<input type="text" class="ipt ipt-100 date deal-times" readonly="readonly" name="cost_end_time"  />
+			<a href="javascript:;" class="ml20 list-col-cdn condition" data-type="0">全部</a>
+			<a href="javascript:;" class="list-col-cdn condition" data-type="1">今天</a>
+			<a href="javascript:;" class="list-col-cdn condition" data-type="2">最近一个月</a>
+			<a href="javascript:;" class="list-col-cdn condition" data-type="3">最近三个月</a>
+		</div>
+		<div class="list-col deal_type">
+			<b class="fl">交易分类：</b>
+			<div class="list-col-right fl">
+				<a href="javascript:;" class="list-col-cdn conditions current" data-type="0">全选</a>
+			    {{foreach from = $fee_list item = fee_info}}
+			        <a href="javascript:;" class="list-col-cdn conditions" name="fee_type" data-type="{{$fee_info.fee_type_id}}">{{$fee_info.type_name}}</a>
+			    {{/foreach}}
+			</div>
+			
+		</div>
+		{{if $user.company.pattern eq 11}}
+    		<div class="list-col house_type">
+    			<b>房源形态：</b>
+    			<a href="javascript:;" class="list-col-cdn conditions current" data-type="0">全选</a>
+    			<a href="javascript:;" class="list-col-cdn conditions" data-type="2">集中式公寓</a>
+    			<a href="javascript:;" class="list-col-cdn conditions" data-type="1">分散式公寓</a>
+    		</div>
+		{{/if}}
+		<div class="list-col finance_type">
+			<b>资金流向：</b>
+			<a href="javascript:;" class="list-col-cdn conditions current" data-type="0">全选</a>
+			<a href="javascript:;" class="list-col-cdn conditions" data-type="1">收入</a>
+			<a href="javascript:;" class="list-col-cdn conditions" data-type="2">支出</a>
+		</div>
+		<div class="list-col">
+			<b>关键词：</b>
+			<div class="search">
+				<input type="text" class="ipt search-con" placeholder="小区名称/房源编号" />
+				<a href="javascript:;" url="{{'finance-index/index'|url}}" class="ifont btn btn3 search-btn">&#xe645;</a>
+			</div>
+		</div>
+		<input type="hidden" count="{{$page_info.count}}" size="{{$page_info.size}}" class="list_NumCount">
+	</div>
+	<div class="list-fun">
+		<a href="javascript:;" class="checkAll fl" style="padding-top: 5px;">
+			<i class="ifont"><span class="ifont1">&#xe60c;</span></i>
+			全选
+		</a>
+		<!-- <a href="javascript:;" class="list_finance_listPrint fl">
+			<i class="ifont1">&#xe65e;</i>
+			打印
+		</a> -->
+		<a href="#{{'finance-serial/listDebts'|url}}" class="yellow fl btn-auto-new">
+			<i class="ifont">&#xe640;</i>
+			未付费用
+		</a>
+		<a href="#{{'finance-serial/addIncome'|url}}" class="red fl btn-auto-new">
+			<i class="ifont1">&#xe61e;</i>
+			新增收入
+		</a>
+		<a href="#{{'finance-serial/addExpense'|url}}" class="green fl btn-auto-new">
+			<i class="ifont1">&#xe61d;</i>
+			新增支出
+		</a>
+		<a href="javascript:;" class="list_finance_listDelete fl" url="{{'Finance-Serial/deleteRoom'|url}}" style="padding-top: 5px;">
+			<i class="ifont">&#xe675;</i>
+			删除
+		</a>
+		<a href="javascript:;" class="list_finance_listDeleteGU fl" style="padding-top: 5px;">
+			<i class="ifont">&#xe627;</i>
+			取消
+		</a>
+		<b class="green" style="padding-top: 5px;">支出：<span class="expense">{{if !empty($company_total_expense)}}{{$company_total_expense|default:'0.00'}}{{else}}0.00{{/if}}</span>元</b>
+		<b class="red mr20" style="padding-top: 5px;">收入：<span class="income">{{if !empty($company_total_income)}}{{$company_total_income|default:'0.00'}}{{else}}0.00{{/if}}</span>元（冲账<em class="num-cost">0.00</em>元）</b>
+	</div>
+	
+	<!--表格 s-->
+	<table class="lst_tb">
+		<tr>
+			<th>交易时间</th>
+			<th>名称/流水号</th>
+			<th>房间</th>
+			<th>金额</th>
+			<th>操作</th>
+		</tr>
+{{/if}}
+{{if $view == 'data'}}
+        {{if $serial_list != ''}}
+		{{foreach from=$serial_list item=serial_val}}
+			<tr sn_id="{{$serial_val.sn_id}}" room_id="{{$serial_val.room_id}}" status="{{$serial_val.status}}">
+				<td>
+					<span class="chechBox"><i class="choose ifont1">&#xe60c;</i></span>
+					<input type="checkbox"/>
+					<span>{{$serial_val.pay_time|date_format:"%Y-%m-%d"}}</span>
+				</td>
+				<td>
+					<p>{{$serial_val.serial_name}}</p>
+					<p>流水号{{$serial_val.serial_number}}</p>
+				</td>
+				<td>
+				    <p>{{$serial_val.house_name}}{{if isset($serial_val.rental_way) && $serial_val.rental_way == 1}}{{$serial_val.room_type}}{{/if}}</p>
+				    {{if $serial_val.house_type gt 0 && $serial_val.source != 'landlord_contract'}}
+				        {{*if $serial_val.rental_way == 1 || $serial_val.house_type == 2*}}
+                        <!-- <p>房间编号 {{*$serial_val.custom_number*}}</p> -->
+                        {{*/if*}}
+    				{{/if}}
+				</td>
+				<td>
+				    {{if $serial_val.type == 1}}
+					    <p class="lst_tb_red">+{{if isset($serial_val.sd_money)}}{{$serial_val.sd_money}}{{else}}{{$serial_val.sn_money}}{{/if}}元</p>
+					{{else}}
+					    <p class="lst_tb_green">-{{if isset($serial_val.sd_money)}}{{$serial_val.sd_money}}{{else}}{{$serial_val.sn_money}}{{/if}}元</p>
+					{{/if}}
+					{{if {{$serial_val.ssb_money != 0}}}}
+					<p class="lst_tb_gray">[冲减{{$serial_val.ssb_money}}元]</p>	
+					{{/if}}
+				</td>
+				<td>
+					<div class="edit-col">
+					<!-- type == 2是支出 (区分收入和支出跳转不同的页面) -->
+					    {{if $serial_val.type == 2}}
+					        {{if $serial_val.house_type == 2}}
+						        <a href="#{{'Finance-Serial/editExpense'|url|cat:'&'|cat:'serial_id='|cat:$serial_val.sn_id|cat:'&'|cat:'room_id='|cat:$serial_val.room_id|cat:'&'|cat:'flat_id='|cat:$serial_val.flat_id|cat:'&'|cat:'house_type='|cat:$serial_val.house_type|cat:'&'|cat:'source='|cat:$serial_val.source|cat:'&'|cat:'source_id='|cat:$serial_val.source_id}}">查看</a>
+						    {{else}}
+						        <a href="#{{'Finance-Serial/editExpense'|url|cat:'&'|cat:'serial_id='|cat:$serial_val.sn_id|cat:'&'|cat:'room_id='|cat:$serial_val.room_id|cat:'&'|cat:'house_type='|cat:$serial_val.house_type|cat:'&'|cat:'house_id='|cat:$serial_val.house_id|cat:'&'|cat:'source='|cat:$serial_val.source|cat:'&'|cat:'source_id='|cat:$serial_val.source_id}}">查看</a>
+						    {{/if}}
+						{{else}}
+						    {{if $serial_val.house_type == 2}}
+						        <a href="#{{'Finance-Serial/editIncome'|url|cat:'&'|cat:'serial_id='|cat:$serial_val.sn_id|cat:'&'|cat:'room_id='|cat:$serial_val.room_id|cat:'&'|cat:'flat_id='|cat:$serial_val.flat_id|cat:'&'|cat:'house_type='|cat:$serial_val.house_type|cat:'&'|cat:'source='|cat:$serial_val.source|cat:'&'|cat:'source_id='|cat:$serial_val.source_id}}">查看</a>
+						    {{else}}
+						        <a href="#{{'Finance-Serial/editIncome'|url|cat:'&'|cat:'serial_id='|cat:$serial_val.sn_id|cat:'&'|cat:'room_id='|cat:$serial_val.room_id|cat:'&'|cat:'house_type='|cat:$serial_val.house_type|cat:'&'|cat:'house_id='|cat:$serial_val.house_id|cat:'&'|cat:'source='|cat:$serial_val.source|cat:'&'|cat:'source_id='|cat:$serial_val.source_id}}">查看</a>
+						    {{/if}}
+						{{/if}}
+						<em>|</em>
+						<a href="javascript:;" url="{{'Finance-Serial/deleteRoom'|url}}" class="spr-del-trig">删除</a>
+					</div>
+				</td>
+			</tr>
+		{{/foreach}}
+		{{/if}}
+{{/if}}
+{{if $view == 'template'}}
+	</table>
+	<!--表格 e-->
+	
+	<!--分页 s-->
+	<div class="jzf-pagination clearfix" url="{{'Finance-Index/index/view_type/data'|url}}">
+		<div class="pagination" id="finance-page"></div>
+		<div class="jump-to-page clearfix">
+			<span>跳转至</span>
+			<div class="jump-edit-box">
+	        	<input type="text" placeholder="页码" class="page">
+	        	<a href="javascript:;" class="p-btn btn btn4">GO</a>
+	        	<i class="page-unit">页</i>
+	        </div>
+		</div>
+	</div>
+	<!--分页 e-->
+	
+	<!--多选删除遮罩模板 s-->
+	<div class="deletemoreauto none">
+		<div class="top">
+			<div class="top1">
+				<span class="fl">正在删除...</span>
+				<span class="fr">
+					<span class="num_cur">1</span>/<span class="num_total"></span>
+				</span>
+			</div>
+			<div class="top2">
+				<div class="top2a">
+					<div class="top2at"></div>
+				</div>
+			</div>
+		</div>
+		<div class="content">
+			<table>
+				<tr><th class="zb">财务流水</th><th class="yb">删除结果</th></tr>
+				<!--<tr><td class="zb">我是auto</td><td class="yb blue">删除成功</td></tr>-->
+			</table>
+		</div>
+	</div>
+	<!--多选删除遮罩模板 e-->
+	
+	<div class="raty"></div>
+    <div class="finance_List none">
+        <div class="empty">
+        	<div class="empty-main">
+        		<img src="/web/images/03.png" />
+        		<p>当前页面没有任何数据，请<a href="#/index.php?c=finance-serial&a=addincome">点击这里添加</a>！</p>
+        	</div>
+        </div>
+    </div>
+</div>
+{{/if}}
+<!--财务管理-列表 e-->

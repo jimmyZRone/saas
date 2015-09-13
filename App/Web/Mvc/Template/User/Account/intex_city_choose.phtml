@@ -1,0 +1,62 @@
+
+
+		<div id="city-choose" hasform="true">
+			<div class="part1">
+				<div class="head-city-choose">
+					全国城市选择：
+				</div>
+				<div class="part1-content">
+					<div class="selectByM choose-province" hasevent = true>
+							<input type="text" class="selectByMT" dataUrl="/index.php?c=user-user&a=findCityFromProvinceId" readonly = 'readonly' selectVal = '' value="省份"/>
+							<span class='jt_Ctr'><span class='jt_box'></span></span>
+							<div class="selectByMO">
+								<ul>
+								    {{foreach from=$provinceData item=v}}
+									    <li selectVal = '{{$v.province_id}}'>{{$v.name}}</li>
+									{{/foreach}}
+								</ul>
+							</div>
+						</div>
+						<div class="selectByM choose-city">
+							<input type="text" class="selectByMT" readonly = 'readonly' selectVal = '' value="城市"/>
+							<span class='jt_Ctr'><span class='jt_box'></span></span>
+							<div class="selectByMO">
+								<ul>
+								</ul>
+							</div>
+						</div>
+						<a href="javascript:;" setUrl="/index.php?c=user-user&a=setcity"  class="fl btn-choose-city">确定</a>
+				</div>
+			</div>
+			<div class="parts">
+				<div class="head-city-choose">
+					热门城市入口：
+				</div>
+				<div class="hot-cities">
+					<ul>
+					    {{foreach from=$city_hot item=v}}
+						    <li><a href="javascript:;" city_id="{{$v.city_id}}">{{$v.name}}</a></li>
+						{{/foreach}}
+					</ul>
+				</div>
+			</div>
+			<div class="parts">
+				<div class="head-city-choose">
+					按拼音首字母选择：
+				</div>
+				<div class="cities-list">
+					<ul>
+					   {{foreach from=$city_list key=k item=v}}
+    						<li>
+    							<span class="zm-city">{{$k}}</span>
+    							<dl>
+    							    {{foreach from=$v item=info}}
+    								    <dd><a href="javascript:;" city_id="{{$info.city_id}}">{{$info.name}}</a></dd>
+    								{{/foreach}}
+    							</dl>
+    						</li>
+    					{{/foreach}}
+					</ul>
+				</div>
+			</div>
+		</div>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="apple-touch-fullscreen" content="YES">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta http-equiv="Expires" content="-1">
+		<meta http-equiv="pragram" content="no-cache">
+		<meta name="viewport" content="width=640, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>注册</title>
+		<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+	</head>
+	<body>
+		<div class="main">
+			<nav id="nav">
+				<a href="javascript:history.go(-1)" class="btn back"><em></em><span>返回</span></a>
+				<h1>注册</h1>
+			</nav>
+			
+			<h4 class="register-title"></h4>
+			<div class="register-content">
+				<form method="post" action="login_success.html" id="js_register_fm">
+                	<ul>
+                        <li>
+                            <input type="text" class="ipt" id="js_phone" placeholder="请输入手机号"/>
+                        </li>
+                        <li>
+                            <input type="text" class="ipt-short" id="js_dyn_code" placeholder="请输入动态码"/>
+                            <a href="javascript:;" class="getDtm">获取动态码</a>
+                        </li>
+                        <li>
+                            <input type="password" class="ipt" id="js_pass1" placeholder="请输入密码"/>
+                        </li>
+                        <li>
+                            <input type="password" class="ipt" id="js_pass2" placeholder="确认密码"/>
+                        </li>
+                    </ul>
+                    
+                    <div class="submitForm">
+                        <input type="submit" value="立即注册" class="sub-btn" />
+                    </div>
+                </form>
+			</div>
+			<footer>
+				<p class="fl">&copy;九猪<span class="p">版权所有</span></p>
+				<p class="fr"><a href="#"><i></i>申请小站</a></p>
+			</footer>
+		</div>
+	</body>
+        <script type="text/javascript" src="../js/zepto.min.js"></script>
+		<script type="text/javascript" src="../js/base.js"></script>
+        <script>
+        
+            L.Register = {
+                //基础验证
+                verification:function(){
+                   $('#js_register_fm').on('submit',function(){
+						var phone = $('#js_phone');
+							dynCode = $('#js_dyn_code'),
+							pass1 = $('#js_pass1'),
+							pass2 = $('#js_pass2');
+							
+						if( $.trim(phone.val()) =='' || $.trim(phone.val()).length != 11){
+							L.dialog._create({
+								msg:'请输入正确的手机号码',
+								callback:function(){
+									phone.focus();
+								}	
+							});
+							return false;
+						}else if( $.trim(dynCode.val()) == ''){
+							L.dialog._create({
+								msg:'请输入手机动态码',
+								callback:function(){
+									dynCode.focus();
+								}	
+							});
+							return false;
+						}else if( $.trim(pass1.val()) == '' || $.trim(pass1.val()).length < 6 || $.trim(pass1.val()).length > 16){
+							L.dialog._create({
+								msg:'请输入密码,密码必须在6 - 16位之间',
+								callback:function(){
+									pass1.focus();
+								}	
+							});
+							return false;
+						}else if( $.trim(pass1.val()) != $.trim(pass2.val()) ){
+							L.dialog._create({
+								msg:'两次输入的密码不一致',
+								callback:function(){
+									pass2.focus();
+								}	
+							});
+							return false;
+						}
+						else{
+							return true;	
+						}
+						
+						return false;
+					});
+                },
+				//获取注册动态码
+				getDynamicCode:function(){
+					$('#js_register_fm .getDtm').on('click',function(){
+						var phone = $('#js_phone'),
+							_this=$(this),
+							timer = null;
+							
+						if( $.trim( phone.val() ) =='' ||  $.trim(phone.val()).length !=11 ){
+							L.dialog._create({
+								msg:'请输入正确的手机号码',
+								callback:function(){
+									phone.focus();
+								}	
+							});
+						}else{
+							$.ajax({
+								type: 'GET', 
+								url: '', //请求地址
+								data: { phone: '' }, //参数
+								dataType: 'json',
+								timeout:300,
+								success: function(data){
+									//这里还需要判断data....
+									
+									//如果一切正常，执行下面的代码
+									_this.text('60'+'S');
+									var num = parseInt(_this.text());
+									timer = setInterval(function(){
+										if(num > 1){
+											num--;
+											_this.text(num +'S');
+										}else{
+											_this.text('重新发送');
+											clearInterval(timer);
+										}
+									},1000);
+								},
+								error: function(xhr, type){
+									L.dialog._create({
+										msg:'出错了，请重试.'
+									});
+									return false;
+								}
+								
+							});	
+						}
+					});
+				},
+                //统一初始化
+                init:function(){
+                   	this.verification();
+					this.getDynamicCode();
+                }	
+            }
+            $(document).ready(function(e) {
+                L.Register.init();
+            });
+        </script>
+</html>

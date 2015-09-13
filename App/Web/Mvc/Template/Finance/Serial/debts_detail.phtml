@@ -1,0 +1,64 @@
+		<!--财务管理-流水详情 s-->
+		<div class="finance_view view">
+			<div class="view-con">
+				<ul>
+					<li>
+						<b>创建时间：</b>
+						<span>{{$debts_detail_info.create_time|date_format:"%Y-%m-%d %H:%M:%S"}}</span>
+					</li>
+					<li>
+						<b>流 水 号：</b>
+						<span>{{$debts_detail_info.serial_number}}</span>
+					</li>
+					<li>
+						<b>房　　间：</b>
+						{{if $house_type == 1}}<!-- 分散式 -->
+                            {{if $debts_detail_info.rental_way == 1}}<!-- 合租 -->
+    						    <span>{{$debts_detail_info.h_name|cat:$debts_detail_info.room_type|cat:$debts_detail_info.r_custom_num|cat:'号'}}</span>
+    						{{else}}<!-- 整租 -->
+    						    <span>{{$debts_detail_info.h_name}}</span>
+    						{{/if}}
+						{{elseif $house_type == 2}}<!-- 集中式 -->
+						    <span>{{$debts_detail_info.flat_name|cat:$debts_detail_info.floor|cat:'楼'|cat:$debts_detail_info.rf_custom_num|cat:'号'}}</span>
+						{{else}}
+						    <span>非房间流水</span>
+						{{/if}}
+					</li>
+					{{if $source == 'rental' || $source == 'tenant_contract' || $source == 'room'}}
+    					<li>
+    						<b>租　　客：</b>
+    						<span>{{$debts_detail_info.tenant_name}}（{{$debts_detail_info.tenant_phone}}）</span>
+    					</li>
+					{{/if}}
+					<li>
+						<b>欠　　费：</b>
+						{{if $house_type == 1}}
+						    <span>+{{$debts_detail_info.receivable}}元</span>
+						{{elseif $house_type == 2}}
+						    <span>+{{$debts_detail_info.receivable}}元</span>
+						{{else}}
+						    <span>+{{$debts_detail_info.receivable}}元</span>
+						{{/if}}
+					</li>
+					<li>
+						<b>状态：</b>
+						<span>{{$debts_detail_info.status}}</span>
+					</li>
+					<li>
+						<b>预约缴费时间：</b>
+						<span>{{$debts_detail_info.subscribe_pay_time|date_format:"%Y-%m-%d"}}</span>
+					</li>
+					{{if $debts_detail_info.status == '已收费'}}
+    					<li>
+    						<b>交易时间：</b>
+    						<span>{{$debts_detail_info.pay_time|date_format:"%Y-%m-%d"}}</span>
+    					</li>
+					{{/if}}
+					<li>
+						<b>操 作 人：</b>
+						<span>{{$debts_detail_info.user_name}}</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!--财务管理-流水详情 e-->

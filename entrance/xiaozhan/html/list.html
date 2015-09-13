@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="apple-touch-fullscreen" content="YES">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta http-equiv="Expires" content="-1">
+		<meta http-equiv="pragram" content="no-cache">
+		<meta name="viewport" content="width=640, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>列表展示</title>
+		<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+	</head>
+	<body>
+		<div class="main">
+			<nav id="nav">
+				<a href="javascript:history.go(-1)" class="btn back"><em></em><span>返回</span></a>
+				<h1>列表展示</h1>
+				<a href="#" class="goto-uc"></a>
+			</nav>
+			<div class="content-roomlist">
+				<div class="search">
+					<i class="icon-search"></i>
+					<input type="text" name="search" id="search" placeholder="搜索：小区名/地段名"/>
+					<a href="javascript:;" class="btn-search" id="btn-search">搜索</a>
+				</div>
+				<div class="screen-type">
+					<ul>
+						<li data-id="1">
+							<a href="javascript:;"><i>区域</i><span class="sj sj1"></span></a>
+						</li>
+						<li data-id="2">
+							<a href="javascript:;"><i>商圈</i><span class="sj sj1"></span></a>
+                            
+						</li>
+						<li data-id="3">
+							<a href="javascript:;"><i>租金</i><span class="sj sj1"></span></a>
+                            
+						</li>
+						<li data-id="4">
+							<a href="javascript:;"><i>默认排序...</i><span class="sj sj1"></span></a>
+                            
+						</li>
+					</ul>
+                   
+                    <!--区域 s-->
+                    <div class="sereec-down-list">
+                        <a href="javascript:;" data-type='area' data-id="1">不限</a>
+                        <a href="javascript:;" data-type='area' data-id="2">高新区</a>
+                        <a href="javascript:;" data-type='area' data-id="3">武侯区</a>
+                        <a href="javascript:;" data-type='area' data-id="4">青羊区</a>
+                        <a href="javascript:;" data-type='area' data-id="5">锦江区</a>
+                        <a href="javascript:;" data-type='area' data-id="6">成华区</a>
+                    </div>
+                    <!--区域 e-->
+                    
+                    <!--商圈 s-->
+                    <div class="sereec-down-list">
+                        <a href="javascript:;" data-type='district' data-id="1">不限</a>
+                        <a href="javascript:;" data-type='district' data-id="2">芳草街</a>
+                        <a href="javascript:;" data-type='district' data-id="3">神仙树</a>
+                        <a href="javascript:;" data-type='district' data-id="4">肖家河</a>
+                        <a href="javascript:;" data-type='district' data-id="5">紫荆</a>
+                        <a href="javascript:;" data-type='district' data-id="6">中和镇</a>
+                        <a href="javascript:;" data-type='district' data-id="7">新北</a>
+                        <a href="javascript:;" data-type='district' data-id="8">新会展</a>
+                        <a href="javascript:;" data-type='district' data-id="9">大源</a>
+                        <a href="javascript:;" data-type='district' data-id="10">天府长城</a>
+                        <a href="javascript:;" data-type='district' data-id="11">天府软件园</a>
+                        <a href="javascript:;" data-type='district' data-id="12">金融城</a>
+                        <a href="javascript:;" data-type='district' data-id="13">市一医院</a>
+                        <a href="javascript:;" data-district="14">神仙树大院</a>
+                    </div>
+                    <!--区域 e-->
+                    
+                    <!--价格 s-->
+                    <div class="sereec-down-list">
+                        <a href="javascript:;" data-type='price' data-id="1">不限</a>
+                        <a href="javascript:;" data-type='price' data-id="2">500以下</a>
+                        <a href="javascript:;" data-type='price' data-id="3">500-1000</a>
+                        <a href="javascript:;" data-type='price' data-id="4">1000-1500</a>
+                        <a href="javascript:;" data-type='price' data-id="5">1500-2000</a>
+                        <a href="javascript:;" data-type='price' data-id="6">2000以上</a>
+                    </div>
+                    <!--价格 e-->
+                    
+                    <!--排序方式 s-->    
+                    <div class="sereec-down-list">
+                        <a href="javascript:;" data-type='order' data-id="1">不限</a>
+                        <a href="javascript:;" data-type='order' data-id="2">最新发房</a>
+                        <a href="javascript:;" data-type='order' data-id="3">即将到期</a>
+                        <a href="javascript:;" data-type='order' data-id="4">价格从低至高</a>
+                        <a href="javascript:;" data-type='order' data-id="5">价格从搞高至低</a>
+                        <a href="javascript:;" data-type='order' data-id="6">面积从大到小</a>
+                        <a href="javascript:;" data-type='order' data-id="7">面积从小到大</a>
+                    </div>
+                    <!--排序方式 e-->    
+				</div>
+				<div class="rooms-list">
+					<ul id="js_list_ul">
+						<li>
+                        	<a href="details_show_z.html">
+                                <div class="room-pic fl">
+                                    <img src="../img/images-test/book-pic.jpg"/>
+                                </div>
+                                <div class="room-info fr">
+                                    <div class="room-info-part1">
+                                        <p>高新区南城都汇10-601带飘窗</p>
+                                        <p>武侯区-武侯祠大街 |18层38.62㎡|<i class="green">整租</i></p>
+                                    </div>
+                                    <div class="room-info-part2">
+                                        <span class="fl">￥<i class="pink">2800</i>元/月</span>
+                                        <i class="pink fr">2周内到期</i>
+                                    </div>
+                                </div>
+                            </a>
+						</li>
+                        <li>
+                        	<a href="details_show_h.html">
+                                <div class="room-pic fl">
+                                        <img src="../img/images-test/book-pic.jpg"/>
+                                </div>
+                                <div class="room-info fr">
+                                    <div class="room-info-part1">
+                                        <p>高新区南城都汇10-601带飘窗</p>
+                                        <p>武侯区-武侯祠大街 |18层38.62㎡|</p>
+                                    </div>
+                                    <div class="room-info-part2">
+                                        <span class="fl">￥<i class="pink">2800</i>元/月</span>
+                                        <i class="pink fr">2周内到期</i>
+                                    </div>
+                                </div>
+                            </a>
+						</li>
+                        <li>
+                        	<a href="details_show_z.html">
+                                <div class="room-pic fl">
+                                    <img src="../img/images-test/book-pic.jpg"/>
+                                </div>
+                                <div class="room-info fr">
+                                    <div class="room-info-part1">
+                                        <p>高新区南城都汇10-601带飘窗</p>
+                                        <p>武侯区-武侯祠大街 |18层38.62㎡|<i class="green">整租</i></p>
+                                    </div>
+                                    <div class="room-info-part2">
+                                        <span class="fl">￥<i class="pink">2800</i>元/月</span>
+                                        <i class="pink fr">2周内到期</i>
+                                    </div>
+                                </div>
+                            </a>
+						</li>
+                        <li>
+                        	<a href="details_show_h.html">
+                                <div class="room-pic fl">
+                                        <img src="../img/images-test/book-pic.jpg"/>
+                                </div>
+                                <div class="room-info fr">
+                                    <div class="room-info-part1">
+                                        <p>高新区南城都汇10-601带飘窗</p>
+                                        <p>武侯区-武侯祠大街 |18层38.62㎡|</p>
+                                    </div>
+                                    <div class="room-info-part2">
+                                        <span class="fl">￥<i class="pink">2800</i>元/月</span>
+                                        <i class="pink fr">2周内到期</i>
+                                    </div>
+                                </div>
+                            </a>
+						</li>
+                        <li>
+                        	<a href="details_show_h.html">
+                                <div class="room-pic fl">
+                                        <img src="../img/images-test/book-pic.jpg"/>
+                                </div>
+                                <div class="room-info fr">
+                                    <div class="room-info-part1">
+                                        <p>高新区南城都汇10-601带飘窗</p>
+                                        <p>武侯区-武侯祠大街 |18层38.62㎡|</p>
+                                    </div>
+                                    <div class="room-info-part2">
+                                        <span class="fl">￥<i class="pink">2800</i>元/月</span>
+                                        <i class="pink fr">2周内到期</i>
+                                    </div>
+                                </div>
+                            </a>
+						</li>
+                        <li>
+                        	<a href="details_show_z.html">
+                                <div class="room-pic fl">
+                                    <img src="../img/images-test/book-pic.jpg"/>
+                                </div>
+                                <div class="room-info fr">
+                                    <div class="room-info-part1">
+                                        <p>高新区南城都汇10-601带飘窗</p>
+                                        <p>武侯区-武侯祠大街 |18层38.62㎡|<i class="green">整租</i></p>
+                                    </div>
+                                    <div class="room-info-part2">
+                                        <span class="fl">￥<i class="pink">2800</i>元/月</span>
+                                        <i class="pink fr">2周内到期</i>
+                                    </div>
+                                </div>
+                            </a>
+						</li>
+                        
+                        <div class="room-list-notice">
+                            向上滑动加载更多...
+                        </div>
+
+					</ul>
+				</div>
+			</div>
+		</div>	
+	</body>
+	<script type="text/javascript" src="../js/zepto.min.js"></script>
+    <script type="text/javascript" src="../js/base.js"></script>
+    <script type="text/javascript">
+		L.list = {
+			//下拉二级菜单
+			parm:{},
+			dataLi:$('.screen-type ul li'),
+			setParm:function(){ //滚动加载时的参数集合
+				this.parm.area = this.dataLi.eq(0).attr('data-id'); //区域
+				this.parm.district = this.dataLi.eq(1).attr('data-id'); //商圈
+				this.parm.price = this.dataLi.eq(2).attr('data-id'); //价格
+				this.parm.order = this.dataLi.eq(3).attr('data-id'); //排序
+			},
+			
+			//下拉菜单点击加载数据
+			downList:function(){
+				var li = $('.screen-type ul li'),
+					downList = $('.screen-type .sereec-down-list'),
+					downLi = downList.find('a'),
+					headList = $('.screen-type ul li a');
+				li.on('click',function(){
+					var _this = $(this);
+					var num = _this.index();
+					li.eq(num).addClass('current').siblings().removeClass('current');
+					downList.hide();
+					downList.eq(num).show();
+				});
+				downLi.on('click',function(){
+					
+					var num = $(this).parent().index(),
+						dataType = $(this).attr('data-type'),
+						dataId = $(this).attr('data-id');
+						//根据点击设置最新的参数
+					switch(dataType){
+						case 'area':
+						L.list.parm.area = dataId;	
+						break;
+						
+						case 'district':
+						L.list.parm.district = dataId;	
+						break;
+						
+						case 'price':
+						L.list.parm.price = dataId;	
+						break;
+						
+						default:
+						L.list.parm.order = dataId;	
+						break;
+					}
+					//开始动态加载数据.
+					$.ajax({
+						type:'GET',
+						url:'',
+						data:'',
+						dataType:'json',
+						beforeSend:function(){
+							var t ='<div class="room-mask">^主人，请骚等...</div>';
+							$('#js_list_ul').append(t);
+							//设置滚动条为不可以滚动，以免处罚滚动加载事件
+							$('body,html').css('overflow-y','hidden');
+						},
+						success:function(data){
+							var data = {1:1,2:2}; //data数据测试
+							var box = $('#js_list_ul');
+							box.children('li').remove();
+							$.each(data,function(i){
+								var t ='<li>';
+									t+='<a href="details_show_z.html">';
+										t+='<div class="room-pic fl">';
+											t+='<img src="../img/images-test/book-pic.jpg"/>';
+										t+='</div>';
+										t+='<div class="room-info fr">';
+											t+='<div class="room-info-part1">';
+												t+='<p>高新区南城都汇10-601带飘窗</p>';
+												t+='<p>武侯区-武侯祠大街 |18层38.62㎡|<i class="green">整租</i></p>';
+											t+='</div>';
+											t+='<div class="room-info-part2">';
+												t+='<span class="fl">￥<i class="pink">2800</i>元/月</span>';
+												t+='<i class="pink fr">2周内到期</i>';
+											t+='</div>';
+										t+='</div>';
+									t+='</a>';
+								t+='</li>';
+								box.append(t);
+								$('.room-mask').remove();
+								$('body,html').css('overflow-y','scroll');
+							});
+						},
+						error:function(){
+							$('.room-mask').remove();
+							$('body,html').css('overflow-y','scroll');
+							L.dialog._create({
+								msg:'出错了，请刷新页面重试.'	
+							});
+							return false;
+						}
+					});
+					//--------
+					downList.hide();
+					li.removeClass('current');
+					
+				});
+			},
+			//滚动加载数据
+			scrollGetData:function(){
+				var pager = 0,
+					url = 'caipin.php',
+					obj = $('#js_list_ul'), //需要插入HTML的容器
+					data = {}, //所要参数 parm属性里面的值... this.parm ;
+				
+				//动态操作DOM，将新的数据插入到这HTML
+				callback = function(data){
+					//模板
+				}
+				//执行ajax加载数据函数
+				L.scrollGetLister(pager,obj,url,data,callback);
+			},
+			//首次加载数据
+			//搜索
+			searchGetData:function(){
+				ipt = $('#search');
+				btn = $('#btn-search');
+				btn.on('click',function(){
+					if( $.trim( ipt.val() ) == ''){
+						L.dialog._create({
+							msg:'请输入关键字',
+							callback:function(){
+								ipt.focus();
+							}
+						});
+					}else{
+						var key = ipt.val(),
+							box = $('#js_list_ul');
+						$.ajax({
+							type:'GET',
+							url:'search.php?r=' + Math.random( 1000 ) ,
+							data:'',
+							dataType:'json',
+							beforeSend:function(){
+								var t ='<div class="room-mask">^主人，请骚等...</div>';
+								$('#js_list_ul').append(t);
+								//设置滚动条为不可以滚动，以免触发滚动加载事件
+								$('body,html').css('overflow-y','hidden');
+							},
+							success:function(data){
+								
+								var data = {1:1,2:2}; //data数据测试
+								var box = $('#js_list_ul');
+								box.children('li').remove();
+								$.each(data,function(i){
+									var t ='<li>';
+										t+='<a href="details_show_z.html">';
+											t+='<div class="room-pic fl">';
+												t+='<img src="../img/images-test/book-pic.jpg"/>';
+											t+='</div>';
+											t+='<div class="room-info fr">';
+												t+='<div class="room-info-part1">';
+													t+='<p>高新区南城都汇10-601带飘窗</p>';
+													t+='<p>武侯区-武侯祠大街 |18层38.62㎡|<i class="green">整租</i></p>';
+												t+='</div>';
+												t+='<div class="room-info-part2">';
+													t+='<span class="fl">￥<i class="pink">2800</i>元/月</span>';
+													t+='<i class="pink fr">2周内到期</i>';
+												t+='</div>';
+											t+='</div>';
+										t+='</a>';
+									t+='</li>';
+									box.append(t);
+									$('.room-mask').remove();
+									$('body,html').css('overflow-y','scroll');
+								});
+							},
+							error:function(){
+								$('.room-mask').remove();
+								$('body,html').css('overflow-y','scroll');
+								L.dialog._create({
+									msg:'出错了，请刷新页面重试.'	
+								});
+								return false;
+							}
+						});
+					}
+				});
+			},
+			init:function(){
+				this.setParm();
+				this.downList();
+				this.scrollGetData();
+				this.searchGetData();
+			}
+		};
+		$(document).ready(function(e) {
+            L.list.init();
+        });
+	</script>
+</html>
+

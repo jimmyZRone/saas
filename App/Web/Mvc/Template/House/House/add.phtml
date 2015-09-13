@@ -1,0 +1,625 @@
+		<!--分散式公寓-合租 s-->
+		<div class="distributed_add_whole_house distributed_add_round_house view distributed_add_hourse_form" hasform="true">
+			<div class="view-head">
+				{{if $edit_id eq 1}}
+				<h1>修改房间</h1>
+					{{if $entirel_data.status eq 1}}
+					<span class="red" style="margin-right: 10px;">未出租</span>
+					{{/if}}
+					{{if $entirel_data.status eq 2}}
+					<span class="blue" style="margin-right: 10px;">已出租</span>
+					{{/if}}
+					{{if $entirel_data.status eq 3}}
+					<span class="black" style="margin-right: 10px;">停用</span>
+					{{/if}}
+					{{if $entirel_data.is_yytz == 1}}
+					<span class="yellow" style="margin-right: 10px;">预约退租</span>
+					{{/if}}
+				{{else}}
+				<h1>添加房间</h1>
+				{{/if}}
+				{{if $edit_id eq 1}}
+					{{if $contract_id gt 0}}
+						{{if $fee_show eq 1}}
+						<a href="#{{'meterreading/index'|url|cat:'&house_id='|cat:{{$house_data.house_id}}|cat:'&house_type=1'|cat:'&room_id=0'}}">抄表</a>
+						{{/if}}
+						{{if $house_data.rental_way eq 2}}
+						<a href="#{{'finance-serial/newaddincome'|url|cat:'&house_id='|cat:{{$house_data.house_id}}|cat:'&house_type=1'|cat:'&charge_contract_id='|cat:$contract_id|cat:'&charge_source=room_charge'}}">收费</a>
+						{{/if}}
+					{{/if}}
+					{{if $entirel_data.is_yd eq 1}}
+	                <a href="#{{'tenant-index/reserve'|url|cat:'&room_id='|cat:$house_data.houseName|cat:'&house_type=1'|cat:'&reserve_id='|cat:$resver_data.reserve_id}}">预定</a>
+					{{/if}}
+					{{if $contract_id gt 0 and $house_data.rental_way eq 2}}
+					<a href="#{{'tenant-index/edit'|url|cat:'&'|cat:'contract_id='|cat:$contract_id}}">合同</a>
+					{{/if}}
+					{{if $entirel_data.status eq 3}}
+					<a href="javascript:;" class="stop-house" url="{{'House-House/editstop'|url}}" data-url="{{'house-house/getstop'|url|cat:"&house_id="|cat:$house_data.house_id}}">停用</a>
+					{{/if}}
+					{{if $entirel_data.is_yytz == 1}}
+					<a href="javascript:;" class="yytz-room"  house_id="{{$entirel_data.house_id}}" reser_back_id="{{$reserve_back_info.reserve_back_id}}" data-url="{{'house-house/getyytzu'|url|cat:"&house_id="|cat:$entirel_data.house_id}}">预约退租</a>
+					{{/if}}
+				{{/if}}
+			</div>
+			<div class="view-con dataFormRemark">
+				<ul>
+					<li>
+						<b><i class="bit">*</i>出租类型：</b>
+						{{if $edit_id eq 1}}
+						{{if $house_data.rental_way eq 2}}
+							<div class="radio-box radio-type">
+								<label class="radio {{if $house_data.rental_way eq 2}}checked{{/if}}">
+									<i class="ifont r-default" style="{{if $house_data.rental_way eq 2}}display: none;{{else}}display: block;{{/if}}">&#xe612;</i>
+									<i class="ifont r-select" style="{{if $house_data.rental_way eq 1}}display: none;{{else}}display: block;{{/if}}">&#xe617;</i>
+								</label>
+								<input {{if $house_data.rental_way eq 2 and $edit_id gt 0}}checked="checked"{{else}}checked="checked"{{/if}} type="radio" name="rental_way"  value="2" />
+								<span>整租</span>
+							</div>
+						{{/if}}
+						{{if $house_data.rental_way eq 1}}
+							<div class="radio-box radio-type">
+								<label class="radio {{if $house_data.rental_way eq 1}}checked{{/if}}">
+								<i class="ifont r-default" style="{{if $house_data.rental_way eq 1}}display: none;{{else}}display: block;{{/if}}">&#xe612;</i>
+								<i class="ifont r-select" style="{{if $house_data.rental_way eq 2}}display: none;{{else}}display: block;{{/if}}">&#xe617;</i></label>
+								<input {{if $house_data.rental_way eq 1 and $edit_id gt 0}}checked="checked"{{/if}} type="radio" name="rental_way" value="1" />
+								<span>合租</span>
+							</div>
+						{{/if}}
+						{{/if}}
+
+						{{if $edit_id eq 0}}
+							<div class="radio-box radio-type">
+								<label class="radio checked">
+									<i class="ifont r-default" style="display: none;">&#xe612;</i>
+									<i class="ifont r-select" style="display: block;">&#xe617;</i>
+								</label>
+								<input checked="checked" type="radio" name="rental_way"  value="2" />
+								<span>整租</span>
+							</div>
+							<div class="radio-box radio-type">
+								<label class="radio">
+								<i class="ifont r-default">&#xe612;</i>
+								<i class="ifont r-select">&#xe617;</i></label>
+								<input type="radio" name="rental_way" value="1" />
+								<span>合租</span>
+							</div>
+						{{/if}}
+					</li>
+					<li>
+						<b><i class="bit">*</i>小区名称：</b>
+						<input type="text" value="{{$community_data.community_name}}" {{if $edit_id eq 1}}disabled="disabled"{{/if}} name="community_name" actionurl="{{'House-House/community'|url}}"  community_id="{{$community_data.community_id}}"  datatype="*" nullmsg="请输入正确的小区名称" class="ipt ipt-230 mr5 decentralized-name {{if $edit_id eq 1}}bg-gray{{/if}}" placeholder="请输入小区名称" />
+						<input value="{{$house_data.cost}}" type="text" name="cost" class="ipt ipt-50 mr5" id="decentralized-building" datatype="/^[0-9a-zA-Z]{1,4}$/" nullmsg="请输入所在栋数" errormsg="所在栋数为正整数或字母并且不超过4个字符" />
+						<span class="mr5">栋</span>
+						<input value="{{$house_data.unit}}" type="text" name="unit" class="ipt ipt-50 mr5" id="decentralized-unit" datatype="/^[0-9a-zA-Z]{0,3}$/" nullmsg="请输入所在单元" errormsg="所在单元为正整数或字母并且不超过3个字符" />
+						<span class="mr5">单元</span>
+						<input value="{{$house_data.floor}}" type="text" name="floor" class="ipt ipt-50 mr5" id="decentralized-floor" nullmsg="请输入所在楼层" errormsg="所在楼层长度不能超过3个字符"/>
+						<span class="mr5">楼</span>
+						<input value="{{$house_data.number}}" type="text" name="number" class="ipt ipt-100 mr5" id="decentralized-number" datatype="/^.{1,8}$/,/^[\u4E00-\u9FA5\uf900-\ufa2d\w]+$/" nullmsg="请输入房间号" errormsg="房间号为正整数或字母、汉字并且不超过8个字符"/>
+						<span>号</span>
+						<span class="check-error check-error-ts check-error-auto"></span>
+						<!-- <a href="javascript:;" class="decentralized-add-new" style="display:none;">此小区不存在，请点此添加</a> -->
+					</li>
+
+					<!--地址纠错 s-->
+					<!--<li>
+						<b>地址：</b>
+						<div class="selectByM slt-110 mr15">
+							<input type="text" class="selectByMT centralized_Ind_CuteType" readonly = 'readonly' selectVal = '0' value="高新区"/>
+							<span class='jt_Ctr'><span class='jt_box'></span></span>
+							<div class="selectByMO">
+								<ul>
+									<li selectVal = '1'>高新区</li>
+								</ul>
+							</div>
+						</div>
+						<div class="selectByM slt-110 mr15">
+							<input type="text" class="selectByMT centralized_Ind_CuteType" readonly = 'readonly' selectVal = '0' value="中和镇"/>
+							<span class='jt_Ctr'><span class='jt_box'></span></span>
+							<div class="selectByMO">
+								<ul>
+									<li selectVal = '1'>中和镇</li>
+								</ul>
+							</div>
+						</div>
+						<input type="text" class="ipt ipt-270" placeholder="" value="中柏大道28号" />
+					</li>-->
+					<!--地址纠错 e-->
+
+					<li class="col-addr">
+						<b>地址：</b>
+						<span  class="mr20" id="fx-addr">{{$community_data.address}}</span>
+						<input type="text" value="{{$community_data.address}}" class="none" name="address" />
+					</li>
+
+					<li>
+						<b>房源编号：</b>
+						<input value="{{$house_data.custom_number}}" type="text" datatype="*1-20" errormsg="最多可输入20字" ignore="ignore" nullmsg="请输入房源编号" name="custom_number" class="ipt ipt-520" placeholder="输入房源编号" />
+						<span class="check-error check-error-ts check-error-auto"></span>
+					</li>
+					<li>
+						<b>户型：</b>
+						<input value="{{$house_data.count}}" org="{{$house_data.count}}" type="text" class="ipt ipt-40 mr5"  name="count" ignore="ignore" datatype="/^([12][0-9]|30|[1-9])$/" nullmsg="请输入几室" errormsg="请输入1-30范围内的正整数" />
+						<span class="mr5">室</span>
+						<input value="{{$house_data.hall}}" type="text" class="ipt ipt-40 mr5"  name="hall" ignore="ignore" datatype="/^([12][0-9]|30|[1-9])$/" nullmsg="请输入几厅" errormsg="请输入1-30范围内的正整数"/>
+						<span class="mr5">厅</span>
+						<input value="{{$house_data.toilet}}" type="text" class="ipt ipt-40 mr5"  name="toilet" ignore="ignore" datatype="/^([12][0-9]|30|[1-9])$/" nullmsg="请输入几卫" errormsg="请输入1-30范围内的正整数"/>
+						<span class="mr15">卫</span>
+						<input value="{{if $house_data.area gt 0}}{{$house_data.area}}{{/if}}" type="text" class="ipt ipt-100 mr5" name="area" ignore="ignore"  datatype="lengthTest" nullmsg="请输入房源面积" errormsg="请输入长度不超过六位的正整数或者小数(保留两位小数)" />
+						<span class="mr20">㎡</span>
+						<span class="check-error check-error-ts check-error-auto"></span>
+					</li>
+					<li id="decentralized-type-zz" {{if $edit_id eq 1 and $house_data.rental_way eq 1}}style="display: none;"{{/if}}>
+						<b><i class="bit">*</i>房间租金：</b>
+						<input value="{{if $edit_id eq 1 and $house_data.rental_way eq 1}}{{else}}{{$entirel_data.money}}{{/if}}" type="text" class="ipt ipt-80 mr10" name="money" datatype="floatGroup,price-rent"  nullmsg="请输入租金" errormsg="请输入长度不超过八位的正整数或者小数(保留两位小数)" />
+						<span class="mr20">元/月</span>
+						<span class="mr10">押</span>
+						<div class="selectByM slt-70">
+							<input type="text" class="selectByMT" name="detain" readonly = 'readonly' selectVal = "{{if $edit_id lte 0}}1{{else}}{{$entirel_data.detain}}{{/if}}" value="{{if $edit_id lte 0}}一{{/if}}"/>
+							<span class='jt_Ctr'><span class='jt_box'></span></span>
+							<div class="selectByMO">
+								<ul>
+								{{if $edit_id gt 0}}
+									{{foreach from=$pay_config key=pukey item=puval}}
+										<li {{if $pukey eq $entirel_data.detain}}class="selectedLi"{{/if}} selectVal='{{$pukey}}'>{{$puval}}</li>
+									{{/foreach}}
+								{{else}}
+									{{foreach from = $pay_config key=pkey item=pval}}
+										<li {{if $pkey eq 1}}class="selectedLi"{{/if}} selectVal = '{{$pkey}}'>{{$pval}}</li>
+									{{/foreach}}
+								{{/if}}
+								</ul>
+							</div>
+						</div>
+						<span class="mr10 ml10">付</span>
+						<div class="selectByM slt-70 mr20">
+							<input type="text" class="selectByMT" name='pay' readonly = 'readonly' selectVal = "{{if $edit_id lte 0}}3{{else}}{{$entirel_data.pay}}{{/if}}" value="{{if $edit_id lte 0}}三{{/if}}"/>
+							<span class='jt_Ctr'><span class='jt_box'></span></span>
+							<div class="selectByMO">
+								<ul>
+								{{if $edit_id gt 0}}
+									{{foreach from=$pay_config key=pukey item=puval}}
+										{{if $pukey neq 0}}
+										<li {{if $pukey eq $entirel_data.pay}}class="selectedLi"{{/if}} selectVal='{{$pukey}}'>{{$puval}}</li>
+										{{/if}}
+									{{/foreach}}
+								{{else}}
+									{{foreach from = $pay_config key=pkey item=pval}}
+										{{if $pkey neq 0}}
+										<li {{if $pkey eq 3}}class="selectedLi"{{/if}} selectVal = '{{$pkey}}'>{{$pval}}</li>
+										{{/if}}
+									{{/foreach}}
+								{{/if}}
+								</ul>
+							</div>
+						</div>
+						<b class="can-live">可住：</b>
+						<div class="selectByM slt-70 mr20">
+							<input readonly="readonly"  type="text" class="mr10 selectByMT" name="occupancy_number" selectVal = "{{if $edit_id lte 0}}二{{else}}{{$entirel_data.occupancy_number}}{{/if}}" value="{{if $edit_id lte 0}}二{{else}}{{$entirel_data.occupancy_number}}{{/if}}"/>
+							<span class='jt_Ctr'><span class='jt_box'></span></span>
+							<div class="selectByMO">
+								<ul>
+									{{if $edit_id gt 0}}
+										{{foreach from=$pay_config key=pukey item=puval}}
+											<li {{if $puval eq $entirel_data.occupancy_number}}class="selectedLi"{{/if}} selectVal='{{$puval}}'>{{$puval}}</li>
+										{{/foreach}}
+									{{else}}
+										{{foreach from = $pay_config key=pkey item=pval}}
+											{{if $pkey neq 0}}
+											<li {{if $pval eq '二'}}class="selectedLi"{{/if}} selectVal = '{{$pval}}'>{{$pval}}</li>
+											{{/if}}
+										{{/foreach}}
+									{{/if}}
+								</ul>
+							</div>
+						</div>
+						<span class="fl">人</span>
+						<span class="check-error check-error-ts check-error-auto"></span>
+					</li>
+					<li>
+						<b>要求：</b>
+						<div class="radio-box">
+							<label class="radio {{if $entirel_data.gender_restrictions eq 1}}checked{{/if}}">
+							<i class="ifont r-default" style="{{if $entirel_data.gender_restrictions eq 1}}display: none;{{/if}}">&#xe612;</i>
+							<i class="ifont r-select" style="{{if $entirel_data.gender_restrictions eq 1}}display: inline;{{/if}}">&#xe617;</i>
+							</label>
+							<input {{if $entirel_data.gender_restrictions eq 1}}checked="checked"{{/if}} type="radio" name="gender_restrictions" value="1" />
+							<span>限男</span>
+						</div>
+						<div class="radio-box">
+							<label class="radio {{if $entirel_data.gender_restrictions eq 2}}checked{{/if}}">
+							<i class="ifont r-default" style="{{if $entirel_data.gender_restrictions eq 2}}display: none;{{/if}}">&#xe612;</i>
+							<i class="ifont r-select" style="{{if $entirel_data.gender_restrictions eq 2}}display: inline;{{/if}}">&#xe617;</i>
+							</label>
+							<input {{if $entirel_data.gender_restrictions eq 2}}checked="checked"{{/if}} type="radio" name="gender_restrictions" value="2" />
+							<span>限女</span>
+						</div>
+						<div class="radio-box">
+							<label class="radio {{if $entirel_data.gender_restrictions eq 0}}checked{{/if}}">
+							<i class="ifont r-default" style="{{if $entirel_data.gender_restrictions eq 0}}display: none;{{/if}}">&#xe612;</i>
+							<i class="ifont r-select" style="{{if $entirel_data.gender_restrictions eq 0}}display: inline;{{/if}}">&#xe617;</i>
+							</label>
+							<input {{if $entirel_data.gender_restrictions eq 0}}checked="checked"{{/if}} type="radio" name="gender_restrictions" value="0" />
+							<span>男女不限</span>
+						</div>
+					</li>
+					<li class="view-config">
+						<b>房屋配置：</b>
+						<div class="house-config clearfix checkbox-area jzf-checbox-area" fm="public_facilities">
+						{{if $edit_id gt 0}}
+							{{foreach from=$public_config key=fk item=fv}}
+							<div class="check-box check-box-o {{if $fv.name eq "飘窗" or $fv.name eq "阳台" or $fv.name eq "卫生间"}}canntchoose{{/if}}">
+								<label {{if $fv.is_read eq 1}}class="checked"{{/if}}>
+									<span {{if $fv.is_read eq 1}}style="display: inline;"{{/if}} class="choose ifont1">&#xe60c;</span>
+								</label>
+								<input {{if $fv.is_read eq 1}}checked="checked"{{/if}} name="centralized_add_house_room_config" type="checkbox" value="{{$fv.value}}" />
+								<span>{{$fv.name}}</span>
+							</div>
+							{{/foreach}}
+						{{else}}
+							{{foreach from = $public_config key=key item=val}}
+							<div class="check-box check-box-o {{if $val eq "飘窗" or $val eq "阳台" or $val eq "卫生间"}}canntchoose{{/if}}">
+								<label><i class="choose ifont1">&#xe60c;</i></label>
+								<input type="checkbox" value="{{$key}}"/>
+								<span>{{$val}}</span>
+							</div>
+							{{/foreach}}
+						{{/if}}
+						<div class="check-box check-box-a fold">
+							<label class="checkAll"><i class="choose ifont1">&#xe60c;</i></label>
+							<input type="checkbox"/>
+							<span class="select-all">全选</span>
+						</div>
+						<!--<div class="chose-all-items">
+							<span class="select-all btn btn4 fold">全选</span>
+						</div>-->
+						<div class="check-box roomconfig_diy ml20">
+							<a href="javascript:;" class="roomconfig_dy">自定义房间配置</a>
+						</div>
+						<div class="roomconfig-diy-txt">
+							<div class="roomconfig-diy-txt-a">
+								<ul>
+									<li><label class='checkbox'><span class='choose ifont1'>&#xe60c;</span></label>全选</li>
+									<li><a url="{{'Company/addconfig'|url}}" href="javascript:;" class="config-auto-add">新增配置</a></li>
+									<li><a href="javascript:;" url="{{'Company/deleteconfig'|url}}" class="config-auto-deleteall">删除配置</a></li>
+									<li><a href="javascript:;" class="config-auto-submit">保存配置</a></li>
+								</ul>
+							</div>
+							<ul class="roomconfig-diy-txt-auto">
+
+							</ul>
+						</div>
+						</div>
+					</li>
+					<li class="clearfix col-file-upload">
+						<b>公共照片：</b>
+						<div class="row-upload-zone">
+							<p class="red" style="position:relative;top:-10px;">(请上传真实、美观的房间图片，要求：jpg、gif、png格式，最多上传9张)</p>
+							{{if $edit_id eq 0}}
+							<div class="uploader-area" id="distri_house_add_col" fm="img">
+					        	<div class="uploadview-wrapper">
+					                <div class="upload-group">
+					                    <div id="queue"></div>
+					                    <input id="distri_house_add_file_upload2" name="file_upload" type="file">
+					                </div>
+					            </div>
+					        </div>
+					     	{{/if}}
+					        <!--编辑状态绑定元素-->
+					        {{if $edit_id eq 1}}
+					        <div class="uploader-area" id="distri_house_edit_col" fm="img">
+					        {{foreach from=$imag key=imgkey item=imgval}}
+					      		<div filename="{{$imgval.key}}" class="upload-imgview">
+					      			<img class="" style="_display: none;" src="{{imageView2 op='w/60/h/60' key=$imgval.key}}">
+					      			<span class="ie7bug"></span><i class="ifont deleteImg">&#xe627;</i>
+					      			<input type="hidden" name="images[new][room1][]" value="{{$imgval.key}}">
+					      		</div>
+					        {{/foreach}}
+					        	<div class="uploadview-wrapper">
+					                <div class="upload-group">
+					                    <div id="queue"></div>
+					                    <input id="distri_house_edit_file_upload2" name="file_upload" type="file">
+					                </div>
+					            </div>
+					        </div>
+					        {{/if}}
+					        <!--编辑状态绑定元素end-->
+						</div>
+					</li>
+				</ul>
+			</div>
+			<!--费用模块-->
+			<div class="view-con view-cost col-fees-form dataFormRemark">
+				<ul id="list-fee-distri"></li>
+					{{foreach from=$fee_data key=fkey item=fval}}
+						<li class="list-fee-item data-fee-li">
+							<div class="col-l-t clearfix errorBox">
+						<b>费用名称：</b>
+						<div class="selectByM slt-150 fees-opt-sel triger-drag-down">
+							<input disabled="disabled" type="text" datatype="selType" nullmsg="请选择费用名称"  class="selectByMT fee-item-name" readonly="readonly" selectval="{{$fval.fee_type_id}}" value="选择费用项">
+							{{if $edit_id eq 0}}
+							<span class="jt_Ctr"><span class="jt_box"></span></span>
+							{{/if}}
+							<div class="selectByMO">
+								<ul>
+									{{foreach from=$fee_type key=fk item=fv}}
+										<li {{if $fv.fee_type_id eq $fval.fee_type_id }}class="selectedLi"{{/if}} selectVal='{{$fv.fee_type_id}}'>{{$fv.type_name}}</li>
+									{{/foreach}}
+								</ul>
+							</div>
+						</div>
+						<b class="dte-30">计费方式：</b>
+						<div class="selectByM slt-150 fees-opt-sel cache-pay-way-data" hasevent="2">
+							<input disabled="disabled" type="text" datatype="selType" nullmsg="请选择计费方式"  class="edited selectByMT way-cal-fee" readonly="readonly" selectval="{{$fval.payment_mode}}" value="选择支付方式">
+							{{if $edit_id eq 0}}
+							<span class="jt_Ctr"><span class="jt_box"></span></span>
+							{{/if}}
+							<div class="selectByMO">
+								<ul>
+									{{foreach from=$money_pay_config key=mpk item=mpv}}
+										<li {{if $fval.payment_mode eq $mpk }}class="selectedLi"{{/if}} selectVal = '{{$mpk}}'>{{$mpv}}</li>
+									{{/foreach}}
+								</ul>
+							</div>
+						</div>
+						<b class="dte-30">收费单价：</b>
+						<input type="text" value="{{$fval.money}}" class="ipt ipt-70 signal_price" nullmsg="请输入收费单价" errormsg="收费单价格式错误" datatype="/.+/,floatGroup">
+						<span class="ml10">元</span>
+							<i class="ifont dte-30 mr5">&#xe675;</i>
+							<a href="javascript:;" class="ico-del-fitem">删除</a>
+							<span class="check-error check-error-ts check-error-auto"></span>
+						</div>
+						<div class="col-l-b errorBox" style="{{if $fval.payment_mode eq 3 or $fval.payment_mode eq 4 or $fval.payment_mode eq 5}}display: block;{{else}}display: none;{{/if}}">
+							<b>当前底度：</b>
+							<input type="text" value="{{$fval.now_meter}}" disabled="disabled"  {{if $fval.payment_mode neq 1 and $fval.payment_mode neq 2}}data-name="du"{{else}} ignore="ignore" {{/if}} class="ipt slt-100" nullmsg="请输入度数" errormsg="度数格式错误"  datatype="/.+/,nowDegree" />
+							<b class="dte-25">抄表日期：</b>
+							<input disabled="disabled" value="{{$fval.add_time|date_format:'%Y-%m-%d'}}" type="text" {{if $fval.payment_mode neq 1 and $fval.payment_mode neq 2}}data-name="cbdate" {{else}}ignore="ignore"{{/if}} class="ipt slt-100 wdatePicker" nullmsg="请选择抄表日期"  datatype="*" readonly="readonly" />
+							<span class="check-error check-error-ts check-error-auto"></span>
+						</div>
+					</li>
+					{{/foreach}}
+					<li class="view-add-cost">
+					<i class="ifont mr5 ml15">&#xf0037;</i>
+					<a href="javascript:;" class="add_distri_fee" title="除租金、定金、押金外如有其他费用可在此处添加">添加费用</a>
+					</li>
+				</ul>
+			</div>
+			<!--费用模块end-->
+
+			<div class="view-btn">
+				<a href="javascript:;" house-id="{{$house_id}}"  class="btn btn2" editId="{{$edit_id}}" id="distributed-save-addTr" addUrl="{{'House-House/add'|url}}" editUrl="{{{{'House-House/edit'|url}}}}">保存</a>
+				<a href="javascript:;" class="btn btn4 cancle-save-acttrig btn-cancel">取消</a>
+			</div>
+		</div>
+		<!--费用增加模板-->
+
+					<div class="list-fee-item" style="display:none;" id="temp-add-fee">
+						<div class="col-l-t clearfix errorBox">
+							<b>费用名称：</b>
+							<div class="selectByM slt-90 fees-opt-sel triger-drag-down"  hasevent="3">
+								<input type="text" datatype="selType" nullmsg="请选择费用名称" class="selectByMT fee-item-name" readonly = 'readonly' selectVal = '-1' value="选择费用项"/>
+								<span class='jt_Ctr'><span class='jt_box'></span></span>
+								<div class="selectByMO">
+									<ul>
+										{{foreach from=$fee_type key=fk item=fv}}
+											<li selectVal='{{$fv.fee_type_id}}'>{{$fv.type_name}}</li>
+										{{/foreach}}
+									</ul>
+								</div>
+							</div>
+							<b class="ml15">计费方式：</b>
+							<div class="selectByM slt-150 fees-opt-sel cache-pay-way-data" hasevent="2">
+								<input type="text" datatype="selType" nullmsg="请选择计费方式" class="selectByMT way-cal-fee" readonly = 'readonly' selectVal = '-1' value="选择支付方式"/>
+								<span class='jt_Ctr'><span class='jt_box'></span></span>
+								<div class="selectByMO">
+									<ul>
+										{{foreach from=$money_pay_config key=mpk item=mpv}}
+											<li selectVal = '{{$mpk}}'>{{$mpv}}</li>
+										{{/foreach}}
+									</ul>
+								</div>
+							</div>
+							<b class="ml15">收费单价：</b>
+							<input type="text" class="ipt ipt-50 signal_price" nullmsg="请输入收费单价" errormsg="收费单价格式错误"  datatype="/.+/,floatGroup" />
+							<span class="ml10">元</span>
+							<i class="ifont ml15 mr5">&#xe675;</i>
+							<a href="javascript:;" class="ico-del-fitem">删除</a>
+							<span class="check-error check-error-ts check-error-auto"></span>
+						</div>
+						<div class="col-l-b errorBox" style="display: none;">
+							<b>当前底度：</b>
+							<input type="text" data-name="du" class="ipt slt-100" nullmsg="请输入度数" errormsg="度数格式错误"  datatype="/.+/,nowDegree" />
+							<b class="dte-25">抄表日期：</b>
+							<input type="text" data-name="cbdate" class="ipt slt-100 wdatePicker" nullmsg="请选择抄表日期"  datatype="*" readonly="readonly" />
+							<span class="check-error check-error-ts check-error-auto"></span>
+						</div>
+					</div>
+					<!--费用增加模板end-->
+
+					<!--已有费用-->
+
+                    <!-- end-->
+		<!--分散式公寓-合租 e-->
+		<!--新增小区遮罩模板-->
+		<div id="dpt-addHouse-temp" style="display: none;">
+				<div class="checkout-con add-compounds-con dpt-add-new-form">
+				<ul>
+					<li>
+						<b><i>*</i>小区名称：</b>
+						<input type="text" nullmsg="请输入小区名称" datatype="*" name="community_name" class="ipt ipt-300 compounds-name fl mb20" datatype="*" nullmsg="请填写小区名称" />
+						<span class="check-error check-error-ts check-center"></span>
+					</li>
+					<li>
+						<b><i>*</i>区域：</b>
+						<div class="selectByM distri-add-new-areas distri-define-area" hasevent="1">
+							<input type="text" class="selectByMT area" name="area_name" readonly = 'readonly' selectVal = '0' value="请选择区域" datatype="areaName" nullmsg="请选择区域" errormsg="请选择区域" />
+							<span class='jt_Ctr'><span class='jt_box'></span></span>
+							<div class="selectByMO">
+								<ul class="requstZoneUrl" url="{{'House-House/business'|url}}">
+									{{foreach from=$area_data key=akey item=aval}}
+									<li selectVal = '{{$aval.area_id}}'>{{$aval.name}}</li>
+									{{/foreach}}
+								</ul>
+							</div>
+						</div>
+						<span class="check-error check-error-ts check-center"></span>
+					</li>
+					<li>
+						<b><i>*</i>商圈：</b>
+						<div class="selectByM distri-add-new-circle distri-add-new-areas">
+							<input type="text" class="selectByMT business" name="business_name" readonly = 'readonly' selectVal = '0' value="请选择商圈" datatype="areaName" nullmsg="请选择商圈" errormsg="请选择商圈" />
+							<span class='jt_Ctr'><span class='jt_box'></span></span>
+							<div class="selectByMO">
+								<ul>
+									<li selectVal = '0'>请选择商圈</li>
+								</ul>
+							</div>
+						</div>
+						<span class="check-error check-error-ts check-center"></span>
+					</li>
+					<li>
+						<b><i>*</i>街道地址：</b>
+					</li>
+					<li>
+						<textarea class="i-txt dpt-own-addres" name="address" datatype="*" nullmsg="请填写街道地址"></textarea>
+						<span class="check-error check-error-ts ml5"></span>
+					</li>
+					<li class="checkout-btn">
+						<a href="javascript:;" url="{{'Community/add'|url}}" class="btn btn2 save-distri-add-other-area">保存</a>
+						<a href="javascript:;" class="btn btn4 cancel-btn cancle-add-own-area">取消</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!--新增小区遮罩模板end-->
+		<!--多选删除遮罩模板-->
+			<div class="deletemoreauto none">
+				<div class="top">
+					<div class="top1">
+						<span class="fl">正在删除...</span>
+						<span class="fr">
+							<span class="num_cur">1</span>/<span class="num_total"></span>
+						</span>
+					</div>
+					<div class="top2">
+						<div class="top2a">
+							<div class="top2at"></div>
+						</div>
+					</div>
+				</div>
+				<div class="content">
+					<table>
+						<tr><th class="zb">房间配置名称</th><th class="yb">删除结果</th></tr>
+						<!--<tr><td class="zb">我是auto</td><td class="yb blue">删除成功</td></tr>-->
+					</table>
+				</div>
+			</div><!--费用名称循环模板-->
+			<script type="text/html" id="add-roomfee-dynamic-temp">
+				<ul>
+					{{'<% for (var i = 0; i < data.length; i ++) { %>'}}
+						 <li selectVal='{{'<%=data[i].id%>'}}'>{{'<%=data[i].text%>'}}</li>
+					{{'<%}%>'}}
+				</ul>
+			</script>
+			<!--费用名称循环模板end-->
+				<!-- 预约退租信息展示-房间详情 -->
+	    <script type="text/template" id="cover-room-yytz-detail">
+	    		<div class="rsv-wrap jzf-form room-chekout-form" id="roomCheckoutForm-detail">
+	    			<div class="jzf-col">
+					<div class="col-box">
+						<div class="jzf-col-l float-l">
+							<span class="room-num"></span>
+						</div>
+						<div class="jzf-col-r">
+							<span class="roomNum"></span>
+						</div>
+				    </div>
+				</div>
+				<div class="jzf-col">
+					<div class="col-box">
+						<div class="jzf-col-l float-l">
+							<span><i class="red">*</i>退租日期：</span>
+						</div>
+						<div class="jzf-col-r fl clearfix">
+							<input type="text" datatype="*" readonly="readonly" name="start_time" nullmsg="请选择退租日期" class="ipt ipt-165 date-input ipx-txt">
+							<span class="check-error-ts check-error-auto">
+							<i class="ico-arrwo-d"></i>
+							<span class="check-error"></span>
+						</span>
+						</div>
+				    </div>
+				</div>
+				<div class="jzf-col">
+					<div class="jzf-col-l">
+						<span><i class="red">*</i>备注说明：</span>
+					</div>
+					<div class="jzf-col-r blo-row">
+						<textarea class="ipx-txt" id="remark-for-tz-room-detail" name="remark" datatype="*"  nullmsg="请输入备注信息"></textarea>
+						<span class="check-error-ts">
+							<i class="ico-arrwo-d ico-arrwo-d-remark"></i>
+							<span class="check-error check-error-textarea"></span>
+						</span>
+					</div>
+				</div>
+				<div class="jzf-col">
+					<div class="jzf-col-r blo-row">
+						<div class="resv-act-btns">
+							<a href="javascript:;" class="btn btn2 mr10"  id="room-tz-info-save-detail" tzurl="{{'House-Room/rentalback'|url}}">保存</a>
+							<a href="javascript:;" class="btn btn4 restore-yytz-act" rasb-url="{{'house-room/revocationsubscribe'|url|cat:'&house_id='|cat:$entirel_data.house_id}}">撤销</a>
+						</div>
+					</div>
+				</div>
+	    		</div>
+	    </script>
+
+	    <!--停用房间信息展示-房间详情 e-->
+<script type="text/template" id="house-detail-distri-stop">
+    	<div class="rsv-wrap jzf-form room-stop-form" id="house_detail_stop_info">
+			<div class="jzf-col">
+				<div class="col-box">
+					<div class="jzf-col-l float-l">
+						<span><i class="red">*</i>起始日期：</span>
+					</div>
+					<div class="jzf-col-r fl clearfix">
+						<input type="text" datatype="*" readonly="readonly" name="endtime_start" nullmsg="请选择起始日期" class="ipt ipt-165 date-input ipx-txt">
+						<span class="check-error-ts check-error-auto">
+						<i class="ico-arrwo-d"></i>
+						<span class="check-error"></span>
+					</span>
+					</div>
+			    </div>
+				<div class="col-box">
+					<div class="jzf-col-l float-l">
+						<span><i class="red">*</i>终止日期：</span>
+					</div>
+					<div class="jzf-col-r fl clearfix">
+						<input type="text" datatype="*" readonly="readonly"  name="endtime_end" nullmsg="请选择终止日期" class="ipt ipt-165 date-input ipx-txt">
+						<span class="check-error-ts check-error-auto">
+							<i class="ico-arrwo-d"></i>
+							<span class="check-error"></span>
+						</span>
+					</div>
+			    </div>
+			</div>
+			<div class="jzf-col">
+				<div class="jzf-col-l">
+					<span>停用说明：</span>
+				</div>
+				<div class="jzf-col-r blo-row">
+					<textarea class="ipx-txt"  ignore="ignore" name="notice" datatype="*"  nullmsg="请输入备注信息"></textarea>
+					<span class="check-error-ts">
+						<i class="ico-arrwo-d ico-arrwo-d-remark"></i>
+						<span class="check-error check-error-textarea"></span>
+					</span>
+					<input type="text" style="display:none;" class="ipx-txt" name="stop_id" />
+				</div>
+			</div>
+			<div class="jzf-col">
+				<div class="jzf-col-r blo-row">
+					<div class="resv-act-btns">
+						<a href="javascript:;" class="btn btn2 mr10"  id="housedetail-stop-info-save" stopurl="{{'House-House/editstop'|url}}">保存</a>
+						<a href="javascript:;" class="btn btn4 house-restore-disable-act" data-url="{{'House-Room/recover'|url|cat:'&house_id='|cat:$entirel_data.house_id}}">恢复</a>
+					</div>
+				</div>
+			</div>
+    		</div>
+    </script>

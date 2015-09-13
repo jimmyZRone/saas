@@ -1,0 +1,92 @@
+{{if $view == 'template'}}
+        <!--财务管理-删除 s-->
+		<div class="finance_debts list">
+			
+			<!--表格 s-->
+			<table class="lst_tb">
+				<tr>
+					<th>欠费时间</th>
+					<th class="th-second">房间</th>
+					<th>未付金额</th>
+					<th>交费时间</th>
+					<th>状态</th>
+					<th>操作</th>
+				</tr>
+{{/if}}
+{{if $view == 'data'}}
+				{{foreach from=$debts_list item=list}}
+				<tr>
+					<td>
+						<span>{{$list.pay_time|date_format:"%Y-%m-%d"}}</span>
+					</td>
+					<td>
+                        {{if $list.house_type == 0}}
+                            非房间流水
+    					{{elseif $list.house_type == 1}}<!-- 分散式 -->
+                            {{if $list.rental_way == 1}}<!-- 合租 -->
+        						<p>{{$list.h_name|cat:$list.room_type|cat:$list.r_custom_num|cat:'号'}}</p>
+    						{{else}}<!-- 整租 -->
+        						<p>{{$list.h_name}}</p>
+    						{{/if}}
+        				{{elseif $list.house_type == 2}}<!-- 集中式 -->
+    						<p>{{$list.flat_name}}{{$list.floor}}楼{{$list.rf_custom_num}}号</p>
+<!--     						<p>房间编号  {{*$list.rf_custom_num*}}</p>	 -->
+						{{/if}}
+					</td>
+					<td>
+						<p>{{$list.receivable}}元</p>
+					</td>
+					<td>
+						<span>{{$list.subscribe_pay_time|date_format:"%Y-%m-%d"}}</span>
+					</td>
+					<td>
+						<span>{{$list.status}}</span>
+					</td>
+					<td>
+						<div class="edit-col" serial_id="{{$list.sn_id}}" father_id="{{$list.father_id}}">
+						    <!-- 收费 -->
+						    {{if $list.status != '已收费'}}
+    						    {{if $list.house_type == 1}}
+    							    <a href="#{{'Finance-serial/editIncome/debts_id/'|cat:$list.sn_id|cat:'/'|cat:'house_id/'|cat:$list.house_id|cat:'/'|cat:'room_id/'|cat:$list.room_id|url}}">收费</a>
+    							{{else}}
+    							    <a href="#{{'Finance-serial/editIncome/debts_id/'|cat:$list.sn_id|cat:'/'|cat:'flat_id/'|cat:$list.flat_id|cat:'/'|cat:'room_focus_id/'|cat:$list.room_focus_id|url}}">收费</a>
+    							{{/if}}
+							    <em>|</em>
+							{{/if}}
+							<!-- 查看 -->
+							{{if $list.house_type == 1}}
+							    <a href="#{{'Finance-serial/showDebtsDetail/serial_id/'|cat:$list.sn_id|cat:'/'|cat:'house_id/'|cat:$list.house_id|cat:'/'|cat:'room_id/'|cat:$list.room_id|cat:'/'|cat:'source/'|cat:$list.source|cat:'/'|cat:'source_id/'|cat:$list.source_id|cat:'/'|cat:'house_type/'|cat:$list.house_type|cat:'/'|cat:'user_id/'|cat:$list.user_id|url}}">查看</a>
+							{{elseif $list.house_type == 2}}
+							    <a href="#{{'Finance-serial/showDebtsDetail/serial_id/'|cat:$list.sn_id|cat:'/'|cat:'flat_id/'|cat:$list.flat_id|cat:'/'|cat:'room_focus_id/'|cat:$list.room_focus_id|cat:'/'|cat:'source/'|cat:$list.source|cat:'/'|cat:'source_id/'|cat:$list.source_id|cat:'/'|cat:'house_type/'|cat:$list.house_type|cat:'/'|cat:'user_id/'|cat:$list.user_id|url}}">查看</a>
+							{{else}}
+							    <a href="#{{'Finance-serial/showDebtsDetail/serial_id/'|cat:$list.sn_id|cat:'/'|cat:'source/'|cat:$list.source|cat:'/'|cat:'source_id/'|cat:$list.source_id|cat:'/'|cat:'house_type/'|cat:$list.house_type|cat:'/'|cat:'user_id/'|cat:$list.user_id|url}}">查看</a>
+							{{/if}}
+							<em>|</em>
+							<a href="javascript:;" url="{{'Finance-serial/deleteDebts'|url}}" class="spr-del-trig">删除</a>
+						</div>
+					</td>
+				</tr>
+				{{/foreach}}
+{{/if}}
+{{if $view == 'template'}}
+			</table>
+			<!--表格 e-->
+			
+			<!--分页 s-->
+			<div class="jzf-pagination clearfix" page_url="{{'Finance-Serial/listDebts/view_type/data'|url}}">
+				<div class="pagination" id="list_debts"></div>
+				<div class="jump-to-page clearfix">
+					<span>跳转至</span>
+					<div class="jump-edit-box">
+			        	<input type="text" placeholder="页码" class="page">
+			        	<a href="javascript:;" class="p-btn btn btn4">GO</a>
+			        	<i class="page-unit">页</i>
+			        </div>
+				</div>
+			</div>
+			<!--分页 e-->
+			
+			<div class="raty"></div>
+		</div>
+		<!--财务管理-删除 e-->
+{{/if}}

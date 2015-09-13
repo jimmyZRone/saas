@@ -1,0 +1,120 @@
+{{foreach from=$list_data key=lk item=lv}}
+{{foreach from=$lv key=lvk item=lkv}}
+						<dd  house-id="{{$lkv.room_focus_id}}"
+							{{if $lkv.status eq 1}} {{if $lkv.is_yd eq 1}}data-booked="true"{{/if}}data-rentstyle="notRented"{{/if}}
+							{{if $lkv.status eq 3}} {{if $lkv.is_yd eq 1}}data-booked="true"{{/if}}data-rentstyle="stopUse"{{/if}}
+							{{if $lkv.status eq 2 and $lkv.is_yytz eq 0}}{{if $lkv.is_yd eq 1}}data-booked="true"{{/if}}data-rentStyle='rented'{{/if}}
+							{{if $lkv.is_yytz eq 1 and $lkv.status eq 2}}{{if $lkv.is_yd eq 1}}data-booked="true"{{/if}}data-rentstyle="outRented"{{/if}}
+						>
+							<span class="romm_NUM fl">{{$lkv.custom_number}}</span>
+							<div class="jtBox">
+								<span class="jt"></span>
+								<div class="detail_Choices">
+									<ul>
+										<li><a class="a_Detail" href="#{{'Centralized-Roomfocus/edit'|url|cat:'&'|cat:'room_focus_id'|cat:'='|cat:$lkv.room_focus_id}}">查看</a></li>
+										{{if $lkv.status eq 2}}
+										<li><a class="a_GoOnRented" href="javascript:;">续租</a></li>
+										<li><a class="a_OutRented" href="javascript:;">退租</a></li>
+										{{/if}}
+										
+										<li><a class="a_Booked" url="{{'Centralized-Roomfocus/renewal'|url}}" href="javascript:;">预定</a></li>
+										
+										{{if $lkv.is_yd eq 1}}
+										<li><a class="a_OutBooked" href="javascript:;" url="{{'Centralized-Roomfocus/abolishrenewal'|url}}">退定</a></li>
+										{{/if}}
+										
+										{{if $lkv.status neq 3 and $lkv.status neq 2 and $lkv.is_yd neq 1}}
+										<li><a class="a_StopUse" url="{{'Centralized-Roomfocus/stop'|url}}" href="javascript:;">停用</a></li>
+										{{/if}}
+										
+										{{if $lkv.status eq 3}}
+										<li><a class="a_StartUse" url="{{'Centralized-Roomfocus/recover'|url}}" href="javascript:;">恢复</a></li>
+										{{/if}}
+										
+										{{if $lkv.status eq 2 and $lkv.is_yytz eq 0}}
+										<li><a class="a_BookOutRented" url="{{'Centralized-Roomfocus/rentalBack'|url}}" href="javascript:;">预约退租</a><input type="text" val="/baodi.com" style="display: none;"/></li>
+										{{/if}}
+										{{if $lkv.status neq 2 and $lkv.status neq 3}}
+											{{if $lkv.is_yd==1}}
+												<li><a class="a_Rental" reserve-url= "{{'centralized-roomfocus/reserve'|url}}" jup-url="#{{'tenant-index/reservetolet'|url}}" href="javascript:;">出租</a></li>
+												{{else}}
+												<li><a class="a_Rental" jup-url="#{{'tenant-index/adds'|url|cat:'&'|cat:'house_room_id='|cat:$lkv.room_focus_id|cat:'&house_type=2'|cat:'&flat_id='|cat:$lkv.flat_id}}" href="javacript:;">出租</a></li>
+											{{/if}}
+										{{/if}}
+										{{if $lkv.is_yytz eq 1 and $lkv.status eq 2}}
+										<li><a class="a_resetOutRented" url="{{'Centralized-Roomfocus/revocationSubscribe'|url}}" href="javascript:;">撤销</a></li>
+										{{/if}}
+									</ul>
+								</div>
+							</div>
+							{{if $lkv.status eq 1 and $lkv.is_yd eq 0}}<span class="rent_Style notRented">未出租</span>{{/if}}
+							{{if $lkv.status eq 3}}<span class="icon_Style ifont"><span class="stop">&#xe62e;</span></span>{{/if}}
+							{{if $lkv.status eq 2 and $lkv.is_yytz eq 0}}<span class="icon_Style ifont">
+							<span {{if $lkv.gender eq 1}}class="man"{{else $lkv.gender eq 2}}class="woman"{{/if}}>
+							{{if $lkv.gender eq 1}}&#xe654;{{else $lkv.gender eq 2}}&#xe656;{{/if}}
+							</span>
+							</span>{{/if}}
+							{{if $lkv.status neq 3 and $lkv.status neq 2 and $lkv.is_yd eq 1}}<span class="icon_Style ifont"><span class="book">&#xe6a3;</span></span>{{/if}}
+							{{if $lkv.is_yytz eq 1 and $lkv.status eq 2}}<span class="icon_Style ifont"><span class="outRent">&#xe663;</span></span></span></span>{{/if}}
+							<div class="rented_Detail tc_Detail">
+								{{if $lkv.is_yd eq 1 and $lkv.status neq 2 and $lkv.status neq 3}}
+								<ol>
+									{{foreach from=$lkv.msg_yd key=lkvvk item=lkvval}}
+										<li><span class="name">房间类型：</span>{{if $flat_data.rental_way eq 1}}合租{{elseif $flat_data.rental_way eq 2}}整租{{/if}}</li>
+										<li><span class="name">预定人姓名：</span>{{$lkvval.name}}</li>
+										<li><span class="name">预定人电话：</span>{{$lkvval.phone}}</li>
+										<li><span class="name">预定金额：</span>{{$lkvval.money}}</li>
+										<li><span class="name">预定周期：</span>{{$lkvval.stime|date_format:"%Y/%m/%d"}}至{{$lkvval.etime|date_format:"%Y/%m/%d"}}</li>
+									{{/foreach}}
+								</ol>
+								{{/if}}
+								
+								{{if $lkv.status eq 3}}
+								<ol>
+									{{foreach from=$lkv.stop_msg key=lkvvk item=lkvval}}
+										<li><span class="name">房间类型：</span>{{if $flat_data.rental_way eq 1}}合租{{elseif $flat_data.rental_way eq 2}}整租{{/if}}</li>
+										<li><span class="name text">停用说明：{{$lkvval.remark}}</span></li>
+										<li><span class="name">起始日期：</span>{{$lkvval.start_time|date_format:"%Y/%m/%d"}}</li>
+										<li><span class="name">结束日期：</span>{{$lkvval.end_time|date_format:"%Y/%m/%d"}}</li>
+									{{/foreach}}
+								</ol>
+								{{/if}}
+								
+								{{if $lkv.status eq 2 and $lkv.is_yytz neq 1}}
+								<ol>
+								{{foreach from=$lkv.msg key=lkvvk item=lkvval}}
+									<li><span class="name">房间类型：</span>{{if $flat_data.rental_way eq 1}}合租{{elseif $flat_data.rental_way eq 2}}整租{{/if}}</li>
+									<li><span class="name">租客姓名：</span>{{$lkvval.name}}</li>
+									<li><span class="name">租客电话：</span>{{$lkvval.phone}}</li>
+									<li><span class="name">下次付款金额：</span>{{$lkvval.total_money}}</li>
+									<li><span class="name">下次付款时间：</span>{{$lkvval.next_pay_time|date_format:"%Y-%m-%d"}}</li>
+								{{/foreach}}
+								</ol>
+								{{/if}}
+								
+								{{if $lkv.status eq 2 and $lkv.is_yytz eq 1}}
+								<ol>
+								{{foreach from=$lkv.msg_yytz key=lkvvk item=lkvval}}
+									<li><span class="name">房间类型：</span>{{if $flat_data.rental_way eq 1}}合租{{elseif $flat_data.rental_way eq 2}}整租{{/if}}</li>
+									<li><span class="name">退租时间：</span>{{$lkvval.back_rental_time|date_format:"%Y-%m-%d"}}</li>
+									<li><span class="name text">备注说明：{{$lkvval.remark}}</span></li>
+								{{/foreach}}
+								</ol>
+								{{/if}}
+								
+								{{if $lkv.status eq 1 and $lkv.is_yytz eq 0 and $lkv.is_yd eq 0}}
+								<ol>
+								{{foreach from=$lkv.emp_msg key=lkvvk item=lkvval}}
+									<li><span class="name">房间类型：</span>{{if $flat_data.rental_way eq 1}}合租{{elseif $flat_data.rental_way eq 2}}整租{{/if}}</li>
+									<li><span class="name">房间租金：</span>{{$lkvval.money}}元/月</li>
+									<li><span class="name">空置天数：</span>{{$lkvval.day}}</li>
+								{{/foreach}}
+								</ol>
+								{{/if}}
+							</div>
+							<span class="checkBox"> <label><span class="gou ifont ifont1">&#xe60c;</span></label>
+								<input type="checkbox" />
+							</span>
+						</dd>
+					{{/foreach}}
+{{/foreach}}

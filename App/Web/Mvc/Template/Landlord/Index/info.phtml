@@ -1,0 +1,376 @@
+<!--业主信息 s-->
+<div class="manager_landlord_msg view" landlord_id="{{$landlord_info.landlord_id}}" contract_id="{{$landlord_info.contract_id}}" hasform="true">
+	<div class="view-head">
+		<h1>业主信息</h1>
+		{{if $landlord_info.next_pay_time lt $landlord_info.dead_line and $landlord_info.is_stop neq 1}}
+            <span href="javascript:;" class="ops-agrmt">正常</span>
+        {{/if}}
+		{{if $landlord_info.next_pay_time gte $landlord_info.dead_line}}
+		<a href="#{{'Landlord-index/reletLandlord'|url|cat:'&pid='|cat:$landlord_info.contract_id}}" action="{{'Landlord-index/reletLandlord'|url|cat:'&pid='|cat:$landlord_info.contract_id}}" class="ml20">续租</a>
+		{{/if}}
+		{{if $landlord_info.is_stop neq 1}}
+		      <a href="javascript:;" class="contract-stop" action="{{'Landlord-index/stopLandlord'|url|cat:'&contract_id='|cat:$landlord_info.contract_id}}">终止</a>
+        {{/if}}
+        
+        {{if $landlord_info.next_pay_time lt $landlord_info.dead_line and $landlord_info.is_stop neq 1}}
+		<a href="javascript:;" class="contract-pay" payaction="{{'landlord-index/pay'|url|cat:'&cid='|cat:$landlord_info.contract_id}}">支付</a><!--js请求大括号中的接口 , 拿到返回的json数组中的url,用url新开一个标签 {{'Landlord-index/pay'|url|cat:'&cid='|cat:$landlord_info.contract_id}} -->
+		{{/if}}
+        {{if $landlord_info.is_stop eq 1}}
+        <span href="javascript:;" class="ops-agrmt">已退租</span>
+		{{/if}}
+		<!--<a href="javascript:;" class="">向业主交租提醒</a>-->
+	</div>
+	<div class="view-con">
+		<ul>
+			<li class="house-type">
+				<b><i class="bit"></i>房源类型：</b>
+			{{if $landlord_info.house_type eq '2'}}
+				<div class="radio-box">
+					<label class="radio checked"><i class="ifont r-default" style="display: none;">&#xe612;</i><i class="ifont r-select" style="display: inline;">&#xe617;</i></label>
+					<input type="radio" name="type" value="" checked="checked" data-type="2" />
+					<span>集中式公寓</span>
+				</div>
+            {{else}}
+				<div class="radio-box radio-type">
+					<label class="radio checked"><i class="ifont r-default" style="display: none;">&#xe612;</i><i class="ifont r-select" style="display: inline;">&#xe617;</i></label>
+					<input type="radio" name="type" value="" checked="checked" data-type="1" />
+					<span>分散式公寓</span>
+				</div>
+			{{/if}}
+			</li>
+			<li class="house-distributed" {{if $landlord_info.house_type eq '2'}}style="display: none;"{{else}}style="display: block;"{{/if}}>
+				<b><i class="bit">*</i>小区名称：</b>
+				{{if $smarty.get.a eq 'info' && $landlord_info.house_type eq '1'}}
+    				<input disabled type="text" class="ipt ipt-350 mr10 bg-gray" name="distributed_house" value="{{$landlord_info.0}}" placeholder="请输入小区名字" datatype="*" nullmsg="请输入房源名" />
+    				{{if $landlord_info.cost != '0'}}
+    				    <input disabled type="text" value="{{$landlord_info.cost}}" class="ipt ipt-40 mr5 bg-gray" name="build" />
+        				<span class="mr5">栋</span>
+        			{{/if}}
+        		    {{if $landlord_info.unit != '0'}}
+        				<input disabled type="text" value="{{$landlord_info.unit}}" class="ipt ipt-40 mr5 bg-gray" name="unit" />
+        				<span class="mr5">单元</span>
+        			{{/if}}
+    				{{if $landlord_info.floor != '0'}}
+        				<input disabled type="text" value="{{$landlord_info.floor}}" class="ipt ipt-40 mr5 bg-gray" name="floor" />
+        				<span class="mr5">楼</span>
+        			{{/if}}
+        		    {{if $landlord_info.number != '0'}}
+        				<input disabled type="text" value="{{$landlord_info.number}}" class="ipt ipt-50 mr5 bg-gray" name="number" />
+        				<span>号</span>
+    				{{/if}}
+    				<span class="check-error check-error-ts"></span>
+    			{{else}}
+    				<input type="text" class="ipt ipt-350 mr10" name="distributed_house" placeholder="请输入小区名字" datatype="*" nullmsg="请输入房源名" />
+    				<input type="text" class="ipt ipt-40 mr5" name="build" />
+    				<span class="mr5">栋</span>
+    				<input type="text" class="ipt ipt-40 mr5" name="unit" />
+    				<span class="mr5">单元</span>
+    				<input type="text" class="ipt ipt-40 mr5" name="floor" />
+    				<span class="mr5">楼</span>
+    				<input type="text" class="ipt ipt-50 mr5" name="number" />
+    				<span>号</span>
+    				<span class="check-error check-error-ts"></span>
+    			{{/if}}
+			</li>
+			<li class="house-centralized" {{if $landlord_info.house_type eq '1'}}style="display: none;"{{else}}style="display: block;"{{/if}}>
+				<b><i class="bit">*</i>公寓名称：</b>
+				{{if $smarty.get.a eq 'info' && $landlord_info.house_type eq '2'}}
+    				<input disabled type="text" class="ipt ipt-625 bg-gray" id="houses" name="centralized_house" datatype="*" nullmsg="请输入房源名" value="{{$landlord_info.hosue_name}}"/>
+    				<input disabled type="hidden" name="rentType-select" value="1">
+    				<input disabled type="hidden" name="community_id">
+    			{{else}}
+    				<input type="text" class="ipt ipt-625" id="houses" name="centralized_house" datatype="*" nullmsg="请输入房源名" value="{{$landlord_info.hosue_name}}"/>
+    				<input type="hidden" name="rentType-select" value="1">
+    				<input type="hidden" name="community_id">
+    			{{/if}}
+				<span class="check-error check-error-ts"></span>
+			</li>
+			<li>
+				<b><i class="bit">*</i>业　　主：</b>
+				<input type="text" class="ipt ipt-250 ipt-con" name="landlord_name" datatype="*" nullmsg="请输入业主姓名" value="{{$landlord_info.name}}"/>
+				<b class="dte-50"><i class="bit">*</i>电　　话：</b>
+				<input type="text" class="ipt ipt-250 ipt-con" name="landlord_phone" datatype="/^1\d{10}$/" nullmsg="请输入业主电话" errormsg="电话号码格式错误" value="{{$landlord_info.phone}}"/>
+				<span class="check-error check-error-ts"></span>
+			</li>
+			<li>
+				<b><i class="bit">*</i>证件号码：</b>
+				<input type="text" class="ipt ipt-250 ipt-con" name="landlord_card" datatype="*1-40" nullmsg="请输入业主证件号码" errormsg="证件号码格式错误" value="{{$landlord_info.idcard}}"/>
+				<b class="dte-50"><i class="bit"></i>合同编号：</b>
+				<input type="text" class="ipt ipt-250 ipt-con" name="landlord_contract_num" value="{{$landlord_info.custom_number}}" />
+				<span class="check-error check-error-ts"></span>
+			</li>
+			<li>
+				<b><i class="bit"></i>合同起始：</b>
+				{{if $smarty.get.a eq 'info'}}
+				    <input disabled type="text" value="{{if $landlord_info.signing_time neq 0}}{{$landlord_info.signing_time|date_format:'%Y-%m-%d'}}{{/if}}" class="ipt ipt-110 ipt-con date bg-gray" readonly="readonly" name="landlord_start_time" />
+				{{else}}
+				    <input type="text" class="ipt ipt-110 date" readonly="readonly" name="landlord_start_time" />
+				{{/if}}
+				<span class="mr5 ml5">至</span>
+				{{if $smarty.get.a eq 'info'}}
+				    <input disabled type="text" value="{{if $landlord_info.signing_time neq 0}}{{$landlord_info.dead_line|date_format:'%Y-%m-%d'}}{{/if}}" class="ipt ipt-110 ipt-con date bg-gray" readonly="readonly" name="landlord_end_time" />
+				{{else}}
+				    <input type="text" class="ipt ipt-110 date" readonly="readonly" name="landlord_end_time" />
+				{{/if}}
+				<b class="dte-50"><i class="bit"></i>免房租期：</b>
+				{{if $smarty.get.a eq 'info'}}
+				    <input disabled type="text" class="ipt ipt-230 ipt-con bg-gray" name="landlord_term" value="{{if $landlord_info.free_day neq ''}}{{$landlord_info.free_day}}{{/if}}" />
+				{{else}}
+				    <input type="text" class="ipt ipt-230" name="landlord_term" value="{{$landlord_info.free_day}}"/>
+				{{/if}}
+				{{if $landlord_info.free_day_uite == 1}}
+				    <span class="ml5">月</span>
+				{{else}}
+				    <span class="ml5">天</span>
+				{{/if}}
+			</li>
+			<li class="landlord-rent">
+				<b><i class="bit"></i>租　　金：</b>
+				{{if $smarty.get.a eq 'info'}}
+				    <input disabled type="text" class="ipt ipt-80 bg-gray" name="landlord_rent" datatype="landlordRent" nullmsg="请输入租金" errormsg="租金格式不正确" value="{{if $landlord_info.rent neq 0}}{{$landlord_info.rent}}{{/if}}"/>
+				{{else}}
+				    <input type="text" class="ipt ipt-80 ipt-con" name="landlord_rent" datatype="n" nullmsg="请输入租金" errormsg="租金格式不正确" value="{{$landlord_info.rent}}"/>
+				{{/if}}
+				<span class="ml5">元/月</span>
+				<div class="check-box">
+				{{if $landlord_info.is_ascending eq '1'}}<!-- 是递增 -->
+					<label class="checked"><i class="choose ifont1" style="display:inline">&#xe60c;</i></label>   <!-- lable加class= checked   i加style=display:inline  -->
+					<input type="checkbox" checked="checked" value="" style="display: none;" />
+				{{else}}<!-- 不是递增 -->
+					<label class="none"><i class="choose ifont1" style="display:none">&#xe60c;</i></label>   <!-- lable加class= checked   i加style=display:inline  -->
+					<input type="checkbox" value="" style="display: none;" />
+				{{/if}}
+                {{if $landlord_info.is_ascending eq '1'}}
+					<span>租金递增</span>
+				</div>
+				<div class="rent-con" style="display:block"><!-- ascending_type 1比例 2金额 3自定义 lable class=checked 第一个I style=display:none  第二个style=display:inline check=checked -->
+					{{if $landlord_info.ascending_type eq '1'}}
+    					<div class="radio-box">
+    					{{if $landlord_info.ascending_type eq '1'}}
+    						<label class="radio checked"><i class="ifont r-default" style="display: none;">&#xe612;</i><i class="ifont r-select" style="display: inline;">&#xe617;</i></label>
+    						<input type="radio" name="type" checked="checked" readonly="readonly"/>
+    					{{else}}
+                            <label class="radio"><i class="ifont r-default" >&#xe612;</i><i class="ifont r-select">&#xe617;</i></label>
+    						<input  type="radio" name="type" value="" />
+    					{{/if}}
+    						<span>按比例</span>
+    					</div>
+                    {{elseif $landlord_info.ascending_type eq '2'}}
+    					<div class="radio-box radio-type">
+    					{{if $landlord_info.ascending_type eq '2'}}
+    						<label class="radio checked"><i class="ifont r-default" style="display:none">&#xe612;</i><i style="display:inline" class="ifont r-select">&#xe617;</i></label>
+    						<input check="checked" type="radio" name="type"  />
+    					{{else}}
+    					    <label class="radio"><i class="ifont r-default">&#xe612;</i><i class="ifont r-select">&#xe617;</i></label>
+    						<input type="radio" name="type" value="" />
+    					{{/if}}
+    						<span>按金额</span>
+    					</div>
+    				{{/if}}
+					<input {{if $smarty.get.a eq 'info'}}placeholder="已自定义"{{/if}}  type="text" class="ipt ipt-80 rent-con-num bg-gray" disabled="disabled" value="{{if !empty($landlord_info.ascending_num)}}{{$landlord_info.ascending_num}}{{/if}}" datatype="rentIncrease" errormsg="格式不正确" />
+					<input type="hidden" name="rent_money" class="rent_money" />
+					{{if $landlord_info.ascending_type eq '2'}}
+					<span class="ml5 word" style="display: block;">元</span>
+					{{else if $landlord_info.ascending_type eq 1}}
+					<span class="ml5 sign">%</span>
+					{{/if}}
+					{{if $landlord_info.ascending_type eq '2'}}
+					<a href="javascript:;" class="ml15 edit-auto-money {{if $landlord_info.ascending_type eq '3'}}blue{{/if}}" >自定义每年递增金额</a>
+					{{/if}}
+				</div>
+				{{/if}}
+				<span class="check-error check-error-ts"></span>
+			</li>
+			<li>
+				<b><i class="bit"></i>付款方式：</b>
+				<span class="mr10">押</span>
+				<div class="selectByM slt-100 bg-box">
+				{{if $smarty.get.a eq 'info'}}
+					<input  type="text" class="selectByMT slt-con" readonly="readonly" selectVal = "{{$landlord_info.detain}}" value="{{$detain_str}}" name="landlord_bet_num" />
+			     {{else}}
+					<input type="text" class="selectByMT" readonly = 'readonly' selectVal = "{{$landlord_info.detain}}" value="{{$detain_str}}" name="landlord_bet_num" />
+				{{/if}}
+					<span class='jt_Ctr'><span class='jt_box'></span></span>
+					<div class="selectByMO">
+						<ul>
+							{{foreach from=$bet_arr key=k item=value }}
+							    {{if $k==$landlord_info.detain}}
+							     <li class="selectedLi" selectVal='{{$k}}' >{{$value}}</li>
+							       {{else}}
+							         <li selectVal='{{$k}}'>{{$value}}</li>
+							    {{/if}}
+							{{/foreach}}
+						</ul>
+					</div>
+				</div>
+				<span class="mr10 ml10">付</span>
+				<div class="selectByM slt-100 bg-box">
+					<input type="text" class="selectByMT slt-con" readonly="readonly" selectVal = "{{$landlord_info.pay}}" value="{{$pay_str}}" name="landlord_pay_num" />
+					<span class='jt_Ctr'><span class='jt_box'></span></span>
+					<div class="selectByMO">
+						<ul>
+						    {{foreach from=$bet_arr key=k item=value }}
+							{{if $k>0}}
+								{{if $k==$landlord_info.pay}}
+								 <li class="selectedLi" selectVal='{{$k}}' >{{$value}}</li>
+								{{else}}
+								<li selectVal='{{$k}}'>{{$value}}</li>
+								{{/if}}
+							{{/if}}
+							{{/foreach}}
+						</ul>
+					</div>
+				</div>
+				<b class="dte-50"><i class="bit"></i>押　　金：</b>
+				{{if $smarty.get.a eq 'info'}}
+				    <input disabled type="text" class="ipt ipt-230 ipt-con bg-gray" name="landlord_deposit" datatype="landlordDeposit" nullmsg="请输入押金" errormsg="押金格式不正确" value="{{if $landlord_info.deposit neq 0}}{{$landlord_info.deposit}}{{/if}}" />
+				{{else}}
+				    <input type="text" class="ipt ipt-230" name="landlord_deposit" value="{{$landlord_info.deposit}}" />
+				{{/if}}
+				<span class="ml5">元</span>
+				<span class="check-error check-error-ts"></span>
+			</li>
+			<li>
+				<b><i class="bit"></i>提前付款：</b>
+				{{if $smarty.get.a eq 'info'}}
+				    <input disabled type="text" class="ipt ipt-230 bg-gray"  name="landlord_advance_pay" value="{{if $landlord_info.advance_time neq ''}}{{$landlord_info.advance_time}}{{/if}}"/>
+				{{else}}
+				    <input type="text" class="ipt ipt-230" placeholder="15" name="landlord_advance_pay" value="{{$landlord_info.advance_time}}"/>
+				{{/if}}
+				<span class="ml5">天</span>
+			</li>
+			<li>
+				<b><i class="bit"></i>下次付款：</b>
+				<span class="ml5">
+						{{if $landlord_info.is_stop == 1}}已终止
+						{{elseif $landlord_info.next_pay_time gte $landlord_info.dead_line}}
+						租金已收完
+						{{elseif $landlord_info.is_stop neq 1}}
+						{{$landlord_info.next_pay_time|date_format:'Y-m-d'}}
+						{{/if}}
+				</span>
+				{{if $landlord_info.is_stop == 1}}
+				<b class="dte-255"><i class="bit"></i>退租时间：</b>
+				<span class="ml5">{{$landlord_info.end_line|date_format:'Y-m-d'}}</span>
+				{{/if}}
+			</li>
+			<li>
+				<b><i class="bit"></i>付款银行：</b>
+				<div class="selectByM slt-200" hasevent="1">
+					<input type="text" class="selectByMT slt-con" selectVal="{{$landlord_info.bank}}" value="" prev-value="{{$landlord_info.bank}}" name="landlord_pay_bank"/>
+					<span class='jt_Ctr'><span class='jt_box'></span></span>
+					<div class="selectByMO">
+						<ul>
+							{{foreach from=$bankconfig key=key item=v}}
+                            	<li class="charts-auto">{{$key}}</li>
+                            	{{foreach from=$v key=vkey item=vv}}
+							    <li {{if $landlord_info.bank eq $vv.key}}class="selectedLi"{{/if}} selectVal='{{$vv.key}}'>{{$vv.value}}</li>
+							    {{/foreach}}
+						    {{/foreach}}
+						</ul>
+					</div>
+				</div>
+				<b class="dte-50"><i class="bit"></i>开户支行：</b>
+				<input type="text" class="ipt ipt-250 ipt-con" name="landlord_open_bank" value="{{$landlord_info.fork_bank}}" />
+			</li>
+			<li>
+				<b><i class="bit"></i>银行卡号：</b>
+				<input type="text" class="ipt ipt-250 ipt-con" name="landlord_card_num" datatype="landlord_card_num" errormsg="银行卡号格式不正确" value="{{if $landlord_info.bank_no neq '0'}}{{$landlord_info.bank_no}}{{/if}}" />
+				<b class="dte-50"><i class="bit"></i>收 款 人：</b>
+				<input type="text" class="ipt ipt-250 ipt-con" name="landlord_payee" value="{{$landlord_info.payee}}"/>
+				<span class="check-error check-error-ts"></span>
+			</li>
+		</ul>
+	</div>
+
+	<div class="view-con cost-msg">
+		<ul>
+			<li class="li-pic" style="margin-bottom: 0;">
+				<b style="margin-bottom: 0;"><i style="margin-bottom: 0;" class="bit"></i>合同照片：</b>
+				<span style="margin-bottom: 0;">（建议添加业主合同照片、业主证件照片等，要求：jpg、gif、png、pdf、word格式，最多上传9张）</span>
+			</li>
+			<li class="view-img">
+				<div class="uploader-area" id="landlord-edit-uploaderArea">
+				{{foreach from=$picdata key=imgkey item=imgval}}
+				    <div filename="{{$imgval.key}}" queueid="queue-item-SWFUpload_0_1" class="upload-imgview">
+				    	<img class="" style="_display: none;" src="{{imageView2 op='w/60/h/60' key=$imgval.key}}">
+				    	<span class="ie7bug"></span>
+				    	<i class="ifont deleteImg">&#xe627;</i>
+				    	<input type="hidden" name="images[new][room1][]" value="{{$imgval.key}}">
+			    	</div>
+			    {{/foreach}}
+                    <div class="uploadview-wrapper">
+		                <div class="upload-group">
+		                    <div id="queue"></div>
+		                    <input id="landlord-edit-file-upload" name="file_upload" type="file">
+		                </div>
+		            </div>
+		        </div>
+			</li>
+			<li class="view-txt">
+				<b><i class="bit"></i>备注说明：</b>
+				<textarea class="i-txt ipt-con" name="landlord_mark" ignore="ignore" datatype="*1-400" errormsg="备注内容超出范围">{{$landlord_info.mark}}</textarea>
+				<span class="check-error check-error-ts"></span>
+			</li>
+		</ul>
+	</div>
+	<input type="hidden" id="landlord-msg" landlord_id="{{$landlord_info.landlord_id}}" contract_id="{{$landlord_info.contract_id}}" />
+	<div class="view-btn">
+		<a href="javascript:;" url="{{'Landlord-index/info'|url}}" class="btn btn2">保存</a>
+		<a href="javascript:;" class="btn btn4 btn-cancel">取消</a>
+	</div>
+</div>
+<!--业主信息 e-->
+
+<!--自定义金额 s-->
+<div id="hide-auto-money" class="none">
+	<div class="auto-money-con">
+		<ul>
+			<li class="auto-money-head">
+				<b>合约年份</b>
+				<span>租金</span>
+			</li>
+			<li>
+				<b>第一年</b>
+				<input type="text" class="ipt ipt-70 year-money rent-first" readonly="readonly" datatype="n" nullmsg="请输入金额" errormsg="金额格式不正确" />
+				<span class="ml10 mr10">元/月</span>
+				<span class="check-error check-error-ts"></span>
+			</li>
+    		<li class="loop">
+				<b>第${year}年</b>
+				<input type="text" class="ipt ipt-70 year-money" datatype="n"  nullmsg="请输入金额" errormsg="金额格式不正确" />
+				<span class="ml10 mr10">元/月</span>
+				<span class="check-error check-error-ts"></span>
+    		</li>
+			<li class="submit-btn">
+				<a href="javascript:;" url="" class="btn btn2 ok-btn">保存</a>
+				<a href="javascript:;" class="btn btn4 cancel-btn">取消</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<!--自定义金额 e-->
+<div id="hide-auto-moneys" class="none">
+	<div class="auto-money-con">
+		<ul>
+			<li class="auto-money-head">
+				<b>合约年份</b>
+				<span>租金</span>
+			</li>
+			{{if !empty($astype) && $smarty.get.a eq 'info'}}
+                {{foreach from=$astype item=v}}
+    			      <li>
+        				<b>第{{$v.contract_year}}年</b>
+        				<input type="text" class="ipt ipt-70 year-money" readonly="readonly" datatype="n" value="{{$v.ascending_money}}" nullmsg="请输入金额" errormsg="金额格式不正确" />
+        				<span class="ml10 mr10">元/月</span>
+        				<span class="check-error check-error-ts"></span>
+    			     </li>
+    			{{/foreach}}
+    		{{/if}}
+		</ul>
+	</div>
+</div>
+<!--自定义金额 e-->
+
+
+

@@ -1,0 +1,114 @@
+<!--抄表 s-->
+<div class="meter view" hasform="true">
+			<div class="view-head">
+				<h1>抄表信息</h1>
+			</div>
+			<div class="view-con">
+				<ul>
+					<li class="vc-title">
+						<h2>{{$house_name}}</h2>
+						<span>已出租</span>
+					</li>
+					<li>
+						<b><i class="bit">*</i>费用名称：</b>
+						<div class="selectByM" hasevent="true">
+							<input type="text" class="selectByMT centralized_Ind_CuteType" readonly = 'readonly' selectVal = '' value="选择费用名称" name="fee-name" datatype="chooseGroup" nullmsg="请选择费用名称"/>
+							<span class='jt_Ctr'><span class='jt_box'></span></span>
+							<div class="selectByMO">
+								<ul>
+								{{foreach from=$fee_type_data key=key item=val}}
+									<li money="{{$val.money}}" selectVal = '{{$val.fee_type_id}}'>{{$val.type_name}}</li>
+								{{/foreach}}
+								</ul>
+							</div>
+						</div>
+						<b class="ml20"><i class="bit">*</i>收费单价：</b>
+						<span class="fee-price"><span class="fee-price-auto"></span>元</span><span class="check-error check-error-ts"></span>
+					</li>
+					<li>
+						<b><i class="bit">*</i>抄表时间：</b>
+						<input type="text" class="ipt ipt-200 meter-time" datatype="*" nullmsg="请选择抄表时间"/>
+						<b class="ml20"><i class="bit">*</i>当前记录：</b>
+						<input url="{{'MeterReading/getbeforemeter'|url}}" type="text" class="ipt ipt-200 meter-val" datatype="float,checkhigh" nullmsg="请填写当前记录" errormsg="当前记录应为正数"/><span class="check-error check-error-ts"></span>
+					</li>
+				</ul>
+				
+			</div>
+			
+			<div class="view-btn">
+				<a href="javascript:;" url="{{'MeterReading/index'|url}}" class="btn btn2">保存</a>
+				<a href="javascript:;" class="btn btn4 btn-cancel">取消</a>
+				<!--
+                	作者：710414018@qq.com
+                	时间：2015-06-15
+                	描述：取消改功能
+                	<div class="check-box">
+					<label><span class="gou ifont1">&#xe60c;</span></label>
+					<span>保存并收费</span>
+				</div>
+                -->
+			</div>
+			
+			<div class="history-records">
+				<b>历史记录</b>
+				<div class="selectByM select-auto" hasevent="true">
+					<input url="{{'MeterReading/list'|url}}" type="text" class="selectByMT centralized_Ind_CuteType" readonly = 'readonly' selectVal = '0' value="全部"/>
+					<span class='jt_Ctr'><span class='jt_box'></span></span>
+					<div class="selectByMO">
+						<ul>
+							<li selectVal = '0'>全部</li>
+							{{foreach from=$fee_type_data key=key item=val}}
+									<li selectVal = '{{$val.fee_type_id}}'>{{$val.type_name}}</li>
+							{{/foreach}}
+						</ul>
+					</div>
+				</div>
+			</div>
+			
+			<!--表格 s-->
+			<div class="history-records-detail">
+				<table class="lst_tb">
+					<tr>
+						<th>费用名称</th>
+						<th>上次度数</th>
+						<th>本次度数</th>
+						<th>抄表时间</th>
+						<th class="tb-five">抄表人</th>
+					</tr>
+				</table>
+			</div>
+			<!--表格 e-->
+			
+			<!--分页 s-->
+			<div class="jzf-pagination clearfix">
+				<div class="pagination" id="pagination-auto-fee"></div>
+				<div class="jump-to-page clearfix">
+					<span>跳转至</span>
+					<div class="jump-edit-box">
+			        	<input type="text" placeholder="页码">
+			        	<a href="javascript:;" class="p-btn btn btn4">GO</a>
+			        	<i class="page-unit">页</i>
+			        </div>
+				</div>
+			</div>
+			<!--分页 e-->
+			
+			<div class="raty"></div>
+</div>
+<!--
+    	选择收费房间遮罩模板
+    -->
+    <div f-url="{{'Finance-Serial/addincome'|url}}" url="{{'MeterReading/moneylist'|url}}" id="hideTemp" style="display: none;">
+		<div  class="dialog-dpt-flr flat_room_list_td">
+			<div class="center-dpt-body">
+				<ul class="flat_room_list_tdzz">
+					<li style="width: 225px;">房间编号</li>
+					<li style="width: 110px;">费用项</li>
+					<li style="width: 115px;">金额</li>
+				</ul>
+				<table class="lr-tb center-dpt-row centralized_Ind_tab_td">
+				</table>
+			</div>
+		</div>
+	</div>
+<!--抄表 e-->

@@ -1,0 +1,70 @@
+<div id="workerManage_AuthorityManage">
+	<div class="workerManage_AuthorityManage_a">
+		<div class="a fl">
+			<ul>
+				<li class="checkAllBox"><label class="checkAll"><span
+						class="ifont ifont1">&#xe60c;</span></label><a href="javascript:;">全选</a></li>
+				<li class="fzManage"><a
+					href="#{{'Staffmanage-Group/add'|url}}" class="btn-auto-new"><span class="ifont1 blue">&#xe6d4;</span>新增分组</a></li>
+				<li class="a_delete"><span class="ifont">&#xe675;</span>
+					<a href="javascript:;" data-url="{{'Staffmanage-Group/del'|url}}" class="delete_workerManage_AuthorityManage">删除</a></li>
+				<li class="giveUpCheck"><span class="x_giveUpCheck">x</span><a
+					href="javascript:;">取消</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="workerManage_AuthorityManage_b">
+		<table>
+			<tr>
+				<th class="first_T" width="33%"></label>分组</th>
+				<th width="33%">添加时间</th>
+				<th width="34%">操作</th>
+			</tr>
+			{{foreach from=$group_list item=list_val}}
+				<tr uid="{{$list_val.group_id}}">
+					<td class="first_T"><label
+						class="workerManage_AuthorityManage_checkBox checkBox"><span
+							class="gou ifont ifont1">&#xe60c;</span><input type="checkbox" /></label><span class="group_name">{{$list_val.name}}</span></td>
+					<td>{{$list_val.create_time|date_format:"%Y-%m-%d %H:%M:%S"}}</td>
+					<td>
+						<ul>
+							<li class="first"><a href="#{{'Staffmanage-Group/edit'|url|cat:'&'|cat:'group_id'|cat:'='|cat:$list_val.group_id}}">查看</a></li>
+							<li class="last"><a href="javascript:;" data-url="{{'Staffmanage-Group/del'|url}}" class="delete_LineTab">删除</a></li>
+						</ul>
+					</td>
+				</tr>
+			{{/foreach}}
+		</table>
+	</div>
+</div>
+<!--多选删除遮罩模板-->
+	<div class="deletemoreauto none">
+		<div class="top">
+			<div class="top1">
+				<span class="fl">正在删除...</span>
+				<span class="fr">
+					<span class="num_cur">1</span>/<span class="num_total"></span>
+				</span>
+			</div>
+			<div class="top2">
+				<div class="top2a">
+					<div class="top2at"></div>
+				</div>
+			</div>
+		</div>
+		<div class="content">
+			<table>
+				<tr><th class="zb">房间名称</th><th class="yb">删除结果</th></tr>
+				<!--<tr><td class="zb">我是auto</td><td class="yb blue">删除成功</td></tr>-->
+			</table>
+		</div>
+	</div>
+	<!-- 消息提示! -->
+	<div class="group_List none">
+        <div class="empty">
+        	<div class="empty-main">
+        		<img src="/web/images/03.png" />
+        		<p>当前页面没有任何数据，请<a href="#/index.php?c=staffmanage-group&a=add">点击这里添加</a>！</p>
+        	</div>
+        </div>
+    </div>

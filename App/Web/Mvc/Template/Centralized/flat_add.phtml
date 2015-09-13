@@ -1,0 +1,195 @@
+		<div class="center-dpt jzf-form" hasform="true">
+			<div class="dpt-item">
+				<div class="center-dpt-top">
+					<span class="iblue">公寓信息</span>
+				</div>
+				<div class="center-dpt-body">
+							<div class="jzf-col">
+								<div class="jzf-col-l">
+									<span><i class="red">*</i>公寓名称：</span>
+								</div>
+								<div class="jzf-col-r">
+									<input url="{{{{'Centralized-Flat/checkunique'|url}}}}" type="text" value="{{$contract_data.hosue_name}}" class="ipt" name="centralized_Depart_InfoJs_flat_name" placeholder="输入公寓名称" datatype = "*1-40,checktszf,checkrepeat" nullmsg = "请输入公寓名称" errormsg="公寓名称不能超过40个字符"/>
+								</div>
+								<span class="check-error check-error-ts"></span>
+								<i class="notice-auto">（例如：九猪公寓）</i>
+							</div>
+							<div class="jzf-col">
+								<div class="jzf-col-l">
+									<span><i class="red">&nbsp;&nbsp;</i>公寓编号：</span>
+								</div>
+								<div class="jzf-col-r">
+									<input type="text" value="" class="ipt" name="centralized_Depart_InfoJs_custom_number" placeholder="公寓内部用来识别的编号"/>
+								</div>
+							</div>
+							<div class="jzf-col clearfix">
+								<div class="jzf-col-l float-l">
+									<span><i class="red">*</i>区域商圈：</span>
+								</div>
+								<div class="jzf-col-r clearfix fl">
+									<div class="selectByM" hasevent = true>
+										<input business-url={{$business}} type="text" name="centralized_Depart_InfoJs_city_id" class="selectByMT centralized_Ind_CuteType1" readonly = 'readonly' selectVal = '' value="区域" prev-value=""  datatype = "chooseGroup" choosenull = "请选择区域"/>
+										<span class='jt_Ctr'><span class='jt_box'></span></span>
+										<div class="selectByMO">
+											<ul>
+												{{foreach from=$area_data key=ak item=av}}
+													<li selectVal="{{$av.area_id}}">{{$av.name}}</li>
+												{{/foreach}}
+											</ul>
+										</div>
+									</div>
+									<div class="selectByM">
+										<input name="centralized_Depart_InfoJs_area_id" type="text" class="selectByMT centralized_Ind_CuteType" readonly = 'readonly' selectVal = '' value="商圈" datatype = "chooseGroup" choosenull = "请选择商圈"/>
+										<span class='jt_Ctr'><span class='jt_box'></span></span>
+										<div class="selectByMO">
+											<ul></ul>
+										</div>
+									</div>
+								</div>
+								<span class="check-error check-error-ts" style="line-height: 32px;margin-left: 10px;"></span>
+							</div>
+							<div class="jzf-col" style="z-index: 2;">
+								<div class="jzf-col-l">
+									<span><i class="red">*</i>详细地址：</span>
+								</div>
+								<div class="jzf-col-r jzf-col-r-auto">
+									<input type="text" value="" class="ipt adr-box" id="centralized_Depart_InfoJs_address" name="centralized_Depart_InfoJs_address" placeholder="街道/号"  point-lat="" point-lng="" datatype = "check-flat-address" nullmsg = "请输入详细地址"/>
+									<div id="show_addressdetail">
+										<ul></ul>
+									</div>
+								</div>
+								<a href="javascript:;" class="chooseaddressauto">地址不对，我来纠正</a>
+								<span class="check-error check-error-ts"></span>
+							</div>
+							<div class="jzf-col" style="margin-top: 0;">
+								<iframe id="map_auto_add" src="{{'Centralized-Flat/map'|url}}" width="100%" height="265" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes" id="flat-map-auto" style="display: none;"></iframe>
+							</div>
+							<div class="jzf-col">
+								<div class="jzf-col-l">
+									<span><i class="red">*</i>楼层总数：</span>
+								</div>
+								<div class="jzf-col-r">
+									<input type="text" value="" class="ipt" name="centralized_Depart_InfoJs_total_floor" placeholder="楼层总数" datatype = "n1-3,ng0" nullmsg = "请输入楼层总数" errormsg = "楼层总数应为大于0且不超过999整数"/>
+									<a href="javascript:;" url="{{'Centralized-Flat/savefloor'|url}}" class="floor-num" id="show_floors">楼层编号</a>
+								</div>
+								<span class="check-error check-error-ts"></span>
+							</div>
+							<div class="jzf-col">
+								<div class="jzf-col-l">
+									<span><i class="red">*</i>楼层房源：</span>
+								</div>
+								<div class="jzf-col-r">
+									<input type="text" value="" class="ipt mr5" name="centralized_Depart_InfoJs_group_number" placeholder="楼层房源" datatype = "n1-3,ng0" nullmsg = "请输入每层房源套数" errormsg = "房源套数应为大于0小于999整数"/>
+									<span class="jzf-unit">套</span>
+									<a href="javascript:;" house-url={{'Centralized-Flat/getdiyhousenumber'|url}} url="{{'Centralized-Flat/housenumber'|url}}" class="jzf-unit sf-house zdy-roomNum">自定义房源编号</a>
+								</div>
+								<span class="check-error check-error-ts"></span>
+							</div>
+							<div class="jzf-col clearfix">
+								<div class="jzf-col-l float-l">
+									<span><i class="red">*</i>出租类型：</span>
+								</div>
+								<div class="jzf-col-r clearfix">
+									<!--<label for="rent-unit">
+										<input type="radio" class="rtype" checked id="rent-unit" name="rent-type" value="1" />
+										整租
+									</label>
+									<label for="share-unit" class="share-unit">
+										<input type="radio" class="rtype" id="share-unit" name="rent-type" value="1" />
+										合租
+									</label>-->
+									<div class="radio-box">
+										<label class="radio"><i class="ifont r-default" style="display: none;">&#xe612;</i>
+											<i class="ifont r-select" style="display: inline;">&#xe617;</i>
+										</label>
+										<input type="radio" name="rental_way" value="2" checked="checked"/>
+										<span>整租</span>
+									</div>
+									<div class="radio-box ml60">
+										<label class="radio"><i class="ifont r-default">&#xe612;</i>
+											<i class="ifont r-select">&#xe617;</i>
+										</label>
+										<input type="radio" name="rental_way" value="1" />
+										<span>合租</span>
+									</div>
+									<div class="jzf-col-2 unit-rooms fl" style="display: none;">
+										<div class="jzf-col-l">
+											<span><i class="red">*</i>套内间数：</span>
+										</div>
+										<div class="jzf-col-r">
+											<input type="text" value="" class="ipt mr5" name="room_number" placeholder="套内房间数"  datatype = "n1-2,ng0" nullmsg = "请输入套内房间数" errormsg = "套内间数应为1到99整数"/>
+											<span class="jzf-unit">间</span>
+											<a href="javascript:;" room-url={{'Centralized-Flat/getroomdiyroomnumber'|url}} url="{{'Centralized-Flat/roomsnumber'|url}}" class="jzf-unit sf-house diy-roomnum">自定义套内间数</a>
+										</div>
+										<span class="check-error check-error-ts"></span>
+									</div>
+								</div>
+							</div>
+							<!--费用模块添加-->
+							<div class="jf-fees">
+								 <div class="dpt-fee-list">
+								 	 <div class="dpt-fee-item">
+											<ul class="gen-f-item clearfix">
+												<li class="forclone  fl" style="clear: both;"><b>费用名称：</b>
+														<div class="selectByM slt-90" hasevent="true">
+															<input type="text" class="selectByMT centralized_Ind_CuteType"
+																readonly='readonly' selectVal='' value="费用选择"  name="feechoose" datatype="chooseGroup" choosenull="请选择费用类型"/> <span
+																class='jt_Ctr'><span class='jt_box'></span></span>
+															<div class="selectByMO">
+																<ul>
+																{{foreach from=$fee_type key=fk item=fv}}
+																	<li selectVal='{{$fv.fee_type_id}}'>{{$fv.type_name}}</li>
+																{{/foreach}}
+																</ul>
+															</div>
+														</div> <b class="dte-30">计费方式：</b>
+														<div class="selectByM slt-180">
+															<input type="text" class="selectByMT centralized_Ind_CuteType"
+																readonly='readonly' selectVal='' value="计费选择" name="jfeechoose"  style="width: 172px;" datatype="chooseGroup" choosenull="请选择计费方式"/> <span
+																class='jt_Ctr'><span class='jt_box'></span></span>
+															<div class="selectByMO">
+																<ul>
+																	{{foreach from=$pay_config key=ckey item=cval}}
+																	<li selectVal='{{$ckey}}'>{{$cval}}</li>
+																	{{/foreach}}
+																</ul>
+															</div>
+														</div> <b class="dte-30">收费单价：</b> 
+														<input type="text" value="" class="ipt ipt-80" name="money" datatype="float,fee-check" nullmsg="请输入收费单价" errormsg="收费单价格式错误"/> 
+														<span class="ml10">元/月</span> <i class="ifont">&#xe675;</i>
+														<a href="javascript:;" class="forclonedelete">删除</a>
+														<span class="check-error check-error-ts"></span>
+													</li>
+											</ul>
+								 	 </div>
+								 </div>
+								<a href="javascript:;" class="dpt-add-btn-auto" title="除租金、定金、押金外如有其他费用可在此处添加"><i class="ifont">&#xf0037;</i>添加费用</a><i style="color: red;">（除房屋租金、押金、定金外的其他费用,如服务费、保洁费等）</i>
+							</div>
+							<!--费用模块end-->
+
+				</div>
+			</div>
+			<div class="dpt-bot-grp">
+				<a href="javascript:;" url={{$add_url}} class="btn btn2">保存</a>
+				<a href="javascript:;" class="btn btn4 ml10 btn-cancel">取消</a>
+			</div>
+		</div>
+	<!--
+    	楼层编号遮罩模板
+    -->
+	<div id="hideTemp" style="display: none;">
+		<div  class="dialog-dpt-flr">
+		<div class="dpt-flr-top">
+			<span class="dpt-name fl">保利国际<i class="dpt-flrs">(共计25层)</i></span>
+			<!--<span class="smal-tip fl">地下楼层请填写负数，楼层数为三位内整数（不能为0）</span>-->
+		</div>
+		<div class="center-dpt-body">
+			<table class="lr-tb center-dpt-row">
+				<tr class="lr-tb-h">
+					<td>当前楼层</td>
+					<td>修改名称</td>
+				</tr>
+		</table>
+		</div>
+		</div>
+	</div>

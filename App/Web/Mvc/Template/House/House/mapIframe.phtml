@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+        <link rel="stylesheet" type="text/css" href="{{$smarty.const.APP_WEB_STATIC_URL}}css/spread_house.css" />
+        <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=uLe6iBql9gByOgFAaqdhPxzO"></script>
+        <script src="{{$smarty.const.APP_WEB_STATIC_URL}}js/seajs/seajs/2.1.0/sea.js" type="text/javascript" charset="utf-8"></script>
+        <script src="{{$smarty.const.APP_WEB_STATIC_URL}}js/config.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript">
+        		seajs.use("{{$smarty.const.APP_WEB_STATIC_URL}}js/application_Js/map.js")
+        </script>
+	</head>
+	<body>
+		<div id="allMap" class="map-outer-wrap" data-city="{{$cinfo.name}}" data-province="{{$pinfo.name}}">
+			<span style="position: fixed;top:0;left:0;right:0;bottom:0;display:block;width:120px;height:30px;line-height:30px;margin:auto;text-align: center;">地图加载中...</span>
+		</div>
+	</body>
+	<script type="text/javascript" id="mapJson">
+		 var mapJSON={{$mapJson}};
+	</script>
+</html>

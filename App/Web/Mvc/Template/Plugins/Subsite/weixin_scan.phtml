@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" type="text/css" href="{{$smarty.const.APP_WEB_STATIC_URL}}css/plug-station.css?v={{$smarty.const.APP_WEB_VERSION}}" />
+        <link rel="stylesheet" type="text/css" href="{{$smarty.const.APP_WEB_STATIC_URL}}js/bigcolorpicker/css/bigcolorpicker.css?v={{$smarty.const.APP_WEB_VERSION}}"/>
+        <script src="{{$smarty.const.APP_WEB_STATIC_URL}}js/seajs/seajs/2.1.0/sea.js" type="text/javascript" charset="utf-8"></script>
+        <script src="{{$smarty.const.APP_WEB_STATIC_URL}}js/config.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript">
+seajs.use("{{$smarty.const.APP_WEB_STATIC_URL}}js/plug-station_Js/wechat_loginJs.js")
+        </script>
+    </head>
+    <body style="background-color: #FFFFFF;">
+
+        <!--首页 s-->
+        <div class="wechat-manage station" style="margin: 0; padding: 0;">
+            <!--信息 s-->
+            <div class="main">
+                <div class="nav">
+                    <ul>
+                        <li class="nav-menu">
+                            <a href="javascript:;">菜单设置</a>
+                        </li>
+                        <li class="nav-authority current">
+                            <a href="javascript:;">授权设置</a>
+                        </li>
+                        <li class="nav-mode">
+                            <a href="javascript:;" flat_id="{{'flat_id'|I}}" datasrc="{{'Plugins-SubSite/getTempList'|url}}&flat_id={{'flat_id'|I}}"  >消息模板</a>
+                        </li>
+                    </ul>
+                </div>
+
+                
+                <!--授权 s-->
+                <div class="authority-set">
+                    <div class="nav-con">
+                        <p>直接将公众平台申请自定义菜单使用的AppId和AppSecret进行二维码扫描验证，或者手动输入。</p>
+                        <p>通过认证的订阅号，拥有“自定义菜单”；通过认证的服务号，拥有“自定义菜单”和所有“高级接口”。</p>
+                    </div>
+                    <div class="manual-set" style="display: none;">
+                        <b class="ms-title">>&nbsp;&nbsp;手动设置</b>
+                        <form>
+                            <div class="ms-fm">
+                                <div class="ms-fm-col">
+                                    <b>应用ID</b>
+                                    <input type="text" name="app_id" value='{{$app_id}}' class="ipt ipt-340" datatype="*" nullmsg="请输入应用ID" />
+                                    <i style="width: auto;">*</i>
+                                    <span class="check-error check-error-ts ml20"></span>
+                                </div>
+                                <div class="ms-fm-col">
+                                    <b>应用密钥</b>
+                                    <input type="text" name="secret" value="{{$app_secret}}" class="ipt ipt-340" datatype="*" nullmsg="请输入应用密钥" />
+                                    <i style="width: auto;">*</i>
+                                    <span class="check-error check-error-ts ml20"></span>
+                                </div>
+                                <input type="hidden" name="flat_id" value="{{'flat_id'|I}}" class="ipt ipt-340" />
+                                <div class="ms-fm-col ms-fm-btn">
+                                    <a href="javascript:;" class="sub-btn" dataurl='{{'Plugins-SubSite/saveweixinsecret'|url}}'>保存</a>
+                                    <a href="javascript:;" class="sub-code">切换为二维码验证</a>
+                                </div>
+                                <p>注：若AppSecret进行过重置，则需重新输入，否则将不能使用该模块</p>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="authority-ways code-set">
+                        <input type='hidden' class="scan_code" value='{{'Plugins-SubSite/scanqrcode'|url}}&flat_id={{'flat_id'|I}}&token={{$info.token}}&uuid={{$info.uuid}}'/>
+                        <b class="ms-title">>&nbsp;&nbsp;二维码验证</b>
+                        <div class="cs-con">
+                            <p>您的账号开启了微信保护功能，查看密钥操作需进行微信验证</p>
+                            <div class="cs-img">
+                                <img src="{{'Plugins-SubSite/image'|url}}&url={{$info.url}}"/>
+                            </div>
+                            <p class="scan_word">请用微信扫描以上二维码进行验证</p>
+                            <p class="mb20">管理员({{$username}})或非管理员微信均可</p>
+                            <p>可用管理员微信号扫码验证，同时支持非管理员微信号扫码申请，申请后需管理员验证</p>
+                            <p class="mb20">（可直接将上面二维码图片发送给管理员，管理员微信扫一扫即可验证）  <a href="javascript:;" class="switch">切换为手动设置</a></p>
+                            <p class="red">注：若AppSecret进行过重置，则需重新扫描验证，否则将不能使用该模块</p>
+                        </div>
+                    </div>
+                </div>
+                <!--授权 e-->
+
+                <!--消息模块 s-->
+                <div class="info mode-detail" style="display: none;">
+                    <div class="info-title">
+                        <b class="fl md-name">>&nbsp;&nbsp;<span>消息模块【蜜柚公寓】新预约提醒</span></b>
+                        <a href="javascript:;"  class="mode-detail-return return fr">返回</a>
+                    </div>
+                    <div class="info-type">
+                        <p class="p-left md-type">平台事件类型：<span>租客预约成功</span></p>
+                        <p class="md-wechat-num">微信模板编号：<span>OPENTM200804989</span></p>
+                    </div>
+                    <ul>
+                        <li>
+                            <span class="info-sn fsb">平台属性</span>
+                            <span class="info-sn fsb">微信模板属性</span>
+                            <span class="info-sn fsb">字体颜色</span>
+                        </li>
+                    </ul>
+                </div>
+                <!--消息模块 e-->
+
+                <!--我的模板 s-->
+                <div class="mode mode-set" style="display: none;">
+                	{{if $is_open_temp neq '1'}}
+						<div class="empty">
+		                    <p>非常抱歉！您的微信账号未开通消息模板功能！</p>
+		                </div>
+   					{{/if}}
+                    <div class="mode-title">
+                        <b class="fl">>&nbsp;&nbsp;我的模板</b>
+                    </div>
+                    <table class="mode-tab">
+                        <tr>
+                            <th>模板名</th>
+                            <th>模板类别</th>
+                            <th>创建时间</th>
+                            <th>状态</th>
+                            <th class="mode-tab-five">操作</th>
+                        </tr>
+                        {{foreach from=$flat_temp_list item=v}}
+                        <tr id="{{$v.id}}">
+                            <td>{{$v.name}}</td>
+                            <td>{{$v.template_name}}</td>
+                            <td>{{$v.create_time|date_format:'%Y-%m-%d'}}</td>
+                            <td class="use-status">{{$v.status_name}}</td>
+                            <td class="mode-tab-five">
+                                <a href="javascript:;" dataurl="{{'Plugins-SubSite/getTempInfo'|url}}&flat_id={{'flat_id'|I}}" class="mode-tab-detail">详情</a>
+                                <span>|</span>
+                                {{if $v.status eq '1'}}
+                                <a href="javascript:;" dataurl="{{'Plugins-SubSite/setTempStatus'|url}}&flat_id={{'flat_id'|I}}" status="0" class="mode-tab-use">禁用</a>
+                                {{else}}
+                                <a href="javascript:;" dataurl="{{'Plugins-SubSite/setTempStatus'|url}}&flat_id={{'flat_id'|I}}" status="1" class="mode-tab-use">启用</a>
+                                {{/if}}
+                                <span>|</span>
+                                <a href="javascript:;" dataurl="{{'Plugins-SubSite/DeleteTemp'|url}}&flat_id={{'flat_id'|I}}" class="mode-tab-del">删除</a>
+                            </td>
+                        </tr>
+                        {{/foreach}}
+                    </table>
+                    <div class="add-mode-btn">
+                        <a href="javascript:;" dataurl="{{'Plugins-SubSite/getSystemTemp'|url}}&flat_id={{'flat_id'|I}}" class="btn"><i class="add"></i>新增</a>
+                    </div>
+                </div>
+                <!--我的模板 e-->
+
+                <!--新增模板 s-->
+                <div class="info add-mode" style="display: none;">
+                    <div class="info-title">
+                        <b class="fl">>&nbsp;&nbsp;新建模板</b>
+                        <a href="javascript:;"  class="add-mode-return return fr">返回</a>
+                    </div>
+                    <div class="attention">
+                        <b>注意</b>
+                        <p>1、   建立消息模板前，请确定开通了微信消息模板</p>
+                        <p>2、“微信模板编号”为公众平台后台模板库的编号</p>
+                        <p>3、“微信模板属性”为公众平台模板定义的参数，如，填写keyword1</p>
+                        <p>4、“字体颜色”为属性对应的值显示给用户的颜色</p>
+                        <p>5、“其他”属性，当平台属性没有与之对应的属性时，选择“其他”属性，设定默认值，系统将使用默认值展现给用户</p>
+                    </div>
+                    <div class="am-type fm">
+                        <ul>
+                            <li>
+                                <b>平台事件类型</b>
+                                <div class="selectByM slt-220 event-type" hasevent="true">
+                                    <input type="text" class="selectByMT" readonly = 'readonly' selectVal = '' value="" name="mode_id" datatype="modeID" nullmsg="请选择平台事件类型" />
+                                    <span class='jt_Ctr'><span class='jt_box'></span></span>
+                                    <div class="selectByMO">
+                                        <ul>
+                                            <!--<li selectVal = '1'>预约成功通知</li>
+                                            <li selectVal = '2'>租金催缴通知</li>-->
+                                        </ul>
+                                    </div>
+                                </div>
+                                <span class="check-error check-error-ts ml20"></span>
+                            </li>
+                            <li>
+                                <b>模板名称</b>
+                                <input type="text" class="ipt ipt-220" name="mode_name" datatype="*" nullmsg="请输入模板名称" />
+                                <span class="check-error check-error-ts ml20"></span>
+                            </li>
+                            <li>
+                                <b>微信模板编号</b>
+                                <span class="wechat-mode-num">OPENTM200804989</span>
+                            </li>
+                            <li>
+                                <b>微信模板ID</b>
+                                <input type="text" class="ipt ipt-220" name="wechat_mode_id" datatype="*" nullmsg="请输入微信模板ID" />
+                                <a href="javascript:;" class="ml20 get-id">如何获取ID?</a>
+                                <span class="check-error check-error-ts ml20"></span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <table class="add-mode-tab">
+                        <tr class="amt-tr-first">
+                            <th>
+                                <!--<div class="check-box" >
+                                    <label class="none"><i class="choose ifont1">&#xe60c;</i></label>
+                                    <input type="checkbox" value="" />
+                                    <span></span>
+                                </div>-->
+                            </th>
+                            <th>平台属性</th>
+                            <th>微信模板属性</th>
+                            <th>字体颜色</th>
+                        </tr>
+
+                    </table>
+
+                    <div class="mode-btn">
+                        <a href="javascript:;" dataurl="{{'Plugins-SubSite/saveTemp'|url}}&flat_id={{'flat_id'|I}}" class="btn btn1 mb-btn">保存模板</a>
+                    </div>
+                </div>
+                <!--新增模板 e-->
+
+                <input type="hidden" name='attribute[558b6fae935c5][key][]' placeholder="" />
+                <input type="hidden" name='attribute[558b6fae935c5][color][]' />
+
+                <!--菜单设置 s-->
+                <div class="menu-set" style="display: none; height: 900px;">
+                	{{if $menu_is_open neq '1'}}
+	                <div class="empty">
+	                    <p>非常抱歉！您的微信账号未开通自定义菜单功能！</p>
+	                </div>
+	                {{/if}}
+                    <div class="nav-con">
+                        <p>1.使用本模块，必须在微信公众平台申请自定义菜单使用的AppId和AppSecret(订阅号要完成微信认证)，然后在【授权设置】中设置。</p>
+                        <p>2.最多创建3 个一级菜单，每个一级菜单下最多可以创建 5 个二级菜单，菜单最多支持两层。</p>
+                        <p>3.拖动树形菜单再点击“保存排序”可以对菜单重排序，但最终只有“发布”后才会生效。公众平台限制了每天的发布次数。</p>
+                    </div>
+                    <div class="menu-set-con">
+                    	<div class="menu-set-left">
+	                        <div class="msl-title">
+	                            <b datatype="0">自定义菜单列表</b>
+	                            <a href="javascript:;" class="add-menu">增加菜单</a>
+	                        </div>
+	                        <div id="msl-content"></div>
+	
+	                        <script type="text/html" id="mode">
+	
+	                            {{'<% for (var i = 0; i < data.length; i ++) { %>'}}
+	                            <div class="msl-con {{'<%=data[i].cl%>'}}">
+	                                <ul>
+	                                    <div class="menu-one menu-box" menuType="1" menuThree="1">
+	                                        <b class="fsb" datatype="{{'<%=data[i].num%>'}}">{{'<%=data[i].name%>'}}</b>
+	                                        <div class="msl-operate">
+	                                            <a href="javascript:;" class="add add-menu"></a>
+	                                            <a href="javascript:;" class="edit edit-menu"></a>
+	                                            <!--<a href="javascript:;" class="status menu-status"></a>-->
+	                                        </div>
+	                                    </div>
+	                                    {{'<% if(data[i].sub_button){%>'}}
+	                                    	{{'<% for (var k = 0, list = data[i].sub_button.list; k < list.length; k++) { %>'}}
+		                                    <li class="menu-two menu-box" menuType="{{'<%=list[k].menu_two_type%>'}}" menuThree="{{'<%=list[k].menu_type ? list[k].menu_type : list[k].url%>'}}">
+		                                        <b datatype="">>&nbsp;&nbsp;<em>{{'<%=list[k].name%>'}}</em></b>
+		                                        <div class="msl-operate">
+		                                            <a href="javascript:;" class="edit edit-menu"></a>
+		                                        </div>
+		                                    </li>
+	                                    	{{'<%}%>'}}
+	                                    {{'<%}%>'}}
+	                                    <!--<li class="menu-two menu-box" menuType="1" menuThree="2">
+	                                        <b datatype="1">>&nbsp;&nbsp;<em>即将到期房源</em></b>
+	                                        <div class="msl-operate">
+	                                            <a href="javascript:;" class="edit edit-menu"></a>
+	                                        </div>
+	                                    </li>-->
+	                                </ul>
+	                            </div>
+	                            {{'<%}%>'}}
+	
+	                            </script>
+	
+	
+	
+	                            <!--<div class="msl-con msl-con-two">
+	                                <ul>
+	                                    <div class="menu-one menu-box" menuType="1" menuThree="3">
+	                                        <b class="fsb" datatype="2">关于我们</b>
+	                                        <div class="msl-operate">
+	                                            <a href="javascript:;" class="add add-menu"></a>
+	                                            <a href="javascript:;" class="edit edit-menu"></a>
+	                                        </div>
+	                                    </div>
+	                                    <li class="menu-two menu-box" menuType="1" menuThree="3">
+	                                        <b datatype="2">>&nbsp;&nbsp;<em>品牌故事</em></b>
+	                                        <div class="msl-operate">
+	                                            <a href="javascript:;" class="edit edit-menu"></a>
+	                                        </div>
+	                                    </li>
+	                                </ul>
+	                            </div>-->
+	                            <div class="msl-btn">
+	                                <a href="javascript:;" dataurl="{{'Plugins-SubSite/saveMenu'|url}}" class="btn mr15 publish-btn">保存并发布</a>
+	                                <a href="javascript:;" class="btn mr15 preview-btn">预览</a>
+	                                <!--<a href="javascript:;" class="btn reorder-btn">保存排序</a>-->
+	                            </div>
+	                        </div>
+	                        <input type="hidden" id="hide-falt-id" value="{{'flat_id'|I}}" />
+	                        <div class="add-menu-con fl"></div>
+	
+	                    </div>
+                    </div>
+                    
+                    <!--菜单设置 e-->
+
+                </div>
+                <!--信息 e-->
+            </div>
+            <!--首页 e-->
+
+            <!--获取ID图片 s-->
+            <div class="hide-img" style="display: none;">
+                <div class="get-id-img">
+                    <i></i>
+                </div>
+            </div>
+            <div class="hide-imgs" style="display: none;">
+                <div class="get-id-imgs">
+                    <i></i>
+                </div>
+            </div>
+            <!--获取ID图片 e-->
+
+            <div id="add-menu-mode" style="display: none;">
+                <div class="menu-set-right">
+                    <div class="msr-title">
+                        <i></i>
+                        <!--<i class="add"></i>-->
+                        <!--<i class="edit"></i>-->
+                        <span></span>
+                        <input type="hidden" id="hideVal" value="" />
+                    </div>
+                    <div class="msr-con">
+                        <ul>
+                            <li class="msr-con-title">
+                                <b>菜单名称：</b>
+                                <input type="text" class="ipt ipt-200" name="menu_name" datatype="*" nullmsg="请输入菜单名称" />
+                                <i class="bit">*</i>
+                                <i class="menu-mark"></i>
+                                <!--<span class="msr-con-two">二级菜单可输入16个字符，中文占2个</span>-->
+                                <!--<span class="msr-con-one">一级菜单可输入10个字符，中文占2个</span>-->
+                                <span class="check-error check-error-ts ml20"></span>
+                            </li>
+                            <li class="msr-con-type">
+                                <b>类　　型：</b>
+                                <div class="selectByM slt-140 menu-type" hasevent="true">
+                                    <input type="text" class="selectByMT" readonly = 'readonly' name="menu_type" selectVal = '' value="" datatype="menuType" nullmsg="请选择类型" />
+                                    <span class='jt_Ctr'><span class='jt_box'></span></span>
+                                    <div class="selectByMO">
+                                        <ul>
+                                            <li selectVal = '1'>业务模块</li>
+                                            <li selectVal = '2'>外链</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <span class="check-error check-error-ts ml20"></span>
+                            </li>
+                            <li class="menu-type-business">
+                                <b>业务模块：</b>
+                                <div class="selectByM slt-140">
+                                    <input type="text" class="selectByMT" readonly = 'readonly' name="menu_business" selectVal = '' value="" datatype="menuType" nullmsg="请选择类型" />
+                                    <span class='jt_Ctr'><span class='jt_box'></span></span>
+                                    <div class="selectByMO">
+                                        <ul>
+                                            <li selectVal = '1'>精品房源</li>
+                                            <li selectVal = '2'>即将到期</li>
+                                            <li selectVal = '3'>品牌故事</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <span class="check-error check-error-ts ml20"></span>
+                            </li>
+                            <li class="menu-type-url">
+                                <b>页面URL：</b>
+                                <input type="text" class="ipt ipt-270" name="menu_url" datatype="url,jump_url" nullmsg="请输入网址" errormsg="网址格式错误" />
+                                <i class="bit">*</i>
+                                <span>必填，必须是以http://开头的URL格式</span>
+                                <span class="check-error check-error-ts ml10"></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="msr-btn">
+                        <a href="javascript:;" class="btn mr20 menu-btn">保存</a>
+                        <a href="javascript:;" class="btn menu-manage-btn" style="display: none;''">管理</a>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!--预览dialog s-->
+            <div id="hide-menu-preview" style="display: none;">
+                <div class="menu-preview">
+                	<div class="menu-preview-nav" id="menu-preview">
+                		<script type="text/html" id="preview-mode">
+                			{{'<% for (var i = 0; i < data.length; i ++) { %>'}}
+	                		<div class="mpn-nav">
+	                			<div class="title">
+	                				<i class="ifont2">&#xe605;</i>
+	                				<b>{{'<%=data[i].nav_one%>'}}</b>
+	                			</div>
+	                			<ul>
+	                				{{'<% if(data[i].nav_two){%>'}}
+                                    	{{'<% for (var k = 0, list = data[i].nav_two; k < list.length; k++) { %>'}}
+	                				<li>{{'<%=list[k]%>'}}</li>
+	                					{{'<%}%>'}}
+                                    {{'<%}%>'}}
+	                				<i class="ifont2">&#xe606;</i>
+	                				<span class="span-btn"></span>
+	                			</ul>
+	                		</div>
+	                		{{'<%}%>'}}
+                		</script>
+                		<!--<div class="mpn-nav">
+                			<div class="title">
+                				<i class="ifont2">&#xe605;</i>
+                				<b>我的平台</b>
+                			</div>
+                			<ul>
+                				<li>微读忆</li>
+                				<li>微读忆</li>
+                				<li>微读忆</li>
+                				<i class="ifont2">&#xe606;</i>
+                				<span class="span-btn"></span>
+                			</ul>
+                		</div>
+                		<div class="mpn-nav">
+                			<div class="title">
+                				<i class="ifont2">&#xe605;</i>
+                				<b>我的平台</b>
+                			</div>
+                			<ul>
+                				<li>微读忆</li>
+                				<li>微读忆</li>
+                				<li>微读忆</li>
+                				<i class="ifont2">&#xe606;</i>
+                				<span class="span-btn"></span>
+                			</ul>
+                		</div>-->
+                	</div>
+                </div>
+            </div>
+            <!--预览dialog e-->
+            <!--菜单渲染-->
+            <input type="hidden" id="wx_menu" value='{{$wx_menu}}' />
+            <input type="hidden" id="wx_menu_sys" value='[{"name":"\u9884\u7ea6\u770b\u623f","sub_button":{"list":[{"type":"view","name":"\u7cbe\u54c1\u623f\u6e90","url":"http:\/\/xz.jooozo.com\/vvvv?menu_type=1#jpfy"},{"type":"view","name":"\u5373\u5c06\u5230\u671f\u623f\u6e90","url":"http:\/\/xz.jooozo.com\/vvvv\/house?menu_type=2&order_id=1#"}]}},{"name":"\u5173\u4e8e\u6211\u4eec","sub_button":{"list":[{"type":"view","name":"\u54c1\u724c\u6545\u4e8b","url":"http:\/\/xz.jooozo.com\/vvvv?menu_type=3#ppgs"}]}}]' />
+        </body>
+    </html>

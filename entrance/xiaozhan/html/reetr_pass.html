@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="apple-touch-fullscreen" content="YES">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta http-equiv="Expires" content="-1">
+		<meta http-equiv="pragram" content="no-cache">
+		<meta name="viewport" content="width=640, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>找回密码</title>
+		<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+	</head>
+	<body>
+		<div class="main">
+			<nav id="nav">
+				<a href="javascript:history.go(-1)" class="btn back"><em></em><span>返回</span></a>
+				<h1>找回密码</h1>
+			</nav>
+			
+			<h4 class="register-title"></h4>
+			<div class="register-content">
+            	<form action="select_verification.html" method="post" id="js_reetr_fm">
+                    <ul>
+                        <li>
+                            <input type="text" class="ipt" id="phone" placeholder="请输入手机号"/>
+                        </li>
+                        <li>
+                            <input type="text" class="ipt-short" id="short"  placeholder="请输入右图验证码"/>
+                            <span class="pic-yzm fr"><img src="../img/images-test/yzm.jpg"/></span>
+                        </li>
+                    </ul>
+                    
+                    <div class="submitForm">
+                        <input type="submit" class="sub-btn" value="下一步" />
+                    </div>
+                </form>
+			</div>
+			<footer>
+				<p class="fl">&copy;九猪<span class="p">版权所有</span></p>
+				<p class="fr"><a href="#"><i></i>申请小站</a></p>
+			</footer>
+		</div>
+	</body>
+	<script type="text/javascript" src="../js/zepto.min.js"></script>
+    <script type="text/javascript" src="../js/base.js"></script>
+    <script>
+		L.reetrPsss = {
+			//基础验证
+			verification:function(){
+				$('#js_reetr_fm').on('submit',function(){
+					var phone = $('#phone');
+					var short = $('#short');
+					if( $.trim( phone.val()).length != 11){
+												
+						L.dialog._create({
+							msg:'请输入您的手机号码',
+							callback:function(){
+								phone.focus();
+							}
+						});
+						return false;
+						
+					}else if( $.trim( short.val()) == ''){
+						
+						L.dialog._create({
+							msg:'请输入验证码',
+							callback:function(){
+								short.focus();
+							}
+						});
+						return false;
+						
+					}else{
+						return true;
+					}
+				});				
+			},
+			//统一初始化
+			init:function(){
+				this.verification();
+			}	
+		}
+    	$(document).ready(function(e) {
+            L.reetrPsss.init();
+        });
+    </script>
+</html>

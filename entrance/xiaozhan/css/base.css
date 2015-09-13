@@ -1,0 +1,212 @@
+/**
+ *  gobal全局样式
+ *********************************************************************************************/
+@charset "utf-8";
+/* =reset 网页样式重置
+------------------------------------------------------------------------------------------------------------------------------*/
+html {
+	font-size: 2em;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-tap-highlight: rgba(0,0,0,0);
+	-webkit-text-size-adjust: none;
+	overflow: -moz-scrollbars-vertical;/*强制firefox出现滑动条*/
+	background-color: #F0F0F0;
+}
+body {
+	font-size: 0.75em;
+}
+label {
+	cursor: pointer;
+}
+a:link, a:visited {
+	text-decoration: none;
+}
+input:focus {
+	outline: none;
+}
+input, button, select, textarea {
+	outline: none;/*-webkit-appearance:none;*//*强制去除表单自带的样式*/
+}
+textarea {
+	resize: none;/*-webkit-appearance:none;*//*强制去除textarea自带的样式*/
+}
+ input:-webkit-autofill {
+-webkit-box-shadow: 0 0 0px 1000px white inset;
+} /*利用阴影来填充掉input自动填充色*/
+textarea, input, select {
+	background: none;
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+a, abbr, acronym, address, applet, article, aside, audio, b, blockquote, big, body, center, canvas, caption, cite, code, command, datalist, dd, del, details, dfn, dl, div, dt, em, embed, fieldset, figcaption, figure, font, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, keygen, label, legend, li, meter, nav, menu, object, ol, output, p, pre, progress, q, s, samp, section, small, span, source, strike, strong, sub, sup, table, tbody, tfoot, thead, th, tr, tdvideo, tt, u, ul, var {
+	margin: 0;
+	padding: 0;
+}
+article, aside, footer, header, hgroup, nav, section, figure, figcaption {
+	display: block;
+} /*html5设置*/
+h1, h2, h3, h4, h5, h6, th, td, table, input, button, select, textarea, sub {
+	font-size: 1em;
+}
+body, input, button, select, textarea, sub {
+	font-family: Arial, sans-serif;
+}
+em, cite, address, optgroup {
+	font-style: normal;
+}
+kbd, samp, code {
+	font-family: monospace;
+}
+img, input, button, select, textarea {
+	vertical-align: middle;
+	outline: none;
+	-webkit-appearance : none ;
+}
+ul, ol {
+	list-style: none;
+}
+img, fieldset {
+	border: 0;
+}
+abbr, acronym {
+	cursor: help;
+	border-bottom: 1px dotted black;
+}
+table {
+	width: 100%;
+	border-spacing: 0;
+	border: 0;
+}
+table th, table td {
+	border: 0;
+}
+legend, hr {
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+legend, hr, caption {
+	visibility: hidden;
+	font-size: 0;
+	width: 0;
+	height: 0;
+	line-height: 0;
+}
+/**
+ * = global 统一样式
+ *******************************************************************************************************/
+html {
+	height: 100%;
+}
+body {
+	position: relative;
+	font-family: "微软雅黑";
+	width: 640px;
+	max-width: 640px;
+	min-width: 640px;
+	height: 100%;
+	margin: 0 auto;
+}
+body h1, body h2, body h3, body h4, body h5, body h6, body strong, body em {
+	font-weight: normal;
+} /*微软雅体 将原有的bold属性去掉*/
+.fl {
+	float: left;
+}
+.fr {
+	float: right;
+}
+.clear {
+	clear: both;
+}
+.none {
+	display: none !important;
+}
+.line-1 {					/*文字一行*/
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	word-break: break-all;
+}
+/*弹出组件*/
+#dialog-bg {
+	display: block;
+	width: 10000px;
+	height: 10000px;
+	position:fixed;
+	left: 0;
+	top: 0;
+	z-index: 9999;
+	background: rgba(0,0,0,0.5);
+}
+#dialog-main {
+	width:540px;
+	background: #444;
+	position: fixed;
+	_position: absolute;
+	z-index: 10000;
+	left: 0;
+	top: 0;
+	border-radius: 12px; 
+	background: -moz-linear-gradient(top,  #e8e9e9 0%, #dde2e2 49%, #e4e8e7 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e8e9e9), color-stop(49%,#dde2e2), color-stop(100%,#e4e8e7));
+	background: -webkit-linear-gradient(top,  #e8e9e9 0%,#dde2e2 49%,#e4e8e7 100%);
+	background: -o-linear-gradient(top,  #e8e9e9 0%,#dde2e2 49%,#e4e8e7 100%);
+	background: -ms-linear-gradient(top,  #e8e9e9 0%,#dde2e2 49%,#e4e8e7 100%);
+	background: linear-gradient(to bottom,  #e8e9e9 0%,#dde2e2 49%,#e4e8e7 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8e9e9', endColorstr='#e4e8e7',GradientType=0 )
+}
+
+#dialog-box {
+	text-align:center;
+	height: auto;
+	display: block;
+	position: relative;
+	z-index: 1;
+	margin: auto;
+}
+#loading-box {
+	width: 180px;
+	height: 30px;
+	line-height: 30px;
+	overflow: hidden;
+	margin: 20px auto;
+	font-size: 16px;
+	color: #999;
+}
+.diag-confirm .btn-div{
+	width:100%;
+	height:86px;
+	line-height:86px;
+	border-top:1px solid #9c9f9f;
+}
+.diag-confirm .btn-div .js_fm_btn{
+	display:block;
+	width:49.5%;
+	height:86px;
+	line-height:86px;
+	text-align:center;
+	float:left;
+	font-size:32px;
+	color:#157efb;
+}
+.diag-confirm .btn-div .js_fm_btn_sld{
+	border-right:1px solid #9c9f9f;
+}
+.diag-confirm .btn-div .js_fm_btn_ok{
+	width:100%;
+}
+.diag-confirm  p{
+	overflow: hidden;
+	display:block;
+	width:90%;
+	padding:75px 0;
+	font-size: 34px;
+	line-height: 44px;
+	margin:0 auto;
+}
+	

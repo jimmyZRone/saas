@@ -1,0 +1,86 @@
+<!--集中式公寓-批量添加房间 s-->
+<div class="centralized_add_house_bulk view" hasform="true">
+			<div class="view-head">
+				<h1>房间信息</h1>
+			</div>
+			<div class="view-con">
+				<ul>
+					<li>
+						<b><i class="bit"></i>公寓名称：</b>
+						<span>{{$flat_data.flat_name}}</span>
+					</li>
+					<li>
+						<b><i class="bit">*</i>所在楼层：</b>
+						<input type="text" class="ipt ipt-80 floornum" datatype = "s1-3" nullmsg = "请输入所在楼层数" errormsg = "所在楼层数不超过三位整"/>
+						<span class="check-error check-error-ts"></span>
+					</li>
+					<li>
+						<b><i class="bit">*</i>房间号段：</b>
+						<input type="text" class="ipt ipt-80 housenum-start" datatype = "n,house-num" nullmsg = "请输入房间号初始号码" errormsg="房间号应为整数"/>
+						<span class="mr5 ml5">-</span>
+						<input type="text" class="ipt ipt-80 housenum-end" datatype="n,recheckend,house-num" nullmsg = "请输入房间号结束号码" errormsg = "房间号应为整数"/>
+						<a href="javascript:;" class="auto-num auto-house-num">自定义房源编号</a>
+						<span class="check-error check-error-ts"></span>
+					</li>
+					<li>
+						<b><i class="bit">*</i>出租方式：</b>
+						<div class="radio-box">
+							<label class="radio"><i class="ifont r-default" style="display: none;">&#xe612;</i><i class="ifont r-select" style="display: inline;">&#xe617;</i></label>
+							<input type="radio" name="type" value="1" checked="checked"/>
+							<span>整租</span>
+						</div>
+						<div class="radio-box radio-type">
+							<label class="radio"><i class="ifont r-default">&#xe612;</i><i class="ifont r-select">&#xe617;</i></label>
+							<input type="radio" name="type" value="2" />
+							<span>合租</span>
+						</div>
+						
+						<!--合租时，才显示以下信息 s-->
+						<div class="rent-msg">
+							<b><i class="bit">*</i>套内间数：</b>
+							<input type="text" class="ipt ipt-80 roomnum-default" datatype="n,num-rooms" nullmsg = "请输入套内间数" errormsg = "套内间数应为整数"/>
+							<a href="javascript:;" class="auto-num auto-roomnum">自定义套内间数</a>
+						</div>
+						<span class="check-error check-error-ts"></span>
+						<!--合租时，才显示以下信息 e-->
+					</li>
+				</ul>
+			</div>
+			
+			<div class="view-btn">
+				<a href="javascript:;" url="{{'Centralized-Roomfocus/batchadd'|url}}" class="btn btn2">保存</a>
+				<a href="javascript:;" class="btn btn4 btn-cancel">取消</a>
+			</div>
+</div>
+		<!--集中式公寓-添加房间 e-->
+		
+<!--
+    	自定义房源编号遮罩模板
+    -->
+	<div id="hideTemp" style="display: none;">
+		<div  class="dialog-dpt-flr">
+			<div class="center-dpt-body">
+				<table class="lr-tb center-dpt-row">
+					<tr class="lr-tb-h">
+						<td>当前编号</td>
+						<td>修改编号</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+<!--
+    	自定义套内间数遮罩模板
+    -->
+	<div id="hideTemp1" style="display: none;">
+		<div  class="dialog-dpt-flr">
+			<div class="center-dpt-body">
+				<table class="lr-tb center-dpt-row">
+					<tr class="lr-tb-h">
+						<td>房源编号</td>
+						<td>套内间数</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>

@@ -1,0 +1,983 @@
+		<div class="spread-page">
+		<!-- <iframe framespacing="0" frameborder="0"  class="map-container" framespacing="0"  id="mapWraper" src="{{'House-House/mapIframe'|url}}" scrolling="no"></iframe> -->
+
+		<div id="rightColBox" class="rgt-col-wrap" style="border-left: solid 1px #E1E1E1;">
+			<div class="suspension-info" style="display:block;">
+				 <a href="javascript:;" class="show-static">数据</a>
+				 <div class="data-statics-bar" style="display:none;">
+					 <div id="zoneInfoCol" class="dinner"></div>
+					 <script type="text/html" id="area-statice-temp">
+						 <p id="curt-Xq" class="city-zone lg-title">
+							 <span class="city">{{'<%= cityName%>'}}</span>
+							 <span class="area-split"></span>
+						 </p>
+						 <p class="mg-loc" style="display:none;"></p>
+						 <div class="crow clearfix">
+							 <p class="lg-w"><span class="name">房源</span><span class="num">{{'<%= hourseResource%>'}}</span></p>
+							 <p><span class="name">在租</span><span class="num">{{'<%= roomInrenting%>'}}</span></p>
+						 </div>
+						 <div class="crow clearfix">
+							 <p class="lg-w"><span class="name">均价</span><span class="num">{{'<%= averageSalePrice%>'}}</span></p>
+							 <p><span class="name">未租</span><span class="num">{{'<%= roomAvaiable%>'}}</span></p>
+						 </div>
+						 <div class="crow clearfix">
+							 <p class="lg-w"><span class="name">出租率</span><span class="num">{{'<%= rateTotalRent%>'}}</span></p>
+							 <p><span class="name">预定</span><span class="num">{{'<%= roomReserved%>'}}</span></p>
+						 </div>
+						 <div class="crow clearfix">
+							 <p class="lg-w"><span class="name">月空置率</span><span class="num">{{'<%= rateMonthEmpty%>'}}</span></p>
+							 <p><span class="name">预约退租</span><span class="num">{{'<%= cancleDeal%>'}}</span></p>
+						 </div>
+						 <div class="crow clearfix">
+							 <p class="lg-w"><span class="name">年空置率</span><span class="num">{{'<%= rateYearEmpty%>'}}</span></p>
+							 <p><span class="name">停用</span><span class="num">{{'<%= roomUnavaiable%>'}}</span></p>
+						 </div>
+					 </script>
+				 </div>
+			</div>
+
+			<div id="centralized_Ind">
+				<div class="centralized_Ind_A clearfix">
+				<div class="selectByM getRoomType roomRenderTrig" hasEvent="1">
+					<input type="text" id="rent-type" class="selectByMT" readonly = 'readonly' selectVal = '0' value="选择出租类型"/>
+					<span class='jt_Ctr'><span class='jt_box'></span></span>
+					<div class="selectByMO" id="rtype_ops">
+						<ul room-url="{{'House-House/roomtype'|url}}">
+							<li class="selectedLi" selectVal = '0'>选择出租类型</li>
+							<li selectVal = '1'>合租</li>
+							<li selectVal = '2'>整租</li>
+						</ul>
+					</div>
+				</div>
+				<div class="selectByM roomRenderTrig roomTypeRender">
+					<input type="text" id="room-type" class="selectByMT" readonly = 'readonly' selectVal = '0' value="选择房间类型"/>
+					<span class='jt_Ctr'><span class='jt_box'></span></span>
+					<div class="selectByMO" id="roome_ops">
+						<ul>
+							<li class="selectedLi" selectVal = '0'>选择房间类型</li>
+						</ul>
+					</div>
+				</div>
+				<div class="selectByM roomRenderTrig">
+					<input type="text" id="area_circle" class="selectByMT" readonly = 'readonly' selectVal = '0' value="选择区域"/>
+					<span class='jt_Ctr'><span class='jt_box'></span></span>
+					<div class="selectByMO">
+						<ul>
+							<li class="selectedLi" selectVal = '0'>选择区域</li>
+							{{foreach from=$area_data key=rkey item=rval}}
+					 			<li selectVal = '{{$rval.area_id}}'>{{$rval.name}}</li>
+					 		{{/foreach}}
+						</ul>
+					</div>
+				</div>
+				<input type="text" name="centralized_Ind_ApartmentName" id="centralized_Ind_ApartmentName" class="fl" placeholder="小区名称"/>
+				<input type="text" name="centralized_Ind_SearchTxt" id="centralized_Ind_SearchTxt" class="fl" placeholder="房源编号\房间编号"/>
+				<a href="javascript:;" area-id=""  tuidurl="{{'House-Room/abolishRenewal'|url}}"  community-id="" map-url="{{'House-House/map'|url}}" area-url="{{'House-House/areacount'|url}}" data-url="{{'House-House/Listdata'|url}}" id="getMapData" class="centralized_Ind_SearchButton ifont fl">&#xe645;</a>
+			</div>
+			<!-- <div class="centralized_Ind_B" style="height: 100px; overflow: hidden;">
+				<div class="centralized_info fl" style="width: 600px; overflow: hidden;">
+					<div id="zoneInfoCol" style="width: 600px;"></div>
+					<script type="text/html" id="area-statice-temp">
+						<h1 id="curt-Xq">{{'<%= cityName%>'}}</h1>
+						<ul class="clearfix">
+							<li><span class="name">出租率</span><span class="num">{{'<%= rateTotalRent%>'}}</span></li>
+							<li><span class="name">月空置率</span><span class="num">{{'<%= rateMonthEmpty%>'}}</span></li>
+							<li><span class="name">年空置率</span><span class="num">{{'<%= rateYearEmpty%>'}}</span></li>
+						</ul>
+						<ul class="clearfix">
+							<li><span class="name">房间</span><span class="num">{{'<%= hourseResource%>'}}</span></li>
+							<li><span class="name">均价</span><span class="num">{{'<%= averageSalePrice%>'}}</span></li>
+							<li><span class="name">在租</span><span class="num">{{'<%= roomInrenting%>'}}</span></li>
+							<li><span class="name">未租</span><span class="num">{{'<%= roomAvaiable%>'}}</span></li>
+							<li><span class="name">预定</span><span class="num">{{'<%= roomReserved%>'}}</span></li>
+							<li><span class="name">预约退租</span><span class="num">{{'<%= cancleDeal%>'}}</span></li>
+							<li><span class="name">停用</span><span class="num">{{'<%= roomUnavaiable%>'}}</span></li>
+						</ul>
+					</script>
+				</div>
+				<div class="b fr" style="width: 330px;">
+					<span class="b_1 fl ifont">&#xf00d9;</span> <span class="b_2 fl">
+						<p>
+							移入房态图可查看该房间信息<br /> 移入房态操作按钮可进行出租、预定、续约、退租等操作
+						</p>
+					</span>
+				</div>
+			</div> -->
+
+				<div class="centralized_Ind_C">
+				<div class="a fl">
+					<ul>
+						<li><a href="#{{'House-House/add'|url}}" class="sm-btn-roomadd"><span class="icon ifont">&#xe62f;</span>添加房间</a></li>
+						<li><span class="icon ifont">&#xe675;</span><a url="{{'House-House/delete'|url}}" href="javascript:;" class="centralized_Delete">删除</a></li>
+						<li class="delete_Cancel"><a href="javascript:;" class="centralized_DeleteCancel">取消</a></li>
+					</ul>
+				</div>
+				<div class="b fr">
+					<ul>
+						<li><span class="icon ifont blue">&#xe654;</span><a href="javascript:;" class="choice_man choice"  data-status="1"  data-sex="">男租客</a></li>
+						<li><span class="icon ifont pink">&#xe656;</span><a href="javascript:;" class="choice_women choice" data-status="2"  data-sex="">女租客</a></li>
+						<li class="rent_li"><span class="icon ico-rent"></span><a href="javascript:;" class="choice choice_unrented" data-status="3" data-unrent="">未出租</a></li>
+						<li><span class="icon ifont green">&#xe6a3;</span><a href="javascript:;" class="choice_booked choice" data-status="4" data-yd="">预定</a></li>
+						<li><span class="icon ifont yellow">&#xe663;</span><a href="javascript:;" cx-url="{{'House-Room/revocationsubscribe'|url}}" class="choice_outRented choice" data-status="5" data-tz="">预约退租</a></li>
+						<li><span class="icon ifont black">&#xe62e;</span><a href="javascript:;" class="choice_stopUse choice" data-status="6" hf-url="{{'House-Room/recover'|url}}"  data-ty="">停用</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="centralized_Ind_D">
+				<div class="hiden-loading-temp none"></div>
+				<div class="b">
+					<div class="type-bar clearfix" style="display: none;">
+						<a href="javascript:;" class="type-hz-row" data-type="1" style="display: none;"></a>
+						<a href="javascript:;" class="type-zz-row" data-type="2" style="display: none;"></a>
+						<a href="javascript:;" data-type="0" class="type-all-row cur_a nbr" style="display: none;"></a>
+					</div>
+					<div class="col-rtype tab-gather none">
+						<p class="col-type-name">[合租]</p>
+						<ul class="clearfix" id="hz-temp-box" >
+						</ul>
+							<!--合租数据循环模板-->
+							<script type="text/html" id="hz-temp-gen-mark">
+								{{'<% for (var i = 0; i < hz_data.length; i ++) { %>'}}
+									<li class="bdsh" house_id="{{'<%=hz_data[i].house_id%>'}}" type="1">
+										<span class="floorNum">
+											<span class="checkBoxAll"><span class="gou ifont ifont1">&#xe60c;</span></span>
+											<span class="floor_Num"><a href="#{{'<%=hz_data[i].url%>'}}">{{'<%=hz_data[i].house_name %>'}}</a>
+												<span class="fold-txt active"><b>展开</b><i class="sprit-fold"></i></span>
+											</span>
+										</span>
+										<dl style="display:none;">
+											{{'<% for (var j = 0,item=hz_data[i].room_data; j<item.length; j ++) { %>'}}
+												{{'<%if(item[j].status == 1) { %>'}}
+													 {{'<%if(item[j].is_yd == 1) { %>'}}
+															<dd data-rentStyle='booked' name="room_id" room_id="{{'<%=item[j].record_id %>'}}">
+												  	 {{'<%}%>'}}
+												  	  {{'<%if(item[j].is_yd != 1) { %>'}}
+															<dd data-rentStyle='notRented' name="room_id"  room_id="{{'<%=item[j].record_id %>'}}">
+												  	 {{'<%}%>'}}
+												{{'<%}%>'}}
+												{{'<%if(item[j].status == 2) { %>'}}
+													 {{'<%if(item[j].is_yytz == 1) { %>'}}
+															<dd data-rentStyle='outRented' name="room_id"  room_id="{{'<%=item[j].record_id %>'}}">
+												  	 {{'<%}%>'}}
+												  	  {{'<%if(item[j].is_yytz != 1) { %>'}}
+															<dd data-rentStyle='Rented' name="room_id"  room_id="{{'<%=item[j].record_id %>'}}">
+												  	 {{'<%}%>'}}
+												{{'<%}%>'}}
+												 {{'<%if(item[j].status ==3) { %>'}}
+															<dd data-rentStyle='stopUse' name="room_id"  room_id="{{'<%=item[j].record_id %>'}}">
+												  	 {{'<%}%>'}}
+													<span class="romm_NUM">{{'<%=item[j].custom_number %>'}}</span>
+													<div class="room-info">
+														<p class="room-title">{{'<%=item[j].room_type_c %>'}}</p>
+														<p class="room-envirn">{{'<%=item[j].config %>'}}</p>
+													</div>
+													<!--右侧倒三角-->
+													<div class="jtBox">
+														<span class="fl op">操作</span>
+														<span class="jt"></span>
+														<div class="detail_Choices">
+															<ul>
+																{{'<%if(item[j].status == 1) { %>'}}
+																	 {{'<%if(item[j].is_yd == 1) { %>'}}
+																		<li><a class="a_Detail" data-href="#{{'<%=item[j].detail_url%>'}}">查看</a></li>
+																		<li><a class="a_Booked" href="javascript:;"  name="room_id" data-id="{{'<%=item[j].record_id%>'}}">预定</a></li>
+																		<li><a class="a_cancle_reserved" href="javascript:;" name="room_id" data-id="{{'<%=item[j].record_id%>'}}">退定</a></li>
+																		<li><a name="room_id" data-id="{{'<%=item[j].record_id%>'}}" data-url="{{'house-house/reserve'|url}}" class="a_onRenting" data-href="#{{'<%=item[j].rental_url%>'}}">出租</a></li>
+																	  {{'<%}%>'}}
+																	  {{'<%if(item[j].is_yd != 1) { %>'}}
+																		<li><a class="a_Detail" data-href="#{{'<%=item[j].detail_url%>'}}">查看</a></li>
+																		<li><a href="#{{'<%=item[j].rental_url%>'}}">出租</a></li>
+																		<li><a class="a_Booked" href="javascript:;"  name="room_id" data-id="{{'<%=item[j].record_id%>'}}">预定</a></li>
+																		<li><a class="a_StopUse" href="javascript:;" name="room_id" data-id="{{'<%=item[j].record_id%>'}}">停用</a></li>
+																	  {{'<%}%>'}}
+																{{'<%}%>'}}
+																{{'<%if(item[j].status == 2) { %>'}}
+																	  {{'<%if(item[j].is_yytz == 1) { %>'}}
+																		<li><a class="a_Detail" data-href="#{{'<%=item[j].detail_url%>'}}" data-sex="{{'<%=item[j].sex%>'}}">查看</a></li>
+																		<li><a class="a_cancle_tz" href="javascript:;" data-room-number="{{'<%=item[j].custom_number%>'}}" name="room_id"  data-id="{{'<%=item[j].record_id%>'}}">撤销</a></li>
+																		{{'<%if(item[j].is_relet == 1) { %>'}}
+																		<li><a class="a_GoOnRented" href="#{{'<%=item[j].relet_url%>'}}">续租</a></li>
+																		 {{'<%}%>'}}
+																		<li><a class="a_OutRented" href="javascript:;" name="room_id"  data-id="{{'<%=item[j].record_id%>'}}">退租</a></li>
+																		<li><a class="a_Booked" href="javascript:;" name="room_id"  data-id="{{'<%=item[j].record_id%>'}}">预定</a></li>
+																	  {{'<%}%>'}}
+																	  {{'<%if(item[j].is_yytz != 1) { %>'}}
+																		<li><a class="a_Detail" data-href="#{{'<%=item[j].detail_url%>'}}" data-sex="{{'<%=item[j].sex%>'}}">查看</a></li>
+																		<li><a class="a_Booked" href="javascript:;"  name="room_id" data-id="{{'<%=item[j].record_id%>'}}">预定</a></li>
+																		<li><a class="a_BookOutRented" data-room-number="{{'<%=item[j].custom_number%>'}}" href="javascript:;" name="room_id" data-id="{{'<%=item[j].record_id%>'}}">预约退租</a></li>
+																		<li><a class="a_OutRented" href="javascript:;" name="room_id" data-id="{{'<%=item[j].record_id%>'}}">退租</a></li>
+
+																{{'<%if(item[j].is_relet == 1) { %>'}}
+																		<li><a class="a_GoOnRented" href="#{{'<%=item[j].relet_url%>'}}">续租</a></li>
+																			{{'<%}%>'}}
+																	  {{'<%}%>'}}
+																{{'<%}%>'}}
+																{{'<%if(item[j].status == 3) { %>'}}
+																	<li><a class="a_Detail" data-href="#{{'<%=item[j].detail_url%>'}}">查看</a></li>
+																	<li><a class="a_restoreUsing" href="javascript:;" name="room_id" data-id="{{'<%=item[j].record_id%>'}}">恢复</a></li>
+																	<li><a class="a_Booked" href="javascript:;" name="room_id" data-id="{{'<%=item[j].record_id%>'}}">预定</a></li>
+																{{'<%}%>'}}
+															</ul>
+														</div>
+													</div>
+													<!--右侧倒三角end-->
+													<!--状态start-->
+														<!--状态-未出租-->
+														{{'<%if(item[j].status == 1) { %>'}}
+															 {{'<%if(item[j].is_yd == 1) { %>'}}
+															  	<div class="renter reservedRooms">
+																 	<span class="icon_Style ifont"><span class="book">&#xe6a3;</span></span>
+																</div>
+																<div class="booked_Detail tc_Detail">
+																 		<ol>
+																 			<li><span class="name">预定人姓名：</span><span class="text">{{'<%=item[j].msg_yd.name%>'}}</span></li>
+																 			<li><span class="name">预定人电话：</span><span class="text">{{'<%=item[j].msg_yd.phone%>'}}</span></li>
+																 			<li><span class="name">预定金额：</span><span class="text">{{'<%=item[j].msg_yd.money%>'}}</span></li>
+																 			<li><span class="name">预留时间：</span><span class="text">{{'<%=item[j].msg_yd.stime_c%>'}}至{{'<%=item[j].msg_yd.etime_c%>'}}</span></li>
+																 		</ol>
+																 </div>
+															  {{'<%}%>'}}
+															  {{'<%if(item[j].is_yd != 1) { %>'}}
+															  <span class="rent_Style notRented">未出租</span>
+																<div class="booked_Detail tc_Detail">
+																 		<ol>
+																 			<li><span class="name">月租金：</span><span class="text">{{'<%=item[j].emp_msg.money%>'}}元</span></li>
+																 			<li><span class="name">闲置天数：</span><span class="text">{{'<%=item[j].emp_msg.day%>'}}天</span></li>
+																 		</ol>
+																 </div>
+															  {{'<%}%>'}}
+														{{'<%}%>'}}
+														<!--状态-未出租End-->
+														<!--状态-已出租-->
+														{{'<%if(item[j].status == 2) { %>'}}
+															  {{'<%if(item[j].is_yytz == 1) { %>'}}
+															 	 <span class="icon_Style ifont icon yellow remark-tuizu">&#xe663;</span>
+																  <div class="outRented_Detail tc_Detail">
+																 		<ol>
+																 			<li><span class="name">退租日期：</span><span class="text">{{'<%=item[j].msg_yytz.back_rental_time_c%>'}}</span></li>
+																 			<li class="bzText"><p>备注说明：{{'<%=item[j].msg_yytz.remark%>'}}</p></li>
+																 		</ol>
+																 	</div>
+															  {{'<%}%>'}}
+															  {{'<%if(item[j].is_yytz != 1) { %>'}}
+															  		 {{'<%if(item[j].sex == 1) { %>'}}
+																		<div class="roomActive">
+																			<span class="icon_Style ifont sex-man"><span class="man">&#xe654;</span></span>
+																		</div>
+																	 {{'<%}%>'}}
+																	  {{'<%if(item[j].sex == 2) { %>'}}
+																		<div class="roomActive">
+																			<span class="icon_Style ifont sex-women"><span class="woman">&#xe656;</span></span>
+																		</div>
+																	 {{'<%}%>'}}
+																	  {{'<%if(item[j].sex == 3) { %>'}}
+																		<div class="roomActive">
+																			<span class="icon_Style ifont sex-man"><span class="man">&#xe654;</span></span>
+																			<span class="icon_Style ifont sex-women"><span class="woman">&#xe656;</span></span>
+																		</div>
+																	 {{'<%}%>'}}
+																	{{'<%if(!!item[j].msg) { %>'}}
+																	<div class="rented_Detail tc_Detail">
+																		<ol>
+																			<li><span class="name">租客姓名：</span><span class="text">{{'<%=item[j].msg.name%>'}}</span></li>
+																			<li><span class="name">租客电话：</span><span class="text">{{'<%=item[j].msg.phone%>'}}</span></li>
+																			<li><span class="name">下次付款金额：</span><span class="text">{{'<%=item[j].msg.total_money%>'}}</span></li>
+																			<li><span class="name">下次付款时间：</span><span class="text">{{'<%=item[j].msg.next_pay_time%>'}}</span></li>
+																		</ol>
+																	</div>
+																	{{'<%}%>'}}
+																	{{'<%if(!item[j].msg) { %>'}}
+																		<ol>
+																			<li><span class="name">暂时无法获取租客信息</span></li>
+																		</ol>
+															  		{{'<%}%>'}}
+															  {{'<%}%>'}}
+														{{'<%}%>'}}
+														<!--状态-已出租end-->
+														{{'<%if(item[j].status == 3) { %>'}}
+														<span class="icon_Style ifont roomStop"><span class="stop">&#xe62e;</span></span>
+															<div class="stopUse_Detail tc_Detail">
+														 		<ol>
+														 			<li><span class="name">起始日期：</span><span class="text">{{'<%=item[j].stop_msg.start_time_c%>'}}</span></li>
+														 			<li><span class="name">结束日期：</span><span class="text">{{'<%=item[j].stop_msg.end_time_c%>'}}</span></li>
+														 			<li class="bzText"><span class="text">停用说明：{{'<%=item[j].stop_msg.remark%>'}}</span></li>
+														 		</ol>
+														 	</div>
+														{{'<%}%>'}}
+													<!--状态end-->
+													<span class="checkBox">
+														<label><span class="gou ifont ifont1">&#xe60c;</span></label>
+														<input type="checkbox" value="{{'<%=item[j].record_id %>'}}"/>
+													</span>
+												</dd>
+									     		{{'<%}%>'}}
+									     </dl>
+									</li>
+							   {{'<%}%>'}}
+							</script>
+					</div>
+					<div class="col-rtype tab-whole none">
+						<p class="col-type-name">[整租]</p>
+						<ul class="clearfix" id="zz-temp-box"></ul>
+						<script type="text/html" id="zz-temp-gen-mark">
+								{{'<% for (var i = 0; i < zz_data.length; i ++) { %>'}}
+									<li class="bdsh" house_id="{{'<%=zz_data[i].house_id%>'}}" type="2">
+								<span class="floorNum">
+									<span class="checkBoxAll"><span class="gou ifont ifont1">&#xe60c;</span></span>
+									<span class="floor_Num"><a class="blue" href="#{{'<%=zz_data[i].url%>'}}">{{'<%=zz_data[i].house_name %>'}}</a></span>
+								</span>
+								<dl>
+									{{'<%if(zz_data[i].status == 1) { %>'}}
+										 {{'<%if(zz_data[i].is_yd == 1) { %>'}}
+												<dd data-rentStyle='booked'  name="house_id" house_id="{{'<%=zz_data[i].house_id%>'}}">
+									  	 {{'<%}%>'}}
+									  	  {{'<%if(zz_data[i].is_yd != 1) { %>'}}
+												<dd data-rentStyle='notRented'  name="house_id" house_id="{{'<%=zz_data[i].house_id%>'}}">
+									  	 {{'<%}%>'}}
+									{{'<%}%>'}}
+									{{'<%if(zz_data[i].status == 2) { %>'}}
+										 {{'<%if(zz_data[i].is_yytz == 1) { %>'}}
+												<dd data-rentStyle='outRented'  name="house_id" house_id="{{'<%=zz_data[i].house_id%>'}}">
+									  	 {{'<%}%>'}}
+									  	  {{'<%if(zz_data[i].is_yytz != 1) { %>'}}
+												<dd data-rentStyle='Rented'  name="house_id" house_id="{{'<%=zz_data[i].house_id%>'}}">
+									  	 {{'<%}%>'}}
+									{{'<%}%>'}}
+										 {{'<%if(zz_data[i].status ==3) { %>'}}
+												<dd data-rentStyle='stopUse'  name="house_id" house_id="{{'<%=zz_data[i].house_id%>'}}">
+									  	 {{'<%}%>'}}
+										<span class="romm_NUM">编号{{'<%=zz_data[i].custom_number %>'}}</span>
+										<div class="room-info">
+											<p class="room-title">{{'<%=zz_data[i].count %>'}}室{{'<%=zz_data[i].hall %>'}}厅</p>
+											<p class="room-envirn">{{'<%=zz_data[i].config %>'}}</p>
+										</div>
+										<div class="jtBox">
+											<span class="fl op">操作</span>
+											<span class="jt"></span>
+											<div class="detail_Choices">
+												<ul>
+													{{'<%if(zz_data[i].status == 1) { %>'}}
+														  {{'<%if(zz_data[i].is_yd == 1) { %>'}}
+															<li><a class="a_Detail" data-href="#{{'<%=zz_data[i].url%>'}}">查看</a></li>
+															<li><a class="a_Booked" href="javascript:;" name="house_id" data-id="{{'<%=zz_data[i].house_id%>'}}">预定</a></li>
+															<li><a class="a_cancle_reserved" href="javascript:;" name="house_id" data-id="{{'<%=zz_data[i].house_id%>'}}">退定</a></li>
+															<li><a  href="javascipt:;" name="house_id" data-id="{{'<%=zz_data[i].house_id%>'}}" class="a_onRenting" data-url="{{'house-house/reserve'|url}}" data-href="#{{'<%=zz_data[i].rental_url%>'}}">出租</a></li>
+														    {{'<%}%>'}}
+														  {{'<%if(zz_data[i].is_yd != 1) { %>'}}
+															<li><a class="a_Detail" data-href="#{{'<%=zz_data[i].url%>'}}">查看</a></li>
+															<li><a  href="#{{'<%=zz_data[i].rental_url%>'}}">出租</a></li>
+															<li><a class="a_Booked" href="javascript:;" name="house_id" data-id="{{'<%=zz_data[i].house_id%>'}}">预定</a></li>
+															<li><a class="a_StopUse" href="javascript:;" name="house_id" data-id="{{'<%=zz_data[i].house_id%>'}}">停用</a></li>
+														  {{'<%}%>'}}
+													{{'<%}%>'}}
+													{{'<%if(zz_data[i].status == 2) { %>'}}
+														  {{'<%if(zz_data[i].is_yytz == 1) { %>'}}
+															<li><a class="a_Detail" data-href="#{{'<%=zz_data[i].url%>'}}" data-sex="{{'<%=zz_data[i].sex%>'}}">查看</a></li>
+															<li><a class="a_cancle_tz" href="javascript:;" data-room-number="{{'<%=zz_data[i].custom_number%>'}}" name="house_id" data-id="{{'<%=zz_data[i].house_id%>'}}">撤销</a></li>
+															{{'<%if(zz_data[i].is_relet == 1) { %>'}}
+															<li><a class="a_GoOnRented" href="#{{'<%=zz_data[i].relet_url%>'}}">续租</a></li>
+															 {{'<%}%>'}}
+															<li><a class="a_OutRented" href="javascript:;" name="house_id" data-id="{{'<%=zz_data[i].house_id%>'}}">退租</a></li>
+															<li><a class="a_Booked" href="javascript:;" name="house_id" data-id="{{'<%=zz_data[i].house_id%>'}}">预定</a></li>
+														  {{'<%}%>'}}
+														  {{'<%if(zz_data[i].is_yytz != 1) { %>'}}
+															<li><a class="a_Detail" data-href="#{{'<%=zz_data[i].url%>'}}" data-sex="{{'<%=zz_data[i].sex%>'}}">查看</a></li>
+															<li><a class="a_Booked" href="javascript:;" name="house_id" data-id="{{'<%=zz_data[i].house_id%>'}}">预定</a></li>
+															<li><a class="a_BookOutRented" href="javascript:;" data-room-number="{{'<%=zz_data[i].custom_number%>'}}" name="house_id" data-id="{{'<%=zz_data[i].house_id%>'}}">预约退租</a></li>
+															<li><a class="a_OutRented" href="javascript:;" name="house_id" data-id="{{'<%=zz_data[i].house_id%>'}}">退租</a></li>
+															{{'<%if(zz_data[i].is_relet == 1) { %>'}}
+															<li><a class="a_GoOnRented" href="#{{'<%=zz_data[i].relet_url%>'}}">续租</a></li>
+															 {{'<%}%>'}}
+														  {{'<%}%>'}}
+													{{'<%}%>'}}
+													{{'<%if(zz_data[i].status == 3) { %>'}}
+														<li><a class="a_Detail" data-href="#{{'<%=zz_data[i].url%>'}}">查看</a></li>
+														<li><a class="a_restoreUsing" href="javascript:;" name="house_id" data-id="{{'<%=zz_data[i].house_id%>'}}">恢复</a></li>
+														<li><a class="a_Booked" href="javascript:;" name="house_id" data-id="{{'<%=zz_data[i].house_id%>'}}">预定</a></li>
+													{{'<%}%>'}}
+												</ul>
+											</div>
+										</div>
+										<!--状态-未出租-->
+														{{'<%if(zz_data[i].status == 1) { %>'}}
+															 {{'<%if(zz_data[i].is_yd == 1) { %>'}}
+															  	<div class="renter reservedRooms">
+																 	<span class="icon_Style ifont"><span class="book">&#xe6a3;</span></span>
+																</div>
+																<div class="booked_Detail tc_Detail">
+																 		<ol>
+																 			<li><span class="name">预定人姓名：</span><span class="text">{{'<%=zz_data[i].msg_yd.name%>'}}</span></li>
+																 			<li><span class="name">预定人电话：</span><span class="text">{{'<%=zz_data[i].msg_yd.phone%>'}}</span></li>
+																 			<li><span class="name">预定金额：</span><span class="text">{{'<%=zz_data[i].msg_yd.money%>'}}</span></li>
+																 			<li><span class="name">预留时间：</span><span class="text">{{'<%=zz_data[i].msg_yd.stime_c%>'}}至{{'<%=zz_data[i].msg_yd.etime_c%>'}}</span></li>
+																 		</ol>
+																 </div>
+															  {{'<%}%>'}}
+															  {{'<%if(zz_data[i].is_yd != 1) { %>'}}
+															  <span class="rent_Style notRented">未出租</span>
+																<div class="booked_Detail tc_Detail">
+																 		<ol>
+																 			<li><span class="name">月租金：</span><span class="text">{{'<%=zz_data[i].emp_msg.money%>'}}元</span></li>
+																 			<li><span class="name">闲置天数：</span><span class="text">{{'<%=zz_data[i].emp_msg.day%>'}}天</span></li>
+																 		</ol>
+																 </div>
+															  {{'<%}%>'}}
+														{{'<%}%>'}}
+														<!--状态-未出租End-->
+														<!--状态-已出租-->
+														{{'<%if(zz_data[i].status == 2) { %>'}}
+															  {{'<%if(zz_data[i].is_yytz == 1) { %>'}}
+															 	 <span class="icon_Style ifont icon remark-tuizu yellow">&#xe663;</span>
+																  <div class="outRented_Detail tc_Detail">
+																 		<ol>
+																 			<li><span class="name">退租日期：</span><span class="text">{{'<%=zz_data[i].msg_yytz.back_rental_time_c%>'}}</span></li>
+																 			<li class="bzText"><p>备注说明：{{'<%=zz_data[i].msg_yytz.remark%>'}}</p></li>
+																 		</ol>
+																 	</div>
+															  {{'<%}%>'}}
+															  {{'<%if(zz_data[i].is_yytz != 1) { %>'}}
+															  		 {{'<%if(zz_data[i].sex == 1) { %>'}}
+																		<div class="roomActive">
+																			<span class="icon_Style ifont sex-man"><span class="man">&#xe654;</span></span>
+																		</div>
+																	{{'<%}%>'}}
+																	 {{'<%if(zz_data[i].sex == 2) { %>'}}
+																		<div class="roomActive">
+																			<span class="icon_Style ifont sex-women"><span class="woman">&#xe656;</span></span>
+																		</div>
+																	{{'<%}%>'}}
+																	 {{'<%if(zz_data[i].sex == 3) { %>'}}
+																		<div class="roomActive">
+																			<span class="icon_Style ifont sex-man"><span class="man">&#xe654;</span></span>
+																			<span class="icon_Style ifont sex-women"><span class="woman">&#xe656;</span></span>
+																		</div>
+																	{{'<%}%>'}}
+																	<div class="rented_Detail tc_Detail">
+																		{{'<%if(zz_data[i].msg !=null) { %>'}}
+																			<ol>
+																				<li><span class="name">租客姓名：</span><span class="text">{{'<%=zz_data[i].msg.name%>'}}</span></li>
+																				<li><span class="name">租客电话：</span><span class="text">{{'<%=zz_data[i].msg.phone%>'}}</span></li>
+																				<li><span class="name">下次付款金额：</span><span class="text">{{'<%=zz_data[i].msg.total_money%>'}}</span></li>
+																				<li><span class="name">下次付款时间：</span><span class="text">{{'<%=zz_data[i].msg.next_pay_time%>'}}</span></li>
+																			</ol>
+															  			{{'<%}%>'}}
+															  			{{'<%if(zz_data[i].msg ==null) { %>'}}
+																			<ol>
+																				<li><span class="name">暂时无法获取租客信息</span></li>
+																			</ol>
+															  			{{'<%}%>'}}
+																	</div>
+															  {{'<%}%>'}}
+														{{'<%}%>'}}
+														<!--状态-已出租end-->
+														{{'<%if(zz_data[i].status == 3) { %>'}}
+														<span class="icon_Style ifont roomStop"><span class="stop">&#xe62e;</span></span>
+															<div class="stopUse_Detail tc_Detail">
+														 		<ol>
+														 			<li><span class="name">起始日期：</span><span class="text">{{'<%=zz_data[i].stop_msg.start_time_c%>'}}</span></li>
+														 			<li><span class="name">结束日期：</span><span class="text">{{'<%=zz_data[i].stop_msg.end_time_c%>'}}</span></li>
+														 			<li class="bzText"><span class="text">停用说明：{{'<%=zz_data[i].stop_msg.remark%>'}}</span></li>
+														 		</ol>
+														 	</div>
+														{{'<%}%>'}}
+													<!--状态end-->
+										<span class="checkBox">
+											<label><span class="gou ifont ifont1">&#xe60c;</span></label>
+											<input type="checkbox" value="{{'<%=zz_data[i].house_id%>'}}"/>
+										</span>
+									</dd>
+								</dl>
+							</li>
+							{{'<%}%>'}}
+						</script>
+					</div>
+					<div class="hiden-loading-temp-bot none"></div>
+                    <div class="house_List none">
+                        <div class="empty">
+                        	<div class="empty-main">
+                        		<img src="/web/images/03.png" />
+                        		<p>当前页面没有任何数据，请<a href="#/index.php?c=house-house&a=add">点击这里添加</a>！</p>
+                        	</div>
+                        </div>
+                    </div>
+				</div>
+			</div>
+			</div>
+		</div>
+		</div>
+		<!--
+        	作者：522417771@qq.com
+        	时间：2015-05-15
+        	描述：预定遮罩模板
+        -->
+	<script type="text/template" id="cover-distri-reserve">
+		<div class="rsv-wrap reserveDistriUserForm jzf-form" id="distri-reserve-box">
+		<div class="jzf-col">
+			<div class="col-box">
+				<div class="jzf-col-l float-l">
+					<span><i class="red">*</i>预&nbsp;&nbsp;定&nbsp;&nbsp;人：</span>
+				</div>
+				<div class="jzf-col-r fl clearfix">
+					<input type="text" datatype="*" name="name" nullmsg="请输入预定人" class="ipt ipt-165  ipx-txt">
+					<span class="check-error-ts check-error-auto">
+					<i class="ico-arrwo-d"></i>
+					<span class="check-error"></span>
+				</span>
+				</div>
+		    </div>
+			<div class="col-box">
+				<div class="jzf-col-l float-l">
+					<span><i class="red">*</i>联系电话：</span>
+				</div>
+				<div class="jzf-col-r fl clearfix">
+					<input type="text" datatype="/^1\d{10}$/" name="phone" nullmsg="请输入联系电话" errormsg="手机号码格式错误" class="ipt ipt-165  ipx-txt">
+					<span class="check-error-ts check-error-phone">
+						<i class="ico-arrwo-d"></i>
+						<span class="check-error"></span>
+					</span>
+					<div class="check-error-ts tip-black-list" style="display: none;">
+						<div class="pos-rel">
+							<i class="ifont red">&#xf00d9;</i>
+							<i class="ico-arow_down-gray"></i>
+							<span class="tip-msg">
+								该号码已被拉黑<i class="red">2</i>次,
+								点此<a href="javascript:;">查看详情</a>
+							</span>
+						</div>
+					</div>
+				</div>
+		    </div>
+		</div>
+		<div class="jzf-col">
+			<div class="col-box">
+				<div class="jzf-col-l float-l">
+					<span><i class="red">*</i>证件号码：</span>
+				</div>
+				<div class="jzf-col-r fl clearfix">
+					<input type="text" datatype="*1-40" name="idcard" errormsg="证件号码格式错误" nullmsg="请输入预定人证件号码" data-info-action="{{'tenant-index/getComment'|url}}"  data-score-action="{{'tenant-index/getScore'|url}}" class="ipt ipt-165  ipx-txt">
+					<span class="check-error-ts check-error-auto">
+					<i class="ico-arrwo-d"></i>
+					<span class="check-error"></span>
+				</span>
+					<div class="check-error-ts tip-black-list" style="display: none;">
+						<div class="pos-rel">
+							<i class="ifont red">&#xf00d9;</i>
+							<i class="ico-arow_down-gray"></i>
+							<span class="tip-msg">
+								该租客评价分数<i class="red">2</i>,
+								点此<a href="javascript:;">查看详情</a>
+							</span>
+						</div>
+						<a href="javascript:;" class="this-close">x</a>
+					</div>
+				</div>
+		    </div>
+			<div class="col-box">
+				<div class="jzf-col-l float-l">
+					<span><i class="red">*</i>支付定金：</span>
+				</div>
+				<div class="jzf-col-r fl clearfix">
+					<input type="text" datatype="n" name="money" nullmsg="请输入定金金额" class="ipt ipt-165  ipx-txt">
+					<span class="check-error-ts check-error-auto">
+					<i class="ico-arrwo-d"></i>
+					<span class="check-error"></span>
+				</span>
+				</div>
+		    </div>
+		</div>
+		<div class="jzf-col">
+			<div class="col-box">
+				<div class="jzf-col-l float-l">
+					<span><i class="red">*</i>起始日期：</span>
+				</div>
+				<div class="jzf-col-r fl clearfix">
+					<input type="text" datatype="*,checkstart" readonly="readonly" name="begin_date" nullmsg="请选择起始日期" class="ipt ipt-165 date-input ipx-txt">
+					<span class="check-error-ts check-error-auto">
+					<i class="ico-arrwo-d"></i>
+					<span class="check-error"></span>
+				</span>
+				</div>
+		    </div>
+			<div class="col-box">
+				<div class="jzf-col-l float-l">
+					<span><i class="red">*</i>终止日期：</span>
+				</div>
+				<div class="jzf-col-r fl clearfix">
+					<input type="text" datatype="*,checkend" readonly="readonly"  name="end_date" nullmsg="请选择终止日期" class="ipt ipt-165 date-input ipx-txt">
+					<span class="check-error-ts check-error-auto">
+						<i class="ico-arrwo-d"></i>
+						<span class="check-error"></span>
+					</span>
+				</div>
+		    </div>
+		</div>
+		<div class="jzf-col">
+			<div class="col-box">
+				<div class="jzf-col-l float-l">
+					<span><i class="red">*</i>支付方式：</span>
+				</div>
+				<div class="jzf-col-r fl clearfix">
+					<div class="distri-rev-over-temp-selectByM selectByM w9">
+								<input type="text" class="selectByMT centralized_Ind_CuteType" name="ya" readonly = 'readonly' datatype="sel" nullmsg="请选择支付方式" selectVal = '0' value="选择支付方式"/>
+								<span class="check-error-ts check-error-auto">
+									<i class="ico-arrwo-d"></i>
+									<span class="check-error"></span>
+								</span>
+								<span class='jt_Ctr'><span class='jt_box'></span></span>
+								<div class="selectByMO">
+									<ul>
+										<li selectVal='1'>支付宝</li>
+										<li selectVal='2'>现金支付</li>
+										<li selectVal='3'>银行卡支付</li>
+										<li selectVal='4'>其他</li>
+									</ul>
+								</div>
+							</div>
+				</div>
+		    </div>
+			<div class="col-box">
+				<div class="jzf-col-l float-l">
+					<span><i class="red">*</i>来源渠道：</span>
+				</div>
+				<div class="jzf-col-r fl clearfix">
+					<div class="distri-rev-over-temp-selectByM selectByM w9">
+						<input type="text" class="selectByMT centralized_Ind_CuteType" name="fu" readonly = 'readonly'  datatype="sel" nullmsg="选择来源渠道" selectVal = '0' value="选择来源渠道"/>
+						<span class="check-error-ts check-error-auto">
+							<i class="ico-arrwo-d"></i>
+							<span class="check-error"></span>
+						</span>
+						<span class='jt_Ctr'><span class='jt_box'></span></span>
+						<div class="selectByMO">
+							<ul>
+								<li selectVal='1'>网络渠道</li>
+								<li selectVal='2'>客户介绍</li>
+								<li selectVal='3'>自来客</li>
+								<li selectVal='4'>会员</li>
+								<li selectVal='5'>其他</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+		    </div>
+		</div>
+		<div class="jzf-col">
+			<div class="jzf-col-l">
+				<span>备注说明：</span>
+			</div>
+			<div class="jzf-col-r blo-row">
+				<textarea class="ipx-txt" id="cover-distri-remark" ignore="ignore" name="mark" datatype="*"  nullmsg="请输入备注信息"></textarea>
+				<!--<span class="check-error-ts">
+					<i class="ico-arrwo-d ico-arrwo-d-remark"></i>
+					<span class="check-error check-error-textarea"></span>
+				</span>-->
+			</div>
+		</div>
+		<div class="jzf-col">
+			<div class="jzf-col-r blo-row">
+				<div class="resv-act-btns">
+					<a href="javascript:;" class="btn btn2 mr10"  id="distri-reserve-user-info-save" ydurl="{{'House-Room/renewal'|url}}">保存</a>
+					<a href="javascript:;" class="btn btn4 cancle-over-trigger">取消</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	</script>
+	<!--描述：停用遮罩模板-->
+    <script type="text/template" id="cover-distri-forbiden">
+    		<div class="rsv-wrap jzf-form room-stop-form" id="roomStopUseForm">
+			<div class="jzf-col">
+				<div class="col-box">
+					<div class="jzf-col-l float-l">
+						<span><i class="red">*</i>起始日期：</span>
+					</div>
+					<div class="jzf-col-r fl clearfix">
+						<input type="text" datatype="*" readonly="readonly" name="start_time" nullmsg="请选择起始日期" class="ipt ipt-165 date-input ipx-txt">
+						<span class="check-error-ts check-error-auto">
+						<i class="ico-arrwo-d"></i>
+						<span class="check-error"></span>
+					</span>
+					</div>
+			    </div>
+				<div class="col-box">
+					<div class="jzf-col-l float-l">
+						<span><i class="red">*</i>终止日期：</span>
+					</div>
+					<div class="jzf-col-r fl clearfix">
+						<input type="text" datatype="*" readonly="readonly"  name="end_time" nullmsg="请选择终止日期" class="ipt ipt-165 date-input ipx-txt">
+						<span class="check-error-ts check-error-auto">
+							<i class="ico-arrwo-d"></i>
+							<span class="check-error"></span>
+						</span>
+					</div>
+			    </div>
+			</div>
+			<div class="jzf-col">
+				<div class="jzf-col-l">
+					<span>停用说明：</span>
+				</div>
+				<div class="jzf-col-r blo-row">
+					<textarea class="ipx-txt" id="remark-for-stop-room" ignore="ignore" name="remark" datatype="*"  nullmsg="请输入备注信息"></textarea>
+					<!--<span class="check-error-ts">
+						<i class="ico-arrwo-d ico-arrwo-d-remark"></i>
+						<span class="check-error check-error-textarea"></span>
+					</span>-->
+				</div>
+			</div>
+			<div class="jzf-col">
+				<div class="jzf-col-r blo-row">
+					<div class="resv-act-btns">
+						<a href="javascript:;" class="btn btn2 mr10"  id="room-stop-info-save" stopurl="{{'House-Room/stop'|url}}">保存</a>
+						<a href="javascript:;" class="btn btn4 cancle-over-trigger">取消</a>
+					</div>
+				</div>
+			</div>
+    		</div>
+    </script>
+
+
+	<!--描述：预约退租遮罩模板-->
+    <script type="text/template" id="cover-room-yytz">
+    		<div class="rsv-wrap jzf-form room-chekout-form" id="roomCheckoutForm">
+    			<div class="jzf-col">
+				<div class="col-box">
+					<div class="jzf-col-l float-l">
+						<span><i class="red">*</i>房间编号：</span>
+					</div>
+					<div class="jzf-col-r">
+						<span class="roomNum"></span>
+					</div>
+			    </div>
+			</div>
+			<div class="jzf-col">
+				<div class="col-box">
+					<div class="jzf-col-l float-l">
+						<span><i class="red">*</i>退租日期：</span>
+					</div>
+					<div class="jzf-col-r fl clearfix">
+						<input type="text" datatype="*" readonly="readonly" name="start_time" nullmsg="请选择退租日期" class="ipt ipt-165 date-input ipx-txt">
+						<span class="check-error-ts check-error-auto">
+						<i class="ico-arrwo-d"></i>
+						<span class="check-error"></span>
+					</span>
+					</div>
+			    </div>
+			</div>
+			<div class="jzf-col">
+				<div class="jzf-col-l">
+					<span><i class="red">*</i>备注说明：</span>
+				</div>
+				<div class="jzf-col-r blo-row">
+					<textarea class="ipx-txt" id="remark-for-tz-room" name="remark" datatype="*"  nullmsg="请输入备注信息"></textarea>
+					<span class="check-error-ts">
+						<i class="ico-arrwo-d ico-arrwo-d-remark"></i>
+						<span class="check-error check-error-textarea"></span>
+					</span>
+				</div>
+			</div>
+			<div class="jzf-col">
+				<div class="jzf-col-r blo-row">
+					<div class="resv-act-btns">
+						<a href="javascript:;" class="btn btn2 mr10"  id="room-tz-info-save" tzurl="{{'House-Room/rentalback'|url}}">保存</a>
+						<a href="javascript:;" class="btn btn4 cancle-over-trigger">取消</a>
+					</div>
+				</div>
+			</div>
+    		</div>
+    </script>
+
+
+	<!--预定成功-----更改状态替换成预定模板数据渲染-->
+    <script type="text/template" id="suc-render-yd">
+    		<ol>
+ 			<li><span class="name">预定人姓名：</span><span class="text">{{'<%=ydUser%>'}}</span></li>
+ 			<li><span class="name">预定人电话：</span><span class="text">{{'<%=ydPhone%>'}}</span></li>
+ 			<li><span class="name">预定金额：</span><span class="text">{{'<%=ydPayment%>'}}</span></li>
+ 			<li><span class="name">预留时间：</span><span class="text">{{'<%=ydBegindate%>'}}至{{'<%=ydEnddate%>'}}</span></li>
+ 		</ol>
+    </script>
+    <script type="text/template" id="ydStaticTemp">
+    		<div class="renter reservedRooms">
+		 	<span class="icon_Style ifont"><span class="book">&#xe6a3;</span></span>
+		</div>
+    </script>
+	<!--预定成功-----更改状态替换成预定模板数据渲染end-->
+
+	<!--停用成功-----更改状态替换成停用模板数据渲染-->
+    <script type="text/template" id="suc-render-ty">
+    		<ol>
+			<li class="bzText"><span class="name">停用说明：</span><span class="text">{{'<%=tystopRemark%>'}}</span></li>
+			<li><span class="name">起始日期：</span><span class="text">{{'<%=tyBegindate%>'}}</span></li>
+			<li><span class="name">结束日期：</span><span class="text">{{'<%=tyEnddate%>'}}</span></li>
+		</ol>
+    </script>
+    <script type="text/template" id="tyStaticTemp">
+    		<span class="icon_Style ifont roomStop"><span class="stop">&#xe62e;</span></span>
+    </script>
+	<!--停用成功-----更改状态替换成停用模板数据渲染end-->
+
+	<!--预约退租成功-----更改状态替换成预约退租模板数据渲染-->
+    <script type="text/template" id="suc-render-yytz">
+    		<ol>
+			<li><span class="name">退租日期：</span><span class="text">{{'<%=tzDate%>'}}</span></li>
+			<li class="bzText"><span class="name">备注说明：</span><p>{{'<%=tzRemark%>'}}</p></li>
+		</ol>
+    </script>
+    <script type="text/template" id="yytzStaticTemp">
+    		<span class="icon_Style ifont icon yellow remark-tuizu">&#xe663;</span>
+    </script>
+	<!--预约退租成功-----更改状态替换成预约退租模板数据渲染end-->
+
+
+	<!--退定成功(当前房间无预定)-----更改状态为未出租模板数据渲染-->
+    <script type="text/template" id="suc-render-unrented">
+    		<ol>
+ 			<li><span class="name">月租金：</span><span class="text">{{'<%=monthPay%>'}}元</span></li>
+ 			<li><span class="name">闲置天数：</span><span class="text">{{'<%=emptyDays%>'}}天</span></li>
+ 		</ol>
+    </script>
+    <script type="text/template" id="unrentedStaticTemp">
+    		<span class="rent_Style notRented">未出租</span>
+    </script>
+	<!--退定成功(当前房间无预定)-----更改状态为未出租模板数据渲染-->
+
+
+	<!--撤销预约退租成功(当前房间无预定)-----更改状态为已出租模板数据渲染-->
+    <script type="text/template" id="suc-render-rented">
+    		<ol>
+			<li><span class="name">租客姓名：</span><span class="text">{{'<%=roomUserName%>'}}</span></li>
+			<li><span class="name">租客电话：</span><span class="text">{{'<%=roomUserPhone%>'}}</span></li>
+			<li><span class="name">下次付款金额：</span><span class="text">{{'<%=nextPaymoney%>'}}</span></li>
+			<li><span class="name">下次付款时间：</span><span class="text">{{'<%=nextPaytime%>'}}</span></li>
+		</ol>
+    </script>
+    <script type="text/template" id="rentedStaticTemp">
+    		<div class="roomActive">
+			<!--<span class="icon_Style ifont sex-man"><span class="man">&#xe654;</span></span>-->
+			<!--<span class="icon_Style ifont sex-women"><span class="woman">&#xe656;</span></span>-->
+		</div>
+    </script>
+	<!--撤销预约退租成功(当前房间无预定)-----更改状态为已出租模板数据渲染-->
+
+
+
+	<!--操作栏修改状态成功-----替换成新的对应的操作栏目根据状态-->
+	<script type="text/template" id="tool-bar-unrented">
+		<li><a class="a_Detail" data-href="{{'<%=detailUrl%>'}}">查看</a></li>
+		<li><a href="javascript:;" class="a_onRenting"  data-url="{{'house-house/reserve'|url}}" name="{{'<%=rtype%>'}}" data-id="{{'<%=rrid%>'}}" data-href="#{{'<%=rentalUrl%>'}}">出租</a></li>
+		<li><a class="a_Booked" href="javascript:;"  name="{{'<%=rtype%>'}}" data-id="{{'<%=rrid%>'}}">预定</a></li>
+		<li><a class="a_StopUse" href="javascript:;" name="{{'<%=rtype%>'}}" data-id="{{'<%=rrid%>'}}">停用</a></li>
+	</script>
+	<script type="text/template" id="tool-bar-yd">
+		<li><a class="a_Detail" data-href="{{'<%=detailUrl%>'}}">查看</a></li>
+		<li><a class="a_Booked" href="javascript:;" name="{{'<%=rtype%>'}}" data-id="{{'<%=rrid%>'}}">预定</a></li>
+		<li><a class="a_cancle_reserved" href="javascript:;"  name="{{'<%=rtype%>'}}" data-id="{{'<%=rrid%>'}}">退定</a></li>
+		<li><a  href="javascript:;" class="a_onRenting" data-url="{{'house-house/reserve'|url}}" name="{{'<%=rtype%>'}}" data-id="{{'<%=rrid%>'}}" data-href="#{{'<%=rentalUrl%>'}}">出租</a></li>
+	</script>
+	<script type="text/template" id="tool-bar-yytz">
+		<li><a class="a_Detail" data-href="{{'<%=detailUrl%>'}}">查看</a></li>
+		<li><a class="a_cancle_tz" href="javascript:;" data-room-number="{{'<%=roomNum%>'}}"  name="{{'<%=rtype%>'}}" data-id="{{'<%=rrid%>'}}">撤销</a></li>
+		<li><a class="a_GoOnRented" href="{{'<%=xzUrl%>'}}" >续租</a></li>
+		<li><a class="a_OutRented" href="javascript:;"  name="{{'<%=rtype%>'}}" data-id="{{'<%=rrid%>'}}">退租</a></li>
+		<li><a class="a_Booked" href="javascript:;"  name="{{'<%=rtype%>'}}" data-id="{{'<%=rrid%>'}}">预定</a></li>
+	</script>
+	<script type="text/template" id="tool-bar-stop">
+		<li><a class="a_Detail" data-href="{{'<%=detailUrl%>'}}">查看</a></li>
+		<li><a class="a_restoreUsing" href="javascript:;"  name="{{'<%=rtype%>'}}" data-id="{{'<%=rrid%>'}}">恢复</a></li>
+		<li><a class="a_Booked" href="javascript:;"  name="{{'<%=rtype%>'}}" data-id="{{'<%=rrid%>'}}">预定</a></li>
+	</script>
+	<script type="text/template" id="tool-bar-roomActive">
+		<li><a class="a_Detail" data-href="{{'<%=detailUrl%>'}}">查看</a></li>
+		<li><a class="a_Booked" href="javascript:;"  name="{{'<%=rtype%>'}}" data-id="{{'<%=rrid%>'}}">预定</a></li>
+		<li><a class="a_BookOutRented" href="javascript:;" data-room-number="{{'<%=roomNum%>'}}" name="{{'<%=rtype%>'}}" data-id="{{'<%=rrid%>'}}">预约退租</a></li>
+		<li><a class="a_OutRented" href="javascript:;"  name="{{'<%=rtype%>'}}" data-id="{{'<%=rrid%>'}}">退租</a></li>
+		<li><a class="a_GoOnRented" href="{{'<%=xzUrl%>'}}">续租</a></li>
+	</script>
+	<!--操作栏修改状态成功-----替换成新的对应的操作栏目根据状态end-->
+	<!--预定人列表遮罩模板start-->
+	<script type="text/template" id="list-cover-reserved">
+		<div  class="dialog-dpt-flr flat_room_list_td">
+			<div class="center-dpt-body">
+				<ul class="flat_room_list_tdzz">
+					<li style="width: 168px;">预定人</li>
+					<li style="width: 200px;">电话</li>
+					<li style="width:82px">定金</li>
+				</ul>
+				<table class="lr-tb center-dpt-row centralized_Ind_tab_td" id="data-temp-booked"></table>
+			</div>
+			<div class="td-btns" style="text-align: right; display: none;">
+				<a href="javascript:;" class="btn btn2 mr10" style="width: 60px;"  id="send-tuiding-request" tuidurl="{{'House-Room/abolishRenewal'|url}}">保存</a>
+				<a href="javascript:;" class="btn btn4 cancle-over-trigger" style="width: 60px;">取消</a>
+			</div>
+		</div>
+	</script>
+	<script type="text/html" id="list-rendertmp-reserved">
+		{{'<% for (var i = 0; i < data.length; i ++) { %>'}}
+			<tr>
+				<td style="width:49px">
+					<label class="checkbox"><span class="gou ifont1">&#xe60c;</span></label>
+					<input type="checkbox" value="{{'<%=data[i].reserve_id%>'}}">
+				</td>
+				<td style="width:111px">{{'<%=data[i].name%>'}}</td>
+				<td style="width:199px">{{'<%=data[i].phone%>'}}</td>
+				<td>{{'<%=data[i].money%>'}}元</td>
+			</tr>
+		  {{'<%}%>'}}
+	</script>
+	<!--预定人列表遮罩模板end-->
+
+<!--出租人列表遮罩模板start-->
+	<script type="text/template" id="list-cover-customers">
+		<div  class="dialog-dpt-flr flat_room_list_td">
+			<div class="center-dpt-body">
+				<ul class="flat_room_list_tdzz">
+					<li style="width: 168px;">预定人</li>
+					<li style="width: 200px;">电话</li>
+					<li style="width:82px">定金</li>
+				</ul>
+				<table class="lr-tb center-dpt-row centralized_Ind_tab_td" id="data-temp-cz"></table>
+			</div>
+			<div class="td-btns cz-btns" style="text-align: right; display: none;">
+				<a href="javascript:;" class="btn btn4 cancle-over-trigger mr10" style="width: 60px;">取消</a>
+				<a href="javascript:;" class="btn btn2" style="width: 60px;"  id="send-cz-request">确定</a>
+			</div>
+		</div>
+	</script>
+	<script type="text/html" id="list-rendertmp-customers">
+		{{'<% for (var i = 0; i < data.length; i ++) { %>'}}
+			<tr>
+				<td style="width:49px">
+					<label class="radio"><span class="gou ifont">&#xe617;</span>
+					<span class="gou-no ifont">&#xe612;</span></label>
+					<input type="radio" name="renter_url" value="{{'<%=data[i].rental_url%>'}}"/>
+				</td>
+				<td style="width:111px">{{'<%=data[i].name%>'}}</td>
+				<td style="width:199px">{{'<%=data[i].phone%>'}}</td>
+				<td>{{'<%=data[i].money%>'}}元</td>
+			</tr>
+		  {{'<%}%>'}}
+	</script>
+	<!--出租人列表遮罩模板end-->
+
+
+<!--多选删除遮罩模板-->
+	<div class="deletemoreauto none">
+		<div class="top">
+			<div class="top1">
+				<span class="fl">正在删除...</span>
+				<span class="fr">
+					<span class="num_cur">1</span>/<span class="num_total"></span>
+				</span>
+			</div>
+			<div class="top2">
+				<div class="top2a">
+					<div class="top2at"></div>
+				</div>
+			</div>
+		</div>
+		<div class="content">
+			<table>
+				<tr><th class="zb">房间名称</th><th class="yb">删除结果</th></tr>
+				<!--<tr><td class="zb">我是auto</td><td class="yb blue">删除成功</td></tr>-->
+			</table>
+		</div>
+	</div>

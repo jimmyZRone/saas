@@ -1,0 +1,105 @@
+{{if $view == 'template'}}
+<!--消息管理-列表 s-->
+<div class="message_list list">
+	<div class="list-con">
+		<div class="list-col">
+			<b>发送时间：</b>
+			<input type="text" class="ipt ipt-100 deal-time date" name="send_start_time" readonly="readonly" />
+			<span class="ml5 mr5">--</span>
+			<input type="text" class="ipt ipt-100 mr5 deal-times date" name="send_end_time" readonly="readonly" />
+			<a href="javascript:;" class="ml20 list-col-cdn" data-type="1">今天</a>
+			<a href="javascript:;" class="list-col-cdn" data-type="2">最近一个月</a>
+			<a href="javascript:;" class="list-col-cdn" data-type="3">最近三个月</a>
+		</div>
+	</div>
+	<div class="list-fun">
+		<a href="javascript:;" class="message_list_CheckAll">
+			<i class="ifont"><span class="choose ifont1">&#xe60c;</span></i>
+			全选
+		</a>
+		<a href="javascript:;" del_url="{{'Message-message/deleteMessage'|url}}" class="message_list_Delete">
+			<i class="ifont">&#xe675;</i>
+			删除
+		</a>
+		<a href="javascript:;" class="message_list_OFF">
+			<i class="ifont">&#xe627;</i>
+			取消
+		</a>
+	</div>
+	
+	<!--表格 s-->
+	<table class="lst_tb">
+		<tr>
+			<th class="th-first">消息内容</th>
+			<th>发送人</th>
+			<th>发送时间</th>
+			<th>操作</th>
+		</tr>
+{{/if}}
+{{if $view == 'data'}}
+		{{foreach from=$message_list item=list}}
+			<tr mess_id="{{$list.message_id}}">
+				<td>
+					<label class="checkBox"><span class="choose ifont1">&#xe60c;</span></label>
+					<input type="checkbox"/>
+					<span>{{$list.content}}</span>
+				</td>
+				<td>
+					<span>{{$list.user_name}}</span>
+				</td>
+				<td>
+					<span>{{$list.create_time|date_format:"%Y-%m-%d %H:%M:%S"}}</span>
+				</td>
+				<td>
+					<div class="edit-col">
+						<a href="javascript:;" del_url="{{'Message-message/deleteMessage'|url}}" class="spr-del-trig">删除</a>
+					</div>
+				</td>
+			</tr>
+		{{/foreach}}
+{{/if}}
+{{if $view == 'template'}}
+	</table>
+	<!--表格 e-->
+	
+	<!--分页 s-->
+	<div class="jzf-pagination clearfix">
+		<div class="pagination" id="message-page"></div>
+		<div class="jump-to-page clearfix">
+			<span>跳转至</span>
+			<div class="jump-edit-box">
+	        	<input type="text" placeholder="页码" class="page">
+	        	<a href="javascript:;" urls="{{'Message-message/message/view_type/data'|url}}" class="p-btn btn btn4">GO</a>
+	        	<i class="page-unit">页</i>
+	        </div>
+		</div>
+	</div>
+	<!--分页 e-->
+	
+	<!--多选删除遮罩模板 s-->
+	<div class="deletemoreauto none">
+		<div class="top">
+			<div class="top1">
+				<span class="fl">正在删除...</span>
+				<span class="fr">
+					<span class="num_cur">1</span>/<span class="num_total"></span>
+				</span>
+			</div>
+			<div class="top2">
+				<div class="top2a">
+					<div class="top2at"></div>
+				</div>
+			</div>
+		</div>
+		<div class="content">
+			<table>
+				<tr><th class="zb">消息列表</th><th class="yb">删除结果</th></tr>
+			</table>
+		</div>
+	</div>
+	<!--多选删除遮罩模板 e-->
+	
+	<div class="raty"></div>
+</div>
+<!--消息管理-列表 e-->
+{{/if}}

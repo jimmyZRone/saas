@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" type="text/css" href="{{$smarty.const.APP_WEB_STATIC_URL}}css/plug-station.css?v={{$smarty.const.APP_WEB_VERSION}}" />
+        <link rel="stylesheet" type="text/css" href="{{$smarty.const.APP_WEB_STATIC_URL}}js/uplodify/uploadify.css?v={{$smarty.const.APP_WEB_VERSION}}"/>
+        <script src="{{$smarty.const.APP_WEB_STATIC_URL}}js/seajs/seajs/2.1.0/sea.js" type="text/javascript" charset="utf-8"></script>
+        <script src="{{$smarty.const.APP_WEB_STATIC_URL}}js/config.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript">
+seajs.use("{{$smarty.const.APP_WEB_STATIC_URL}}js/plug-station_Js/opened_house_setJs.js")
+        </script>
+    </head>
+    <body style="background-color: #FFFFFF;">
+
+        <div class="station st-detail" style="width: 100%; margin: 0; padding: 0;">
+            <!--<div class="main main_edit main_edit_introduce">
+                <div class="title">
+                    <b class="fl">房间概况</b>
+                    <a href="javascript:;" class="return fr">返回</a>
+                </div>
+                <table class="tab contract-tab">
+                    <tr>
+                        <th>出租类型</th>
+                        <th>所在楼层</th>
+                        <th>房间户型</th>
+                        <th>面积/㎡</th>
+                        <th>租金/每月</th>
+                    </tr>
+                    <tr>
+                        <td>整租</td>
+                        <td>
+                            <input type="text" class="ipt ipt-90" placeholder="例：18" />
+                            <i>*</i>
+                        </td>
+                        <td>
+                            <input type="text" class="ipt ipt-110" placeholder="例：三室一厅" />
+                            <i>*</i>
+                        </td>
+                        <td>
+                            <input type="text" class="ipt ipt-90" placeholder="例：88.38" />
+                            <i>*</i>
+                        </td>
+                        <td>
+                            <input type="text" class="ipt ipt-90" placeholder="例：1200" />
+                            <i>*</i>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="main main_edit main_edit_roommate">
+                <div class="title">
+                    <b>室友分布</b>
+                </div>
+                <table class="tab roommate-tab fl">
+                    <tr>
+                        <th>性别</th>
+                        <th>职业</th>
+                        <th>面积/㎡</th>
+                        <th>租金/每月</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="text" class="ipt ipt-90" value="职员" />
+                        </td>
+                        <td>
+                            <input type="text" class="ipt ipt-90" placeholder="例：23.12" />
+                            <i>*</i>
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+                </table>
+                <p class="roommate-mark fl">（注：如职业不填，则默认为职员）</p>
+            </div>-->
+			<div class="st-detail-title" dataUrl="{{'Plugins-SubSite/getRoomInfo'|url}}">
+                <b class="fl">房间概况</b>
+                <a href="javascript:;" class="return fr btn btn1">返回</a>
+            </div>
+            <div class="detail-main-box">
+            	<div class="main main_detail main_introduce">
+	                <table class="tab introduce-tab fl">
+	                    <tr>
+	                        <th>出租类型</th>
+	                        <th>所在楼层</th>
+	                        <th>房间户型</th>
+	                        <th>面积/㎡</th>
+	                        <th>租金/每月</th>
+	                        <th class="main_contract">合同到期</th>
+	                    </tr>
+	                    <tr>
+	                        <td class="house_type"></td>
+	                        <td class="floor"></td>
+	                        <td class="room_type"></td>
+	                        <td class="area"></td>
+	                        <td class="money"></td>
+	                        <td class="main_contract contract_term"></td>
+	                    </tr>
+	                </table>
+	                <p class="fl improve-msg" style="display: none;">信息不完整，请先<a href="javascript:;" >完善资料</a></p>
+	            </div>
+	
+	            <div class="main main_detail main_roommate">
+	                <div class="title">
+	                    <b>室友分布</b>
+	                </div>
+	                <table class="tab roommate-tab">
+	                    <tr>
+	                    	<th>姓名</th>
+	                        <th>性别</th>
+	                        <th>职业</th>
+	                        <th>面积/㎡</th>
+	                        <th>租金/每月</th>
+	                    </tr>
+	                    <tr>
+	                        <!--<td class="gender"></td>
+	                        <td class="profession"></td>
+	                        <td class="roommate-area"></td>
+	                        <td class="roommate-money"></td>-->
+	                    </tr>
+	                </table>
+	            </div>
+	
+	            <div class="main">
+	                <div class="title">
+	                    <b>房间照片</b>
+	                </div>
+	                <div class="room-situation">
+	                    <div class="picture-detail" dataurl="{{'Plugins-SubSite/delPic'|url}}">
+	                        <!--<ul>-->
+	                        <!--<li>
+	                            <img src="../../images/demoimages/14_03.png"/>
+	                            <div class="pc-shade"></div>
+	                            <div class="pc-use">设置封面</div>
+	                        </li>-->
+	                        <!--<li>-->
+	                        <!--<div class="picture-one picture-spe">
+	                            <a href="javascript:;" class="upload-btn">
+	                                <input type="file" />
+	                            </a>
+	                        </div>-->
+	                        <div class="uploader-area" id="house-uploaderArea">
+	                            <div class="uploadview-wrapper">
+	                                <div class="upload-group">
+	                                    <div id="queue"></div>
+	                                    <input id="house-file-upload" name="file_upload" type="file">
+	                                </div>
+	                            </div>
+	                        </div>
+	                        <!--</li>
+	                    </ul>-->
+	                    </div>
+	                    <div class="picture-preview">
+	                        <b>设置效果预览</b>
+	                        <div class="pp-preview">
+	                            <img src="{{$smarty.const.APP_WEB_STATIC_URL}}images/p_07.png"/>
+	                        </div>
+	                    </div>
+	                </div>
+	                <p class="pd-mark">注：图片最少上传1张，最多不超过9张，为保证图片质量清晰，请上传比例为15:8的图片</p>
+	            </div>
+	
+	            <div class="main main-height">
+	                <div class="title">
+	                    <b>房源绑定</b>
+	                </div>
+	                <div class="fm">
+	                    <ul class="house-bind fl">
+	                        <li>
+	                            <b><i class="bit">*</i>名称设置：</b>
+	                            <input type="text" class="ipt ipt-330" placeholder="" name="name" />
+	                            <span class="ml10 atten">（请输入20个字符，中文占2个）</span>
+	                            <p class="example">例如：龙猫主题，回归最纯真的童年</p>
+	                        </li>
+	                        <li class="mt20 is_recom">
+	                            <b><i class="bit"></i>是否推荐：</b>
+	                            <div class="check-box detail-check-box">
+	                                <label>
+	                                    <i class="choose ifont1">&#xe60c;</i>
+	                                </label>
+	                                <input type="checkbox" value="" />
+	                                <span>推荐为精品房源</span>
+	                            </div>
+	                        </li>
+	                        <li>
+	                            <b><i class="bit">*</i>价格设置：</b>
+	                            <input type="text" class="ipt ipt-330 setmoney" placeholder="" />
+	                            <span class="ml15 atten">注：当前设置价格为小站挂牌价</span>
+	                        </li>
+	                        <li class="is_release">
+	                            <b><i class="bit"></i>是否发布：</b>
+	                            <div class="check-box detail-check-box">
+	                                <label>
+	                                    <i class="choose ifont1">&#xe60c;</i>
+	                                </label>
+	                                <input type="checkbox" value="" />
+	                                <span>发布至小站</span>
+	                            </div>
+	                        </li>
+	                        <li>
+	                            <a href="javascript:;" dataUrl="{{'Plugins-SubSite/getDetails'|url}}" url="{{'Plugins-SubSite/setcover'|url}}" class="btn btn1 st-detail-btn">保存</a>
+	                        </li>
+	                    </ul>
+	                </div>
+	
+	                <div class="picture-preview fl">
+	                    <b>设置效果预览</b>
+	                    <div class="pp-preview">
+	                        <img src="{{$smarty.const.APP_WEB_STATIC_URL}}images/p_08.png"/>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+            </div>
+        <!--详情 e-->
+
+        <!--首页 s-->
+        <div class="opened-house-set station" style="margin: 0; padding: 0;">
+
+            <!--房源信息 s-->
+            <div class="main house-msg">
+                <div class="title">
+                    <b class="fl">房源设置</b>
+                    <span class="ml15">（您可以在此设置小站需要展示的房源，需推荐的精品房源）</span>
+                </div>
+                <div class="house">
+
+                    <p class="notes">（<sapn class="underline red">XXX</sapn>&nbsp;&nbsp;<sapn class="underline">&</sapn>&nbsp;&nbsp;<sapn class="underline blue">XXX</sapn>&nbsp;&nbsp;：可发布房源&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<sapn class="red">XXX</sapn>&nbsp;&nbsp;<sapn class="underline">&</sapn>&nbsp;&nbsp;<sapn class="blue">XXX</sapn>&nbsp;&nbsp;：资料完善后可发布，点击详情立即完善资料&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<sapn class="red">XXX</sapn>：当前未出租房源&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<sapn class="blue">XXX</sapn>：近一个月内将到期的房源&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<sapn class="green">精</sapn> ：精品房源，点击详情即可进行推荐）</p>
+                    <div class="tool">
+                        <div class="check-box fl check-all">
+                            <label>
+                                <i class="choose ifont1">&#xe60c;</i>
+                            </label>
+                            <input type="checkbox" value="" />
+                            <span>全选</span>
+                        </div>
+                        <!--<div class="check-box fl">
+                            <label>
+                                <i class="choose ifont1">&#xe60c;</i>
+                            </label>
+                            <input type="checkbox" value="" />
+                            <span>发布当前已勾选的</span>
+                        </div>-->
+                    </div>
+                    <table class="house-tab">
+                        <tr>
+                            <th>集中式公寓</th>
+                            <th>分散式房源</th>
+                        </tr>
+                        <tr>
+                            <!--集中式 e-->
+                            <td>
+                                {{foreach from=$focusArrResult key=k item=v}}
+                                {{foreach from=$v key=k1 item=v1}}
+                                {{foreach from=$v1 key=k2 item=v2}}
+                                <div class="house-con centralize">
+                                    <div class="hc-title">
+                                        <div class="hc-title-left fl">
+                                            <b class="house-name fl" title="{{$k2}}">{{$k2}}</b>
+                                            <p class="fl"><b>区域商圈</b><span>-</span>{{$v2.0.area_name}}<span>-</span>{{$v2.0.business_name}}</p>
+                                        </div>
+                                        <div class="hc-title-right fr">
+                                            <b>共<span>{{count($v2)}}</span>间房</b>
+                                            <a href="javascript:;" class="hc-switch"></a>
+                                        </div>
+                                    </div>
+                                    <div class="hc-detail-box">
+                                        <div class="hc-detail-title">
+                                            <b>房间编号</b>
+                                        </div>
+                                        <div class="hc-detail">
+                                            <ul>
+                                                {{foreach from=$v2 key=k3 item=v3}}
+                                                <li>
+                                                    <div class="check-box fl">
+                                                        {{if $v3.checked}}
+                                                        <label  class="checked">
+                                                            <i class="choose ifont1" style="display: inline">&#xe60c;</i>
+                                                        </label>
+                                                        <input type="checkbox" value="" wxxzid="{{$v3.checked}}"  checked="checked"/>
+                                                        {{else}}
+                                                        <label>
+                                                            <i class="choose ifont1" style="display: none">&#xe60c;</i>
+                                                        </label>
+                                                        <input type="checkbox" value="" checked=""/>
+                                                        {{/if}}
+                                                        <!--house_name="{{if !empty($houseinfoArr.$k3.house_name)}}{{$houseinfoArr.$k3.house_name}}{{else}}{{$v3.house_name}}{{/if}}"-->
+                                                        <span class="cb-data {{if $v3.is_pic > 0}}line{{/if}} {{if $v3.rental_id neq 0}}blue{{else}}red{{/if}}"
+                                                              room_id="{{$v3.room_id}}"
+                                                              house_type="{{$v3.house_type}}"
+                                                              rental_way="{{$v3.rental_way}}"
+                                                              rental_id="{{$v3.rental_id}}"
+                                                              dead_line="{{$v3.dead_line}}"
+                                                              floor="{{if !empty($houseinfoArr.$k3.floor)}}{{$houseinfoArr.$k3.floor}}{{else}}{{$v3.floor}}{{/if}}"
+                                                              area="{{if !empty($houseinfoArr.$k3.area)}}{{$houseinfoArr.$k3.area}}{{else}}{{$v3.area}}{{/if}}"
+                                                              money="{{if isset($houseinfoArr.$k3.rent)}}{{$houseinfoArr.$k3.rent}}{{else}}{{$v3.money}}{{/if}}"
+                                                              cover="{{$v3.cover}}"
+                                                              house_name="{{$v3.house_name}}"
+                                                              room_type="{{$v3.room_type}}"
+                                                              community_id="{{$v3.flat_id}}"
+                                                              community_name="{{$v3.flat_name}}"
+                                                              address="{{$v3.address}}"
+                                                              area_id="{{$v3.area_id}}"
+                                                              business_id="{{$v3.business_id}}"
+                                                              city_id="{{$v3.city_id}}"
+                                                              status="{{$v3.status}}"
+                                                              online_time="{{$v3.create_time}}"
+                                                              is_pic ="{{$v3.is_pic}}"
+                                                              is_recom="{{$v3.is_recom}}"
+                                                              totalsy = "{{count($v3.shiyouarea)}}"
+                                                              {{if count($v3.shiyouarea) gt 0}}
+                                                              {{foreach from=$v3.shiyouarea key=syk item=syarea}}
+                                                              syarea{{$syk}} = "{{$syarea}}"
+                                                              {{/foreach}}
+                                                              {{/if}}
+                                                              title="{{$v3.custom_number}}"
+                                                              >
+                                                              {{$v3.custom_number}}
+                                                    </span>
+                                                </div>
+                                                <input type="hidden" class="hide-msg" value="" />
+                                                <a href="javascript:;" dataUrl="{{'Plugins-SubSite/getDetails'|url}}" class="detail">详情</a>
+                                                <span class="green {{if $v3.is_recom eq 1}}current{{/if}}">精</span>
+
+                                            </li>
+                                            {{/foreach}}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/foreach}}
+                            {{/foreach}}
+                            {{/foreach}}
+                        </td>
+                        <!--集中式 e-->
+
+                        <!--分散式 s-->
+                        <td>
+                            {{foreach from=$dispersiveArrResult key=k item=v}}
+                            {{foreach from=$v key=k1 item=v1}}
+                            <div class="disperse house-con">
+                                <div class="hc-title">
+                                    <div class="hc-title-left fl">
+                                        <p class="fl"><b>区域商圈</b><span>-</span>{{$k}}<span>-</span>{{$k1}}</p>
+                                    </div>
+                                    <div class="hc-title-right fr">
+                                        <b>共<span>{{count(reset($v1))}}</span>间房</b>
+                                        <a href="javascript:;" class="hc-switch"></a>
+                                    </div>
+                                </div>
+                                <div class="hc-detail-box">
+                                    <div class="hc-detail-title">
+                                        <b class="address fl">地址</b>
+                                        <b class="room-num fl">房间编号</b>
+                                    </div>
+
+                                    {{foreach from=$v1 key=k2 item=v2}}
+                                    <div class="hc-detail">
+                                        <div class="address fl">
+                                            <b title="{{$k2}}">{{$k2}}</b>
+                                        </div>
+                                        <ul class="room fl">
+                                            {{foreach from=$v2 key=k3 item=v3}}
+                                            <li class="current">
+                                                <div class="check-box fl">
+
+                                                    {{if $v3.checked}}
+                                                    <label  class="checked">
+                                                        <i class="choose ifont1" style="display: inline">&#xe60c;</i>
+                                                    </label>
+                                                    <input type="checkbox"  wxxzid="{{$v3.checked}}" value="" checked="checked"/>
+                                                    {{else}}
+                                                    <label >
+                                                        <i class="choose ifont1" style="display: none">&#xe60c;</i>
+                                                    </label>
+                                                    <input type="checkbox"  value="" checked=""/>
+                                                    {{/if}}
+                                                    <span class="cb-data {{if $v3.is_pic > 0}}line{{/if}} {{if $v3.rental_id neq 0}}blue{{else}}red{{/if}}"
+                                                          house_id="{{$v3.house_id}}"
+                                                          house_type="{{$v3.house_type}}"
+                                                          room_id="{{$v3.room_id}}"
+                                                          rental_way="{{$v3.rental_way}}"
+                                                          cover="{{$v3.cover}}"
+                                                          rental_id="{{$v3.rental_id}}"
+                                                          dead_line="{{$v3.dead_line}}"
+                                                          floor="{{if !empty($houseinfoArr.$k3.floor)}}{{$houseinfoArr.$k3.floor}}{{else}}{{$v3.floor}}{{/if}}"
+                                                          area="{{if !empty($houseinfoArr.$k3.area)}}{{$houseinfoArr.$k3.area}}{{else}}{{$v3.area}}{{/if}}"
+                                                          money="{{if isset($houseinfoArr.$k3.rent)}}{{$houseinfoArr.$k3.rent}}{{else}}{{$v3.money}}{{/if}}"
+                                                          house_name="{{$v3.house_name}}"
+                                                          count="{{$v3.count}}"
+                                                          hall="{{$v3.hall}}"
+                                                          toilet="{{$v3.toilet}}"
+                                                          community_id="{{$v3.community_id}}"
+                                                          community_name="{{$v3.community_name}}"
+                                                          address="{{$v3.address}}"
+                                                          area_id="{{$v3.area_id}}"
+                                                          business_id="{{$v3.business_id}}"
+                                                          city_id="{{$v3.city_id}}"
+                                                          status="{{$v3.status}}"
+                                                          online_time="{{$v3.create_time}}"
+                                                          is_pic ="{{$v3.is_pic}}"
+                                                           is_recom="{{$v3.is_recom}}"
+                                                          totalsy = "{{count($v3.shiyouarea)}}"
+                                                          {{if count($v3.shiyouarea) gt 0}}
+                                                          {{foreach from=$v3.shiyouarea key=syk item=syarea}}
+                                                          syarea{{$syk}} = "{{$syarea}}"
+                                                          {{/foreach}}
+                                                          {{/if}}
+                                                          title="{{$v3.custom_number}}"
+                                                          >{{$v3.custom_number}}</span>
+                                                </div>
+                                                <input type="hidden" class="hide-msg" value="" />
+                                                <a href="javascript:;" dataUrl="{{'Plugins-SubSite/getDetails'|url}}" class="detail">详情</a>
+                                                              <span class="green {{if $v3.is_recom eq 1}}current{{/if}}">精</span>
+                                            </li>
+                                            {{/foreach}}
+                                        </ul>
+                                    </div>
+                                    {{/foreach}}
+                                </div>
+                            </div>
+                            {{/foreach}}
+                            {{/foreach}}
+                        </td>
+                        <!--分散式 e-->
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!--房源信息 e-->
+
+        <!--提交按钮 s-->
+        <div class="sub-btn">
+            <a href="javascript:;" flat_id="{{$flat_id}}" class="btn btn1 house-btn">保存</a>
+        </div>
+
+        <!--提交按钮 e-->
+
+    </div>
+    <!--首页 e-->
+
+</body>
+</html>

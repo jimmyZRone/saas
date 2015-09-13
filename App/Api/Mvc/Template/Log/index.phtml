@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>首页</title>
+        <link rel="stylesheet" type="text/css" href="{{$smarty.const.APP_WEB_STATIC_URL}}css/view.css"/>
+        <link rel="stylesheet" type="text/css" href="{{$smarty.const.APP_WEB_STATIC_URL}}js/dialog/artDialog/ui-dialog.css"/>
+        <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+        <style>
+            #main{ width:1400px; margin: 50px auto;}
+            body{background:#3D3D3D;}
+            #log{width:100%; height:800px;  padding: 10px; color:#fff; overflow: hidden; background:#2B303B; overflow-y: scroll; border:1px solid #ccc; text-align: left;}
+            span{color: #00FF00;}
+            .clear{float: right;}
+            select,img{float: left;vertical-align:top;}
+            .hide{visibility: hidden;}
+            .count{float: right; color:#fff; padding-right: 20px;}
+            b{table-layout:fixed; word-break: break-all; overflow:hidden; color: #fff;}
+
+            pre{
+                white-space: pre-wrap;       
+                white-space: -moz-pre-wrap;  
+                white-space: -pre-wrap;      
+                white-space: -o-pre-wrap;    
+                word-wrap: break-word;       
+            }
+        </style>
+    </head>
+    <body>
+
+        <div id="main">
+            <label><input type="checkbox" name="asdasd" checked="checked"  /><b>滚屏</b></label>
+            <select name="ip">
+                <option value="">全部客户端</option>
+                {{foreach $ip_list as $value}}
+                <option value="{{$value.unique_id}}">{{$value.unique_id}}</option>
+                {{/foreach}}
+            </select>
+
+            <button class="clear">清空页面日志</button>
+
+            <b class="count"></b>
+            <br style="clear: both;"/>
+            <div id="log">
+
+            </div>
+        </div>
+
+        <script>
+
+var id = '';
+show_log();
+var gun = true;
+$('input[name=asdasd]').click(function () {
+    gun = !gun;
+})
+$('.clear').click(function () {
+    $('#log').html('');
+})
+function show_log() {
+    $('img').removeClass('hide');
+    var ip = $('select[name=ip]').val();
+    $.post('{{$post_url}}', {'id': id, 'ip': ip}, function (result) {
+        $('.count').html("数据库总条数:" + result.count);
+        if (result.list.length == 0) {
+            $('img').addClass('hide');
+            setTimeout("show_log()", 1000);
+            return;
+        }
+        id = result.id;
+        $(result.list).each(function (i, s) {
+            var content = "<pre>" + s.text + "</pre>";
+            var html = "[" + s.id + "] [" + s.unique_id + "] " + s.create_time + "&nbsp;&nbsp;&nbsp;<b>" + content + "</b>";
+            $("#log").append(html);
+            $("#log").append("<hr/>");
+            if (i == (result.list.length - 1)) {
+                $('img').addClass('hide');
+                show_log();
+            }
+            if (gun)
+                $("#log").scrollTop($("#log").prop("scrollHeight"));
+        })
+    }, 'json'
+            )
+
+}
+
+
+
+function replaceURLWithHTMLLinks(text) {
+    var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+    return text.replace(exp, "<a target='__blank' href='$1'>$1</a>");
+}
+        </script>
+    </body>
+</html>

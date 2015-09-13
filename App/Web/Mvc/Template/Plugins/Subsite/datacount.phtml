@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+        <link rel="stylesheet" type="text/css" href="{{$smarty.const.APP_WEB_STATIC_URL}}css/plug-station.css?v={{$smarty.const.APP_WEB_VERSION}}" />
+        <script src="{{$smarty.const.APP_WEB_STATIC_URL}}js/seajs/seajs/2.1.0/sea.js" type="text/javascript" charset="utf-8"></script>
+        <script src="{{$smarty.const.APP_WEB_STATIC_URL}}js/config.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript">
+        		seajs.use("{{$smarty.const.APP_WEB_STATIC_URL}}js/plug-station_Js/opened_data_countJs.js")
+        </script>
+	</head>
+	<body style="background-color: #FFFFFF;">
+		<div class="data-count station" style="margin: 0; padding: 0;" dataurl="{{'Plugins-SubSite/datacount'|url}}" flat_id="{{$flat_id}}">
+			<!--信息 s-->
+			<div class="main-data">
+				<div class="main">
+					<div class="title">
+						<b>小站数据</b>
+					</div>
+					<div class="data-chart">
+						<div class="total">
+							<b class="fl total-fk">总访客数：<span>0</span>人</b>
+							<b class="fl total-sc">总收藏数：<span>0</span>人</b>
+							<b class="fl total-yy">总预约数：<span>0</span>人</b>
+							<div class="selectByM slt-100 fl" hasevent="true">
+								<input type="text" class="selectByMT total-month" readonly = 'readonly' selectVal = '{{$date[0]}}' value="{{$date[0]}}"/>
+								<span class='jt_Ctr'><span class='jt_box'></span></span>
+								<div class="selectByMO">
+									<ul>
+									   {{foreach from=$date item=v}}
+									       <li selectVal = '{{$v}}' {{if $benyue eq $v}}class="checked"{{/if}}>{{$v}}</li>
+									   {{/foreach}}
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="data-chart-con">
+
+						</div>
+					</div>
+				</div>
+
+				<div class="main">
+					<div class="title">
+						<b>如何分享我的小站</b>
+					</div>
+					<div class="fm">
+						<ul>
+							<li>
+								<b><i class="bit"></i>小站个性网址：</b>
+								<a href="javascript:;" class="personal-url" id="personal-url">{{$flat_id|getXzUrl}}</a>
+								<a href="javascript:;" class="copy-btn" data-clipboard-target="personal-url" >复制链接</a>
+								<span class="ml20 green">建议分享到微信朋友圈</span>
+							</li>
+							<li class="bdsharebuttonbox" data-tag="share_1">
+								<b><i class="bit"></i>链接分享至：</b>
+								<a href="javascript:;" class="bds_tsina icon icon1" data-cmd="tsina" title="分享到新浪微博"></a>
+								<a href="javascript:;" class="bds_douban icon icon2" data-cmd="douban" title="分享到豆瓣"></a>
+								<a href="javascript:;" class="bds_tqq icon icon3" data-cmd="tqq" title="分享到腾讯微博"></a>
+								<a href="javascript:;" class="bds_qzone icon icon4" data-cmd="qzone" title="分享到QQ空间"></a>
+								<a href="javascript:;" class="bds_weixin icon icon5" data-cmd="weixin" title="分享到微信朋友圈"></a>
+								<a href="javascript:;" class="bds_tqf icon icon6" data-cmd="tqf" title="分享到朋友网"></a>
+							</li>
+							<li>
+								<b><i class="bit"></i>小站二维码：</b>
+								<a href="javascript:;" class="code-img fl">
+									<img src="{{'Plugins-SubSite/createqrcode'|url|cat:'&data='}}{{$domain_name}}"/>
+								</a>
+								<div class="down fl">
+									<div class="down-col">
+										<div class="down-col-left">
+											<b>常规二维码</b>
+											<p>用于存放在电脑、手机上扫描</p>
+										</div>
+										<div class="down-col-right">
+                                            <a href="{{'Plugins-SubSite/createqrcode'|url|cat:'&size='|cat:10|cat:'&data='|cat:$domain_name}}" target="_blank" class="down-btn">下载</a>
+										</div>
+									</div>
+									<div class="down-col">
+										<div class="down-col-left">
+											<b>中型二维码</b>
+											<p>用于名片，尺寸700*803像素</p>
+										</div>
+										<div class="down-col-right">
+											<a href="{{'Plugins-SubSite/createqrcode'|url|cat:'&size='|cat:20|cat:'&data='|cat:$domain_name}}"  target="_blank"  class="down-btn">下载</a>
+										</div>
+									</div>
+									<div class="down-col">
+										<div class="down-col-left">
+											<b>巨型二维码</b>
+											<p>用于大尺寸喷绘，尺寸1500*1721像素</p>
+										</div>
+										<div class="down-col-right">
+											<a href="{{'Plugins-SubSite/createqrcode'|url|cat:'&size='|cat:30|cat:'&data='|cat:$domain_name}}"  target="_blank"  class="down-btn">下载</a>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+
+				<div class="main" style="display: none">
+					<div class="title">
+						<b>行业新闻分享</b>
+					</div>
+					<div class="news">
+						<ul>
+							<li>
+								<a href="javascript:;">一个爱思考文艺青年的豆瓣“寻租”记</a>
+							</li>
+							<li class="current">
+								<a href="javascript:;">【硅谷观察】没钱付房租，然后有了Airbnb</a>
+							</li>
+							<li>
+								<a href="javascript:;">玩腻了普通社交，那就来试试长租公寓社交O2O新玩法</a>
+							</li>
+							<li>
+								<a href="javascript:;">互联网颠覆房产中介的五个真问题</a>
+							</li>
+							<li>
+								<a href="javascript:;">【一周投融资小结】想租房给年轻人的可不止雷军</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!--信息 e-->
+		</div>
+		
+		
+		
+	</body>
+	<script type="text/javascript">
+		//分享
+		var url = document.getElementById("personal-url").text;
+		window._bd_share_config = {
+			common : {
+				bdText : '个性网址',	
+				bdDesc : '',	
+				bdUrl : url, 	
+				bdPic : ''
+			},
+			share : [{
+				"bdSize" : 14
+			}],
+			image : [{
+				viewType : 'list',
+				viewPos : 'top',
+				viewColor : 'black',
+				viewSize : '16',
+				viewList : ['qzone','tsina','huaban','tqq','renren']
+			}],
+			selectShare : [{
+				"bdselectMiniList" : ['qzone','tqq','kaixin001','bdxc','tqf']
+			}]
+		}
+		with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+	</script>
+</html>
+
+
+

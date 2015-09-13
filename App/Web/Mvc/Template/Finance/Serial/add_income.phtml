@@ -1,0 +1,739 @@
+<!--财务管理-流水统计 s-->
+<div class="finance_cost view add_income" hasform="true">
+	<div class="view-head" dataUrl="{{'finance-serial/roomsearchcontract'|url}}">
+		<h1>收入流水</h1>
+		<!-- <i class="ifont1 mr5 ml5">&#xe65e;</i>
+		<a href="javascript:;">打印</a> -->
+	</div>
+	<div class="view-con">
+		<ul class="view-ul">
+			<li class="cost-detail" id="li-spe">
+			    {{if $not_room != 'not_room'}}
+				    <b class="title-room"><i class="bit">*</i>房间：</b>
+				    <b class="title-city" style="display: none;"><i class="bit">*</i>城市：</b>
+    				<input type="text" class="ipt ipt-385 city-name" style="display: none;" />
+				{{elseif $not_room == 'not_room'}}
+    				<b class="title-city" ><i class="bit">*</i>城市：</b>
+    				<input type="text" class="ipt ipt-385 city-name" style="display: none;" />
+				{{/if}}
+				<!-- 租客合同收入流水添加 -->
+				{{if $tenant_contract_source == 'tenant_contract'}}
+				    {{if $house_type == 1}}<!-- 分散式 -->
+				        {{if $room_name.rental_way == 1}}<!-- 合租 -->
+    				        <input type="text" name="serial_income[room]" class="ipt ipt-385 cost-room" value="{{$room_name.house_name|cat:$room_name.room_type|cat:$room_name.r_custom_num|cat:'号'}}" placeholder="高新区-楠香山-1栋2单元2703" datatype="*" nullmsg="请输入房间名称" />
+    				    {{else}}<!-- 整租 -->
+    				        <input type="text" name="serial_income[room]" class="ipt ipt-385 cost-room" value="{{$room_name.house_name}}" placeholder="高新区-楠香山-1栋2单元2703" datatype="*" nullmsg="请输入房间名称" />
+    				    {{/if}}
+    				{{else}}<!-- 集中式 -->
+        				<input type="text" name="serial_income[room]" class="ipt ipt-385 cost-room" value="{{$room_name.f_name|cat:$room_name.floor|cat:'楼'|cat:$room_name.rf_custom_num|cat:'号'}}" placeholder="高新区-楠香山-1栋2单元2703" datatype="*" nullmsg="请输入房间名称" />
+				    {{/if}}
+				<!-- 新增收入流水编辑 -->
+				{{elseif isset($serial_id) && $not_room != 'not_room'}}
+				    {{if $room_serial_info.house_type == 1}}
+				        {{if $room_name.rental_way == 1}}<!-- 合租 -->
+        				    <input type="text" name="serial_income[room]" class="ipt ipt-385 cost-room" value="{{if isset($room_name)}}{{$room_name.h_name|cat:$room_name.room_type|cat:$room_name.r_custom_num|cat:'号'}}{{/if}}" placeholder="高新区-楠香山-1栋2单元2703" datatype="*" nullmsg="请输入房间名称" />
+        				{{else}}<!-- 整租 -->
+        				    <input type="text" name="serial_income[room]" class="ipt ipt-385 cost-room" value="{{if isset($room_name)}}{{$room_name.h_name}}{{/if}}" placeholder="高新区-楠香山-1栋2单元2703" datatype="*" nullmsg="请输入房间名称" />
+        				{{/if}}
+    				{{else}}
+    				    <input type="text" name="serial_income[room]" class="ipt ipt-385 cost-room" value="{{$room_name.flat_name|cat:$room_name.rf_floor|cat:'楼'|cat:$room_name.rf_custom_num|cat:'号'}}" placeholder="高新区-楠香山-1栋2单元2703" datatype="*" nullmsg="请输入房间名称" />
+				    {{/if}}
+				<!-- 欠费清单 -->
+				{{elseif isset($debts_info)}}
+				    {{if $debts_info.house_type == 1}}<!-- 分散 -->
+				        {{if $debts_info.rental_way == 1}}<!-- 合租 -->
+    				        <input type="text" name="serial_income[room]" class="ipt ipt-385 cost-room" value="{{$debts_info.h_name|cat:$debts_info.room_type|cat:$debts_info.r_custom_num|cat:'号'}}" placeholder="高新区-楠香山-1栋2单元2703" datatype="*" nullmsg="请输入房间名称" />
+    				    {{else}}<!-- 整租 -->
+    				        <input type="text" name="serial_income[room]" class="ipt ipt-385 cost-room" value="{{$debts_info.h_name}}" placeholder="高新区-楠香山-1栋2单元2703" datatype="*" nullmsg="请输入房间名称" />
+    				    {{/if}}
+    				{{else if $debts_info.house_type == 2}}<!-- 集中 -->
+        				<input type="text" name="serial_income[room]" class="ipt ipt-385 cost-room" value="{{$debts_info.flat_name|cat:$debts_info.floor|cat:'楼'|cat:$debts_info.rf_custom_num|cat:'号'}}" placeholder="高新区-楠香山-1栋2单元2703" datatype="*" nullmsg="请输入房间名称" />
+        		    {{else}}<!-- 非房间流水 -->
+        				<input type="text" name="serial_income[room]" class="ipt ipt-385 cost-room" value="{{$debts_info.house_name}}" placeholder="高新区-楠香山-1栋2单元2703" datatype="*" nullmsg="请输入房间名称" />
+    				{{/if}}
+    			<!-- 房间预定添加流水 -->
+    			{{elseif isset($reserve_id)}}
+    			    {{if $room_info.house_type == 1}}<!-- 分散式 -->
+    			        {{if $rental_way == 1}}<!-- 分散式合租 -->
+    				        <input type="text" name="serial_income[room]" class="ipt ipt-385 cost-room" value="{{$room_info.h_name|cat:$room_info.room_type|cat:$room_info.r_custom_num|cat:'号'}}" placeholder="高新区-楠香山-1栋2单元2703" datatype="*" nullmsg="请输入房间名称" />
+    				    {{else}}<!-- 分散式整租 -->
+    				        <input type="text" name="serial_income[room]" class="ipt ipt-385 cost-room" value="{{$room_info.h_name}}" placeholder="高新区-楠香山-1栋2单元2703" datatype="*" nullmsg="请输入房间名称" />
+    				    {{/if}}
+    				{{else}}<!-- 集中式 -->
+        				<input type="text" name="serial_income[room]" class="ipt ipt-385 cost-room" value="{{$room_info.flat_name|cat:$room_info.floor|cat:'楼'|cat:$room_info.rf_custom_num|cat:'号'}}" placeholder="高新区-楠香山-1栋2单元2703" datatype="*" nullmsg="请输入房间名称" />
+    				{{/if}}
+    			<!-- 房间抄表流水添加 -->
+    			{{elseif isset($meter)}}
+    			    {{if $meter_house_type == 1}}
+        				<input type="text" name="serial_income[room]" class="ipt ipt-385 cost-room" value="{{$house_name}}" placeholder="高新区-楠香山-1栋2单元2703" datatype="*" nullmsg="请输入房间名称" />
+        		    {{else}}
+        				<input type="text" name="serial_income[room]" class="ipt ipt-385 cost-room" value="{{$house_name}}" placeholder="高新区-楠香山-1栋2单元2703" datatype="*" nullmsg="请输入房间名称" />
+    			    {{/if}}
+    			<!-- 首页待办提醒收租 -->
+    			{{elseif isset($index_tenant_con_id)}}
+    			    {{if $rental_info.house_type == 1}}<!-- 分散式 -->
+                        {{if $rents_room_info.rental_way == 1}}<!-- 合租 -->
+    				        <input type="text" name="serial_income[room]" class="ipt ipt-385 cost-room" value="{{$rents_room_info.h_name|cat:$rents_room_info.room_type|cat:$rents_room_info.r_custom_num|cat:'号'}}" placeholder="高新区-楠香山-1栋2单元2703" datatype="*" nullmsg="请输入房间名称" />
+    				    {{else}}<!-- 整租 -->
+    				        <input type="text" name="serial_income[room]" class="ipt ipt-385 cost-room" value="{{$rents_room_info.h_name}}" placeholder="高新区-楠香山-1栋2单元2703" datatype="*" nullmsg="请输入房间名称" />
+    				    {{/if}}
+    				{{else}}<!-- 集中式 -->
+    				    <input type="text" name="serial_income[room]" class="ipt ipt-385 cost-room" value="{{$rents_room_info.flat_name|cat:$rents_room_info.floor|cat:'楼'|cat:$rents_room_info.rf_custom_num|cat:'号'}}" placeholder="高新区-楠香山-1栋2单元2703" datatype="*" nullmsg="请输入房间名称" />
+    				{{/if}}
+    		    <!-- 终止业主合同 -->
+    			{{elseif isset($landlord_contract_id)}}
+    				<input type="text" name="serial_income[room]" class="ipt ipt-385 cost-room" value="{{$landlord_con_info.house_name}}" placeholder="高新区-楠香山-1栋2单元2703" datatype="*" nullmsg="请输入房间名称" />
+    			{{elseif $not_room == 'not_room'}}
+    			<!-- 非房流水 -->
+    				<input type="text" name="serial_income[room]" disabled="disabled" class="ipt ipt-385 cost-room" value="{{$not_room_data[0].name}}" placeholder="高新区-楠香山-1栋2单元2703" datatype="cost_room"/>
+    			{{elseif $charge_source == 'room_charge'}}
+    			<!-- 分散式房源/集中式房源收费 -->
+    			    {{if $house_type == 1}}
+    			        {{if $room_name.rental_way == 1}}<!-- 分散式(整/合) -->
+                            <input type="text" name="serial_income[room]" class="ipt ipt-385 cost-room" value="{{$room_name.house_name|cat:$room_name.room_type|cat:$room_name.r_custom_num|cat:'号'}}" placeholder="高新区-楠香山-1栋2单元2703" datatype="*" nullmsg="请输入房间名称" />
+                        {{else}}
+                            <input type="text" name="serial_income[room]" class="ipt ipt-385 cost-room" value="{{$room_name.house_name}}" placeholder="高新区-楠香山-1栋2单元2703" datatype="*" nullmsg="请输入房间名称" />
+                        {{/if}}
+                    {{else}}<!-- 集中式 -->
+                        <input type="text" name="serial_income[room]" class="ipt ipt-385 cost-room" value="{{$room_name.f_name|cat:$room_name.floor|cat:'楼'|cat:$room_name.rf_custom_num|cat:'号'}}" placeholder="高新区-楠香山-1栋2单元2703" datatype="*" nullmsg="请输入房间名称" />
+                    {{/if}}
+    			{{else}}
+    			<!-- 新增收入流水 -->
+    				<input type="text" name="serial_income[room]" url="{{'finance-serial/wordSearchRoom'|url}}" class="ipt ipt-385 cost-room" value="" placeholder="高新区-楠香山-1栋2单元2703" datatype="cost_room" nullmsg="请输入房间名称" />
+				{{/if}}
+				<!-- 在编辑流水和欠费收费的时候,不显示 -->
+				{{if !isset($serial_id) && !isset($debts_info) && !isset($reserve_id) && !isset($contract_id) && !isset($meter) && !isset($index_tenant_con_id) && $not_room != 'not_room'}}
+    				<div class="check-box">
+    					<label><i class="choose ifont1">&#xe60c;</i></label>
+        				<input type="checkbox" value=""style="display: none;" />
+    					<span>非房间产生的流水</span>
+    				</div>
+    				<span class="check-error check-error-ts"></span>
+    			{{elseif $not_room == 'not_room'}}
+    				<div class="check-box li-spe-checkbox">
+                        <label class="checked"><i class="choose ifont1" style="display: inline;">&#xe60c;</i></label>
+                        <input type="checkbox" value="" style="display: none;" checked="checked"/>
+    					<span>非房间产生的流水</span>
+    				</div>
+    				<span class="check-error check-error-ts" style="display: block;"></span>
+				{{/if}}
+				
+			</li>
+			
+			
+			<!--根据房源名字拉费用数据 s-->
+			<div id="get_cost_income"></div>
+			
+			<script type="text/html" id="cost_mode_income">
+				{{'<% for (var i = 0; i < data.length; i ++) { %>'}}
+				<li class="cost-detail cost-detail-con" sn_id="{{$serial_id}}" detail_id="{{$fee_list.sd_id}}">
+					<div class="cd-t">
+						<b><i class="bit"></i>费用：</b>
+						<div class="selectByM slt-180" hasevent="true">
+							<input type="text" name="" class="selectByMT cost_type" readonly="readonly" selectVal="{{'<%=data[i].fee_type_id%>'}}" value="{{'<%=data[i].type_name%>'}}"/>
+							<span class='jt_Ctr'><span class='jt_box'></span></span>
+							<div class="selectByMO">
+								<ul>
+						            <li selectVal = "{{$list_fee.fee_type_id}}" class="selectedLi"></li>
+						            <li selectVal = "{{$list_fee.fee_type_id}}"></li>
+								</ul>
+							</div>
+						</div>
+						<b class="dte-40">金额：</b>
+						<input type="text" name="" class="ipt ipt-80 cost_num" placeholder="1500" value="{{'<%=data[i].money%>'}}" />
+						<span class="ml10">元</span>
+						<i class="ifont dte-30">&#xe675;</i>
+						<a href="javascript:;" url="{{'Finance-serial/deleteFee'|url}}" class="cd-btn">删除</a>
+					</div>
+					<div class="cd-b">
+						<b><i class="bit"></i>费用：</b>
+						<span class="cdb-con">冲减租金</span>
+						<b>金额：</b>
+						<input type="text" name="" class="ipt ipt-80" placeholder="1500" />
+						<span class="ml10">元</span>
+						<i class="ifont dte-30">&#xe675;</i>
+						<a href="javascript:;">删除</a>
+					</div>
+				</li>
+				{{'<%}%>'}}
+			</script>
+			<!--根据房源名字拉费用数据 e-->
+			
+			
+<!-- 财务流水编辑区域 -->
+			{{if isset($serial_id)}}
+    			{{foreach from=$room_fee_info item=fee_list key=k}}
+    				<li class="cost-detail cost-detail-con" sn_id="{{$serial_id}}" detail_id="{{$fee_list.sd_id}}">
+    					<div class="cd-t">
+    						<b><i class="bit"></i>费用：</b>
+    						<div class="selectByM slt-180" hasevent="true">
+    							<input type="text" name="serial_income[fee_type{{$k}}]" class="selectByMT cost_type" readonly = 'readonly' selectVal = '{{$fee_list.fee_type_id}}' value="{{$fee_list.type_name}}"/>
+    							<span class='jt_Ctr'><span class='jt_box'></span></span>
+    							<div class="selectByMO">
+    								<ul>
+    								    {{foreach from=$fee_type_list key=key item=fee}}
+    								        {{if $fee_list.fee_type_id == $fee.fee_type_id}}
+    								            <li selectVal = "{{$fee.fee_type_id}}" class="selectedLi">{{$fee.type_name}}</li>
+    								        {{else}}
+    								            <li selectVal = "{{$fee.fee_type_id}}">{{$fee.type_name}}</li>
+    								        {{/if}}
+    								    {{/foreach}}
+    								</ul>
+    							</div>
+    						</div>
+    						<b class="dte-40">金额：</b>
+    						<input type="text" name="serial_income[fee_sum{{$k}}]" value="{{if isset($fee_list.sd_money)}}{{$fee_list.sd_money}}{{/if}}" class="ipt ipt-80 cost_num" datatype="cost_num" nullmsg="请填写费用金额" errormsg="费用金额格式错误" placeholder="1500" />
+    						<span class="ml10">元</span>
+    						{{if !isset($fee_list.strike_id)}}
+        						<i class="ifont1 yellow dte-30">&#xe778;</i>
+        			            <a href="javascript:;" url="{{'finance-serial/strikeBalanceSum'|url}}" class="checkout">冲账</a>
+    			            {{/if}}
+    						<i class="ifont dte-30">&#xe675;</i>
+    						<a href="javascript:;" url="{{'finance-serial/deletefee'|url}}" class="cd-btn">删除</a>
+    						<span class="check-error check-error-ts"></span>
+    					</div>
+    					<!--点击冲账更改保存后才显示 s-->
+    					{{if isset($fee_list.strike_id)}}
+					    <div class="" flag="edit">
+    						<b><i class="bit"></i>费用：</b>
+    						<span class="cdb-con">冲减费用</span>
+    						<b>金额：</b>
+    						<input type="text" name="serial_income[fee_offset{{$k}}]" value="{{if isset($fee_list.strike_id)}}{{$fee_list.money}}{{/if}}" class="ipt ipt-80 fee_offset chz_record" />
+    						<span class="ml10">元</span>
+    						<!--<i class="ifont dte-30">&#xe675;</i>
+    						<a href="javascript:;">删除</a>-->
+    					</div>
+    					{{else}}
+    					<div class="cd-b">
+    						<b><i class="bit"></i>费用：</b>
+    						<span class="cdb-con">冲减费用</span>
+    						<b>金额：</b>
+    						<input type="text" name="serial_income[fee_offset{{$k}}]" value="{{if isset($fee_list.strike_id)}}{{$fee_list.money}}{{/if}}" class="ipt ipt-80 fee_offset chz_record" />
+    						<span class="ml10">元</span>
+    						<!--<i class="ifont dte-30">&#xe675;</i>
+    						<a href="javascript:;">删除</a>-->
+					    </div>
+    					{{/if}}
+    				</li>
+    			{{/foreach}}
+			{{/if}}
+
+<!-- 收取欠费清单金额 -->
+			{{if isset($debts_info)}}
+    				<li class="cost-detail cost-detail-con">
+    					<div class="cd-t">
+    						<b><i class="bit"></i>费用：</b>
+    						<div class="selectByM slt-180" hasevent="true">
+    							<input type="text" name="serial_income[fee_type{{$k}}]" class="selectByMT cost_type" readonly = 'readonly' selectVal = '{{$debts_fee_type.fee_type_id}}' value="{{$debts_fee_type.type_name}}"/>
+    							<span class='jt_Ctr'><span class='jt_box'></span></span>
+    							<div class="selectByMO">
+    								<ul>
+								        <li selectVal = "{{$debts_fee_type.fee_type_id}}" class="selectedLi">{{$debts_fee_type.type_name}}</li>
+    								</ul>
+    							</div>
+    						</div>
+    						<b class="dte-40">金额：</b>
+    						<input type="text" name="serial_income" value="{{$debts_fee_type.money}}" class="ipt ipt-80 cost_num" placeholder="1500" datatype="cost_num" nullmsg="请填写费用金额" errormsg="费用金额格式错误" />
+    						<span class="ml10">元</span>
+    						<i class="ifont dte-30">&#xe675;</i>
+    						<a href="javascript:;" url="{{'finance-serial/deletefee'|url}}" class="cd-btn">删除</a>
+    						<span class="check-error check-error-ts"></span>
+    					</div>
+    				</li>
+			{{/if}}
+			
+<!-- 添加预定房间成功后 的收入流水 -->
+			{{if isset($reserve_id)}}
+			    <li class="cost-detail cost-detail-con">
+					<div class="cd-t">
+						<b><i class="bit"></i>费用：</b>
+						<div class="selectByM slt-180" hasevent="true">
+							<input type="text" name="serial_income[fee_type{{$k}}]" class="selectByMT cost_type" readonly = 'readonly' selectVal = '{{$deposit_fee.fee_type_id}}' value="{{$deposit_fee.type_name}}"/>
+							<span class='jt_Ctr'><span class='jt_box'></span></span>
+							<div class="selectByMO">
+								<ul>
+							        <li selectVal = "{{$deposit_fee.fee_type_id}}" class="selectedLi">{{$deposit_fee.type_name}}</li>
+								</ul>
+							</div>
+						</div>
+						<b class="dte-40">金额：</b>
+						<input type="text" name="serial_income" value="{{$room_info.money}}" class="ipt ipt-80 cost_num" placeholder="1500" datatype="cost_num" nullmsg="请填写费用金额" errormsg="费用金额格式错误" />
+						<span class="ml10">元</span>
+						<i class="ifont dte-30">&#xe675;</i>
+						<a href="javascript:;" url="{{'finance-serial/deletefee'|url}}" class="cd-btn">删除</a>
+						<span class="check-error check-error-ts"></span>
+					</div>
+    			</li>
+			{{/if}}
+
+<!-- 租客合同流水新增的位置 -->
+			{{if $tenant_contract_source == 'tenant_contract'}}
+			    <!-- 该房间费用类型循环 -->
+    			{{foreach from=$fee_type_arr item=room_fee}}
+    				<li class="cost-detail cost-detail-con">
+    					<div class="cd-t">
+    						<b><i class="bit"></i>费用：</b>
+    						<div class="selectByM slt-180" hasevent="true">
+    							<input type="text" name="serial_income[fee_type{{$k}}]" class="selectByMT cost_type" readonly = 'readonly' selectVal = '{{$room_fee.fee_type_id}}' value="{{$room_fee.type_name}}"/>
+    							<span class='jt_Ctr'><span class='jt_box'></span></span>
+    							<div class="selectByMO">
+    								<ul>
+    								    {{foreach from=$fee_type_list item=list_fee}}
+    								        {{if $room_fee.fee_type_id == $list_fee.fee_type_id}}
+    								            <li selectVal = "{{$list_fee.fee_type_id}}" class="selectedLi">{{$list_fee.type_name}}</li>
+    								        {{else}}
+    								            <li selectVal = "{{$list_fee.fee_type_id}}">{{$list_fee.type_name}}</li>
+    								        {{/if}}
+    								    {{/foreach}}
+    								</ul>
+    							</div>
+    						</div>
+    						<b class="dte-40">金额：</b>
+    						<input type="text" name="serial_income[fee_sum{{$k}}]" value="{{$room_fee.money}}" class="ipt ipt-80 cost_num" placeholder="1500" datatype="cost_num" nullmsg="请填写费用金额" errormsg="费用金额格式错误" />
+    						<span class="ml10">元</span>
+    						<i class="ifont dte-30">&#xe675;</i>
+    						<a href="javascript:;" url="" class="cd-btn">删除</a>
+    						<span class="check-error check-error-ts"></span>
+    					</div>
+    					<!--点击冲账更改保存后才显示 s-->
+    					<div class="cd-b">
+    						<b><i class="bit"></i>费用：</b>
+    						<span class="cdb-con">冲减费用</span>
+    						<b>金额：</b>
+    						<input type="text" name="serial_income[fee_offset{{$k}}]" class="ipt ipt-80 fee_offset" />
+    						<span class="ml10">元</span>
+    						<!--<i class="ifont dte-30">&#xe675;</i>
+    						<a href="javascript:;">删除</a>-->
+    					</div>
+    				</li>
+    			{{/foreach}}
+    		{{/if}}
+    		
+<!-- 房间抄表数据部分 -->
+			{{if $meter == 'meter_read'}}
+			    <!-- 该房间费用类型循环 -->
+    			{{foreach from=$meter_fee_type item=room_fee}}
+    				<li class="cost-detail cost-detail-con">
+    					<div class="cd-t">
+    						<b><i class="bit"></i>费用：</b>
+    						<div class="selectByM slt-180" hasevent="true">
+    							<input type="text" name="serial_income[fee_type{{$k}}]" class="selectByMT cost_type" readonly = 'readonly' selectVal = '{{$room_fee.fee_type_id}}' value="{{$room_fee.type_name}}"/>
+    							<span class='jt_Ctr'><span class='jt_box'></span></span>
+    							<div class="selectByMO">
+    								<ul>
+    								    {{foreach from=$meter_fee_type item=list_fee}}
+    								        {{if $room_fee.fee_type_id == $list_fee.fee_type_id}}
+    								            <li selectVal = "{{$list_fee.fee_type_id}}" class="selectedLi">{{$list_fee.type_name}}</li>
+    								        {{else}}
+    								            <li selectVal = "{{$list_fee.fee_type_id}}">{{$list_fee.type_name}}</li>
+    								        {{/if}}
+    								    {{/foreach}}
+    								</ul>
+    							</div>
+    						</div>
+    						<b class="dte-40">金额：</b>
+    						<input type="text" name="serial_income[fee_sum{{$k}}]" value="{{$room_fee.money}}" class="ipt ipt-80 cost_num" placeholder="1500" datatype="cost_num" nullmsg="请填写费用金额" errormsg="费用金额格式错误" />
+    						<span class="ml10">元</span>
+    						<i class="ifont dte-30">&#xe675;</i>
+    						<a href="javascript:;" url="" class="cd-btn">删除</a>
+    						<span class="check-error check-error-ts"></span>
+    					</div>
+    					<!--点击冲账更改保存后才显示 s-->
+    					<div class="cd-b">
+    						<b><i class="bit"></i>费用：</b>
+    						<span class="cdb-con">冲减费用</span>
+    						<b>金额：</b>
+    						<input type="text" name="serial_income[fee_offset{{$k}}]" class="ipt ipt-80 fee_offset" />
+    						<span class="ml10">元</span>
+    						<i class="ifont dte-30">&#xe675;</i>
+    						<a href="javascript:;">删除</a>
+    					</div>
+    				</li>
+    			{{/foreach}}
+			{{/if}}
+			
+<!-- 首页待办提醒收租 -->
+			{{if isset($index_tenant_con_id)}}
+				{{foreach from=$fee_type_arr item=room_fee}}
+    				<li class="cost-detail cost-detail-con">
+    					<div class="cd-t">
+    						<b><i class="bit"></i>费用：</b>
+    						<div class="selectByM slt-180" hasevent="true">
+    							<input type="text" name="serial_income[fee_type{{$k}}]" class="selectByMT cost_type" readonly = 'readonly' selectVal = '{{$room_fee.fee_type_id}}' value="{{$room_fee.type_name}}"/>
+    							<span class='jt_Ctr'><span class='jt_box'></span></span>
+    							<div class="selectByMO">
+    								<ul>
+    								    {{foreach from=$fee_type_list item=list_fee}}
+    								        {{if $room_fee.fee_type_id == $list_fee.fee_type_id}}
+    								            <li selectVal = "{{$list_fee.fee_type_id}}" class="selectedLi">{{$list_fee.type_name}}</li>
+    								        {{else}}
+    								            <li selectVal = "{{$list_fee.fee_type_id}}">{{$list_fee.type_name}}</li>
+    								        {{/if}}
+    								    {{/foreach}}
+    								</ul>
+    							</div>
+    						</div>
+    						<b class="dte-40">金额：</b>
+    						<input type="text" name="serial_income[fee_sum{{$k}}]" value="{{$room_fee.money}}" class="ipt ipt-80 cost_num" placeholder="1500" datatype="cost_num" nullmsg="请填写费用金额" errormsg="费用金额格式错误" />
+    						<span class="ml10">元</span>
+    						<i class="ifont dte-30">&#xe675;</i>
+    						<a href="javascript:;" url="" class="cd-btn">删除</a>
+    						<span class="check-error check-error-ts"></span>
+    					</div>
+    					<!--点击冲账更改保存后才显示 s-->
+    					<div class="cd-b">
+    						<b><i class="bit"></i>费用：</b>
+    						<span class="cdb-con">冲减费用</span>
+    						<b>金额：</b>
+    						<input type="text" name="serial_income[fee_offset{{$k}}]" class="ipt ipt-80 fee_offset" />
+    						<span class="ml10">元</span>
+    						<!--<i class="ifont dte-30">&#xe675;</i>
+    						<a href="javascript:;">删除</a>-->
+    					</div>
+    				</li>
+    			{{/foreach}}
+			{{/if}}
+<!-- 终止业主合同 -->
+            {{if isset($landlord_contract_id)}}
+			    <!-- 该房间费用类型循环 -->
+				<li class="cost-detail cost-detail-con">
+					<div class="cd-t">
+						<b><i class="bit"></i>费用：</b>
+						<div class="selectByM slt-180" hasevent="true">
+							<input type="text" name="serial_income[fee_type{{$k}}]" class="selectByMT cost_type" readonly = 'readonly' selectVal = '{{$end_landlord_fee.fee_type_id}}' value="{{$end_landlord_fee.type_name}}"/>
+							<span class='jt_Ctr'><span class='jt_box'></span></span>
+							<div class="selectByMO">
+								<ul>
+							        <li selectVal = "{{$end_landlord_fee.fee_type_id}}" class="selectedLi">{{$end_landlord_fee.type_name}}</li>
+								</ul>
+							</div>
+						</div>
+						<b class="dte-40">金额：</b>
+						<input type="text" name="serial_income[fee_sum{{$k}}]" value="{{$end_landlord_fee.money}}" class="ipt ipt-80 cost_num" placeholder="1500" datatype="cost_num" nullmsg="请填写费用金额" errormsg="费用金额格式错误" />
+						<span class="ml10">元</span>
+						<i class="ifont dte-30">&#xe675;</i>
+						<a href="javascript:;" url="" class="cd-btn">删除</a>
+						<span class="check-error check-error-ts"></span>
+					</div>
+					<!--点击冲账更改保存后才显示 s-->
+					<div class="cd-b">
+						<b><i class="bit"></i>费用：</b>
+						<span class="cdb-con">冲减费用</span>
+						<b>金额：</b>
+						<input type="text" name="serial_income[fee_offset{{$k}}]" class="ipt ipt-80 fee_offset" />
+						<span class="ml10">元</span>
+						<i class="ifont dte-30">&#xe675;</i>
+						<a href="javascript:;">删除</a>
+					</div>
+				</li>
+			{{/if}}
+<!-- 非房间流水 -->
+			{{if $not_room == 'not_room'}}
+                {{foreach from=$not_room_data item=fee_list key=k}}
+    				<li class="cost-detail cost-detail-con" sn_id="{{$serial_id}}" detail_id="{{$fee_list.sd_id}}">
+    					<div class="cd-t">
+    						<b><i class="bit"></i>费用：</b>
+    						<div class="selectByM slt-180" hasevent="true">
+    							<input type="text" name="serial_income[fee_type{{$k}}]" class="selectByMT cost_type" readonly = 'readonly' selectVal = '{{$fee_list.fee_type_id}}' value="{{$fee_list.type_name}}"/>
+    							<span class='jt_Ctr'><span class='jt_box'></span></span>
+    							<div class="selectByMO">
+    								<ul>
+    								    {{foreach from=$fee_type_list key=key item=fee}}
+    								        {{if $fee_list.fee_type_id == $fee.fee_type_id}}
+    								            <li selectVal = "{{$fee.fee_type_id}}" class="selectedLi">{{$fee.type_name}}</li>
+    								        {{else}}
+    								            <li selectVal = "{{$fee.fee_type_id}}">{{$fee.type_name}}</li>
+    								        {{/if}}
+    								    {{/foreach}}
+    								</ul>
+    							</div>
+    						</div>
+    						<b class="dte-40">金额：</b>
+    						<input type="text" name="serial_income[fee_sum{{$k}}]" value="{{if isset($fee_list.sd_money)}}{{$fee_list.sd_money}}{{/if}}" class="ipt ipt-80 cost_num" placeholder="1500" datatype="cost_num" nullmsg="请填写费用金额" errormsg="费用金额格式错误" />
+    						<span class="ml10">元</span>
+    						{{if !isset($fee_list.strike_id)}}
+        						<i class="ifont1 yellow dte-30">&#xe778;</i>
+        			            <a href="javascript:;" url="{{'finance-serial/strikeBalanceSum'|url}}" class="checkout">冲账</a>
+    			            {{/if}}
+    						<i class="ifont dte-30">&#xe675;</i>
+    						<a href="javascript:;" url="{{'Finance-serial/deleteFee'|url}}" class="cd-btn">删除</a>
+    						<span class="check-error check-error-ts"></span>
+    					</div>
+    					<!--点击冲账更改保存后才显示 s-->
+    					{{if isset($fee_list.strike_id)}}
+					    <div class="" flag="edit">
+    						<b><i class="bit"></i>费用：</b>
+    						<span class="cdb-con">冲减费用</span>
+    						<b>金额：</b>
+    						<input type="text" name="serial_income[fee_offset{{$k}}]" value="{{if isset($fee_list.strike_id)}}{{$fee_list.money}}{{/if}}" class="ipt ipt-80 fee_offset chz_record" />
+    						<span class="ml10">元</span>
+    						<!--<i class="ifont dte-30">&#xe675;</i>
+    						<a href="javascript:;">删除</a>-->
+    					</div>
+    					{{else}}
+    					<div class="cd-b">
+    						<b><i class="bit"></i>费用：</b>
+    						<span class="cdb-con">冲减费用</span>
+    						<b>金额：</b>
+    						<input type="text" name="serial_income[fee_offset{{$k}}]" value="{{if isset($fee_list.strike_id)}}{{$fee_list.money}}{{/if}}" class="ipt ipt-80 fee_offset" />
+    						<span class="ml10">元</span>
+    						<!--<i class="ifont dte-30">&#xe675;</i>
+    						<a href="javascript:;">删除</a>-->
+					    </div>
+    					{{/if}}
+    				</li>
+    			{{/foreach}}
+			{{/if}}
+<!-- 房间收费 -->
+			{{if $charge_source == 'room_charge'}}
+			    {{foreach from=$fee_type_arr item=room_fee}}
+    				<li class="cost-detail cost-detail-con">
+    					<div class="cd-t">
+    						<b><i class="bit"></i>费用：</b>
+    						<div class="selectByM slt-180" hasevent="true">
+    							<input type="text" name="serial_income[fee_type{{$k}}]" class="selectByMT cost_type" readonly = 'readonly' selectVal = '{{$room_fee.fee_type_id}}' value="{{$room_fee.type_name}}"/>
+    							<span class='jt_Ctr'><span class='jt_box'></span></span>
+    							<div class="selectByMO">
+    								<ul>
+    								    {{foreach from=$fee_type_list item=list_fee}}
+    								        {{if $room_fee.fee_type_id == $list_fee.fee_type_id}}
+    								            <li selectVal = "{{$list_fee.fee_type_id}}" class="selectedLi">{{$list_fee.type_name}}</li>
+    								        {{else}}
+    								            <li selectVal = "{{$list_fee.fee_type_id}}">{{$list_fee.type_name}}</li>
+    								        {{/if}}
+    								    {{/foreach}}
+    								</ul>
+    							</div>
+    						</div>
+    						<b class="dte-40">金额：</b>
+    						<input type="text" name="serial_income[fee_sum{{$k}}]" value="{{$room_fee.money}}" class="ipt ipt-80 cost_num" placeholder="1500" datatype="cost_num" nullmsg="请填写费用金额" errormsg="费用金额格式错误" />
+    						<span class="ml10">元</span>
+    						<i class="ifont dte-30">&#xe675;</i>
+    						<a href="javascript:;" url="" class="cd-btn">删除</a>
+    						<span class="check-error check-error-ts"></span>
+    					</div>
+    				</li>
+    			{{/foreach}}
+			{{/if}}
+		</ul>
+	</div>
+	
+	<div class="view-con cost-add">
+		<ul>
+			<li class="view-add-cost">
+				<i class="ifont">&#xf0037;</i>
+				<a href="javascript:;" class="add-cost">添加费用</a>
+			</li>
+			<li>
+				<b class="pay-ways"><i class="bit">*</i>交易时间：</b>
+				{{if isset($serial_id) && $not_room != 'not_room'}}<!-- 编辑房间流水 -->
+				    <input type="text" name="serial_income[pay_time]" class="ipt ipt-200 date cost-time mr5" readonly="readonly" value="{{$room_serial_info.pay_time|date_format:"%Y-%m-%d"}}" datatype="*" nullmsg="请填写时间" />
+				{{elseif $not_room == 'not_room'}}<!-- 非房间流水 -->
+				    <input type="text" name="serial_income[pay_time]" class="ipt ipt-200 date cost-time mr5" readonly="readonly" value="{{$not_room_data[0].pay_time|date_format:"%Y-%m-%d"}}" datatype="*" nullmsg="请填写时间" />
+				{{else}}
+				    <input type="text" name="serial_income[pay_time]" class="ipt ipt-200 date cost-time mr5" readonly="readonly" value="" datatype="*" nullmsg="请填写时间" />
+				{{/if}}
+				<b class="dte-65 pay-ways"><i class="bit">*</i>支付方式：</b>
+				<div class="selectByM slt-200">
+				{{if isset($serial_id) && $not_room != 'not_room'}}<!-- 编辑房间流水 -->
+					<input type="text" name="serial_income[pay_type]" class="selectByMT cost-ways" readonly = 'readonly' selectVal = '{{$room_serial_info.payment_mode}}' value="{{$room_serial_info.payment_mode}}" datatype="costWays" nullmsg="请选择支付方式" />
+				{{elseif $not_room == 'not_room'}}<!-- 非房间流水 -->
+					<input type="text" name="serial_income[pay_type]" class="selectByMT cost-ways" readonly = 'readonly' selectVal = '{{$not_room_data[0].payment_mode}}' value="{{$not_room_data[0].payment_mode}}" datatype="costWays" nullmsg="请选择支付方式" />
+				{{else}}
+					<input type="text" name="serial_income[pay_type]" class="selectByMT cost-ways" readonly = 'readonly' selectVal = '0' value="" datatype="costWays" nullmsg="请选择支付方式" />
+				{{/if}}
+					<span class='jt_Ctr'><span class='jt_box'></span></span>
+					<div class="selectByMO">
+						<ul>
+						    {{foreach from=$pay_type item=val}}
+							<li selectVal = {{$val}}>{{$val}}</li>
+							{{/foreach}}
+						</ul>
+					</div>
+				</div>
+				<span class="check-error check-error-ts"></span>
+			</li>
+			<li class="mark">
+				<b><i class="bit"></i>备注：</b>
+				{{if isset($serial_id) && $not_room != 'not_room'}}<!-- 流水编辑 -->
+				    <textarea name="serial_income[remark]" class="i-txt">{{$room_serial_info.remark}}</textarea>
+				{{elseif $not_room == 'not_room'}}<!-- 非房间编辑 -->
+				    <textarea name="serial_income[remark]" class="i-txt">{{$not_room_data[0].remark}}</textarea>
+				{{else}}
+				    <textarea name="serial_income[remark]" class="i-txt"></textarea>
+				{{/if}}
+			</li>
+		</ul>
+	</div>
+	
+	<div class="view-con cost-total">
+		<ul>
+			<li>
+				<b>共计应收：</b>
+				<span name="receivable" class="red receivable">{{if isset($serial_id)}}{{$room_serial_info.receivable}}{{/if}}</span>
+				<b>元，已收：</b>
+				{{if isset($debts_info)}}<!-- 欠费清单 -->
+				    <input type="text" name="serial_income" class="ipt ipt-80 has-collect" value="{{$debts_info.money}}" datatype="has_collect" nullmsg="请填写已收金额" errormsg="已收金额格式不正确" />
+				{{elseif isset($serial_id) && $not_room != 'not_room'}}<!-- 编辑流水 -->
+				    <input type="text" name="serial_income[yi_shou]" flag="flag" class="ipt ipt-80 has-collect" value="{{$room_serial_info.money}}" datatype="has_collect" nullmsg="请填写已收金额" errormsg="已收金额格式不正确" />
+				{{elseif $not_room == 'not_room'}}<!-- 非房间流水 -->
+				    <input type="text" name="serial_income[yi_shou]" flag="flag" class="ipt ipt-80 has-collect" value="{{$not_room_data[0].sn_money}}" datatype="has_collect" nullmsg="请填写已收金额" errormsg="已收金额格式不正确" />
+				{{else}}
+				    <input type="text" name="serial_income[yi_shou]" class="ipt ipt-80 has-collect" value="" datatype="has_collect" nullmsg="请填写已收金额" errormsg="已收金额格式不正确" />
+				{{/if}}
+				<span class="ml5">元</span>
+				<!-- 如果是收取欠费, 就不需要显示-->
+				{{if !isset($debts_info) && !isset($reserve_id)}}
+				<div class="operate-box fl" {{if isset($serial_id) && $room_serial_info.status == 2}}style="display: block;"{{/if}}>
+					<div class="radio-box dte-60">
+					{{if isset($serial_id) && $room_serial_info.status == 1}}
+    					<label class="radio checked">
+    						<i class="ifont r-default" style="display: none;">&#xe612;</i>
+    						<i class="ifont r-select" style="display: block;">&#xe617;</i>
+						</label>
+    					<input type="radio" name="serial_income[type]" value="" data-type="1" checked="checked"/>
+					{{else}}
+    					<label class="radio">
+    						<i class="ifont r-default" style="display: block;">&#xe612;</i>
+    						<i class="ifont r-select" style="display: none;">&#xe617;</i>
+						</label>
+    					<input type="radio" name="serial_income[type]" value="" data-type="1" />
+					{{/if}}
+    					<span>差额减免</span>
+    				</div>
+    				<div class="radio-box radio-type">
+    				{{if isset($serial_id) && $room_serial_info.status == 2}}
+    					<label class="radio checked">
+    						<i class="ifont r-default" style="display: none;">&#xe612;</i>
+    						<i class="ifont r-select" style="display: inline;">&#xe617;</i>
+						</label>
+    					<input type="radio" name="serial_income[type]" value="" data-type="2" checked="checked"/>
+    				{{else}}
+    					<label class="radio">
+    						<i class="ifont r-default" style="display: block;">&#xe612;</i>
+    						<i class="ifont r-select" style="display: none;">&#xe617;</i>
+						</label>
+    					<input type="radio" name="serial_income[type]" value="" data-type="2"/>
+    				{{/if}}
+    					<span>加入欠费清单</span>
+    				</div>
+    				<div class="pay-time ml20" {{if isset($serial_id) && $room_serial_info.status == 2}}style="display: block;"{{else}}style="display: none;"{{/if}}>
+    					<b>预约缴费：</b>
+    					<input type="text" name="serial_income[arrear_time]" class="ipt ipt-150 date destine-time" value="{{$room_serial_info.subscribe_pay_time|date_format:"%Y-%m-%d"}}" placeholder="2014-04-18" datatype="destine-time" nullmsg="请填写预约缴费时间" />
+    				</div>
+				</div>
+				{{/if}}
+				<span class="check-error check-error-ts"></span>
+			</li>
+		</ul>
+	</div>
+	
+	<div class="view-btn">
+	    <!-- 1 欠费清单 -->
+	    {{if isset($debts_info)}}
+		    <a href="javascript:;" sub_type="debts" debts_id="{{$debts_info.debts_id}}" url="{{'Finance-serial/editIncome/debts_id/'|cat:$debts_info.debts_id|url}}" class="btn btn2 add-income-btn">保存</a>
+		<!-- 2 抄表流水 -->
+		{{elseif $meter}}
+    		<a href="javascript:;" sub_type="meter" house_id="{{$house_id}}" room_id="{{$room_id}}" me_house_type="{{$meter_house_type}}" url="{{'Finance-serial/addIncome'|url}}" class="btn btn2 add-income-btn">保存</a>
+        <!-- 3 新增收入编辑 -->
+		{{elseif isset($serial_id)}}
+		    <a href="javascript:;" sub_type="editIncome" sn_id="{{$serial_id}}" room_id="{{$room_id}}" house_type="{{$house_type}}" house_id="{{$house_id}}" url="{{'Finance-serial/editIncome/serial_id/'|cat:$serial_id|url}}" class="btn btn2 add-income-btn">保存</a>
+		<!-- 4 首页待办提醒收租 -->
+		{{elseif isset($index_tenant_con_id)}}
+		    <a href="javascript:;" sub_type="collect_rents" index_tenant_con_id="{{$index_tenant_con_id}}" house_type="{{$rental_info.house_type}}" house_id="{{$rental_info.house_id}}" room_id="{{$rental_info.room_id}}" url="{{'Finance-serial/addIncome'|url}}" class="btn btn2 add-income-btn">保存</a>
+		<!-- 5 添加预定房间成功后 的收入流水 -->
+		{{elseif isset($reserve_id)}}
+		    <a href="javascript:;" sub_type="room_reserve" reserve_source="{{$reserve_source}}" reserve_id="{{$reserve_id}}" room_id="{{$reserve_info.room_id}}" house_type="{{$reserve_info.house_type}}" house_id="{{$reserve_info.house_id}}" url="{{'Finance-serial/addIncome'|url}}" class="btn btn2 add-income-btn">保存</a>
+		<!-- 6 添加租客合同 -->
+		{{elseif $tenant_contract_source == 'tenant_contract'}}
+		    <a href="javascript:;" sub_type="tenant_contract" contract_id="{{$contract_id}}" con_house_type="{{$house_type}}" url="{{'Finance-serial/addIncome'|url}}" class="btn btn2 add-income-btn">保存</a>
+		<!-- 7 终止业主合同 -->
+		{{elseif isset($landlord_contract_id)}}
+		    <a href="javascript:;" sub_type="end_lc_contract" house_type="{{$landlord_con_info.house_type}}" lc_contract_id="{{$landlord_contract_id}}" url="{{'Finance-serial/addIncome'|url}}" class="btn btn2 add-income-btn">保存</a>
+		<!-- 8 房间收费 -->
+		{{elseif $charge_source == 'room_charge'}}
+		    <a href="javascript:;" sub_type="room_charge" house_type="{{$house_type}}" tc_contract_id="{{$contract_id}}" house_id="{{$room_name.house_id}}" room_id="{{$room_name.room_id}}" con_detail="{{$con_detail}}" url="{{'Finance-serial/newaddincome'|url}}" class="btn btn2 add-income-btn">保存</a>
+		{{else}}
+		<!-- 新增收入 -->
+		    <a href="javascript:;" url="{{'Finance-serial/addIncome'|url}}" class="btn btn2 add-income-btn">保存</a>
+		{{/if}}
+            <a href="javascript:;" class="btn btn4 cancel btn-cancel">取消</a>
+	</div>
+</div>
+<!--财务管理-流水统计 e-->
+
+<!--冲账功能弹窗 s-->
+<div id="hide-checkout" class="none">
+	<div class="checkout-con">
+		<ul>
+			<li>
+				<b><i>*</i>授权密码：</b>
+				<input type="password" name="strike[pass]" class="ipt ipt-250 auth_pwd" datatype="*6-18" nullmsg="请填写密码" errormsg="密码由6到18位字符组成" />
+				<!--<span class="ml10">密码请咨询主账号</span>-->
+				<span class="check-error check-error-ts"></span>
+			</li>
+			<li>
+				<b><i></i>当前金额：</b>
+				<input type="text" name="strike[current_sum]" class="ipt ipt-250 cur_num" readonly="readonly" />
+			</li>
+			<li>
+				<b><i>*</i>冲账金额：</b>
+				<input type="text" name="strike[balance_sum]" class="ipt ipt-250 checkout-num" placeholder="最大金额为当前金额" datatype="checkout_num" nullmsg="请填写冲账金额" errormsg="冲账金额格式不正确" />
+				<span class="check-error check-error-ts"></span>
+			</li>
+			<li>
+				<b><i>*</i>备　　注：</b>
+				<textarea name="strike[balance_mark]" class="i-txt checkout-mark" datatype="*" nullmsg="请填写备注信息"></textarea>
+				<span class="check-error check-error-ts"></span>
+			</li>
+			<li class="checkout-btn">
+				<a href="javascript:;" class="btn btn2 checkout-btn">保存</a>
+				<a href="javascript:;" class="btn btn4 cancel-btn">取消</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<!--冲账功能弹窗 s-->
+
+<!--添加费用模板 s-->
+<div id="cost" style="display: none;">
+	<li class="cost-detail cost-col-detail" sn_id="" fee_id="">
+		<div class="cd-t">
+			<b><i class="bit"></i>费用：</b>
+			<div class="selectByM slt-180" hasevent="true">
+				<input type="text" name="serial_income[fee_type{{$k}}]" class="selectByMT cost_type" readonly = 'readonly' selectVal = '' value="" datatype="cost_type" nullmsg="请选择费用类型" />
+				<span class='jt_Ctr'><span class='jt_box'></span></span>
+				<div class="selectByMO">
+					<ul>
+					    {{foreach from=$fee_type_list item=fee_type}}
+					        <li selectVal = "{{$fee_type.fee_type_id}}">{{$fee_type.type_name}}</li>
+					    {{/foreach}}
+					</ul>
+				</div>
+			</div>
+			<b class="dte-40">金额：</b>
+			<input type="text" name="serial_income[fee_sum{{$k}}]" class="ipt ipt-80 cost_num" datatype="cost_num" nullmsg="请填写费用金额" errormsg="费用金额格式错误" />
+			<span class="ml10">元</span>
+			{{*if isset($serial_id)*}}
+<!--     			<i class="ifont1 yellow dte-30">&#xe778;</i> -->
+<!--     			<a href="javascript:;" class="checkout">冲账</a> -->
+			{{*/if*}}
+			<i class="ifont dte-30">&#xe675;</i>
+			<a href="javascript:;" class="cd-btn">删除</a>
+			<span class="check-error check-error-ts"></span>
+			<!--<a href="#{{'Finance-serial/deleteFee'|url|cat:'&'|cat:'serial_detail_id='|cat:$list_fee.serial_detail_id}}" class="cd-btn">删除</a> -->
+		</div>
+		<!--点击冲账更改保存后才显示 s-->
+		<div class="cd-b">
+			<b><i class="bit"></i>费用：</b>
+			<span class="cdb-con">冲减费用</span>
+			<b>金额：</b>
+			<input type="text" name="serial_income[fee_offset{{$k}}]" class="ipt ipt-80 fee_offset" />
+			<span class="ml10">元</span>
+			<i class="ifont dte-30">&#xe675;</i>
+			<a href="javascript:;">删除</a>
+		</div>
+		<!--点击冲账更改保存后才显示 s-->
+	</li>
+</div>
+<!--添加费用模板 e-->

@@ -1,0 +1,46 @@
+<!--财务管理-类型管理 s-->
+<div class="finance_type view finance">
+	<div class="view-head">
+		<h1>类型管理<em style="font-weight: normal;color: red;font-style: normal;font-size: 14px;padding-left: 15px;">(系统默认的财务类型不可删除和编辑)</em></h1>
+	</div>
+	<div class="view-con">
+		<ul class="view-ul">
+		    {{foreach from = $fee_type_list item = fee_tyep_info}}
+    			<li uid="{{$fee_tyep_info.fee_type_id}}">
+    				<input type="text" name="typeManage" {{if $fee_tyep_info.sys_type_id > 0}}disabled="disabled" class="ipt ipt-200 bg-gray" {{else}}class="ipt ipt-200"{{/if}} value="{{$fee_tyep_info.type_name}}" placeholder="请输入财务类型" datatype="*" nullmsg="请填写类型名" />
+    				{{if $fee_tyep_info.sys_type_id == 0}}
+        				<i class="ifont">&#xe675;</i>
+        				<a href="javascript:;" class="finance_type_del" url="{{'Finance-TypeManage/feeTypeDelete'|url|cat:'&'|cat:'fee_type_id='|cat:$fee_tyep_info.fee_type_id}}">删除</a>
+    				{{/if}}
+    				<span class="check-error check-error-ts"></span>
+    			</li>
+			{{/foreach}}
+		</ul>
+	</div>
+	
+	<div class="view-con cost-add">
+		<ul>
+			<li class="view-add-cost">
+				<i class="ifont">&#xf0037;</i>
+				<a href="javascript:;" class="add-type">添加财务类型</a>
+			</li>
+		</ul>
+	</div>
+	
+	<div class="view-btn">
+		<a href="javascript:;" url="{{'finance-typemanage/feeTypeManage'|url}}" class="btn btn2 finance_type_btn">保存</a>
+		<a href="javascript:;" class="btn btn4 btn-cancel">取消</a>
+	</div>
+</div>
+<!--财务管理-类型管理 e-->
+
+<!--添加财务类型模板 s-->
+<div id="type-model" class="none">
+	<li uid="">
+		<input type="text" name="typeManage" class="ipt ipt-200" placeholder="请输入财务类型" datatype="*" nullmsg="请输入类型名" />
+		<i class="ifont">&#xe675;</i>
+		<a href="javascript:;" class="finance_type_del" >删除</a>
+		<span class="check-error check-error-ts"></span>
+	</li>
+</div>
+<!--添加财务类型模板 e-->

@@ -1,0 +1,309 @@
+<div class="crm-manage crm-agrmt crm-custm-info jzf-form" hasform="true">
+	<div class="crm-item-top">
+		<span>{{if $smarty.get.a eq 'index'}}编辑租客{{else}}添加租客{{/if}}</span>
+		<a class="cutm-score show-custm-trig" data-info-action="{{'tenant-index/getComment'|url}}" {{if $smarty.get.type eq 'jumpFromCheck'}}type="jumpFromCheck"{{/if}} href="javascript:;">{{$data.avgscore|default:'0'}}<i>分</i></a>
+	</div>
+	<div class="crm-item-body">
+		<form action="{{'tenant-evaluation/add'|url}}" actionEdit="{{'tenant-evaluation/index'|url}}" class="cutm-form jzf-form">
+			<div class="jzf-col">
+				<div class="col-box">
+					<div class="jzf-col-l float-l">
+						<span><i class="red">*</i>租客姓名：</span>
+					</div>
+					<div class="jzf-col-r fl" style="position:relative;">
+						<input type="text" {{if !empty($tenant)}}value="{{$tenant.name}}"{{/if}} datatype="*" nullmsg="请输入租客姓名" errormsg="姓名不能包含特殊字符"  name="name" class="ipt ipt-120 validInput" jzf-orig="" />
+						<span class="check-error check-error-ts check-error-auto" style="position:absolute;left:250px;top:7px;width:120px;"></span>
+					</div>
+					<div class="jzf-col-r fl ml20">
+						<div class="radio-box">
+							<label class="radio">
+
+							{{if (!empty($tenant) && $tenant.gender eq 1) || !isset($tenant)}}
+							     <i class="ifont r-default" style="display: none;">&#xe612;</i>
+								 <i class="ifont r-select" style="display: block;">&#xe617;</i>
+							{{else}}
+							     <i class="ifont r-default">&#xe612;</i>
+								 <i class="ifont r-select">&#xe617;</i>
+							{{/if}}
+
+							</label>
+							<input type="radio" name="gender"  {{if !isset($tenant)}}checked="checked"{{/if}} value="1" {{if !empty($tenant) && $tenant.gender eq 1}}checked="checked"{{/if}} />
+							<span>男</span>
+						</div>
+						<div class="radio-box ml40">
+							<label class="radio">
+							{{if !empty($tenant) && $tenant.gender eq 2}}
+							     <i class="ifont r-default" style="display: none;">&#xe612;</i>
+								 <i class="ifont r-select" style="display: block;">&#xe617;</i>
+							{{else}}
+							     <i class="ifont r-default">&#xe612;</i>
+								 <i class="ifont r-select">&#xe617;</i>
+							{{/if}}
+							</label>
+							<input type="radio" name="gender" value="2" {{if !empty($tenant) && $tenant.gender eq 2}}checked="checked"{{/if}} />
+							<span>女</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-box">
+					<div class="jzf-col-l">
+						<span><i class="red">*</i>联系电话：</span>
+					</div>
+					<div class="jzf-col-r">
+						<input type="text" datatype="/^1\d{10}$/" nullmsg="请输入联系电话" errormsg="电话号码格式错误" {{if !empty($tenant)}}value="{{$tenant.phone}}"{{/if}}  name="phone" class="ipt ipt-250 validInput" jzf-orig="" />
+						<span class="check-error check-error-ts check-error-auto"></span>
+					</div>
+				</div>
+			</div>
+			<div class="jzf-col">
+				<div class="col-box">
+					<div class="jzf-col-l">
+						<span><i class="red">*</i>证件号码：</span>
+					</div>
+					<div class="jzf-col-r">
+						<input type="text" id="renter_id_card" disabled="disabled" datatype="*1-40" nullmsg="请输入证件号码" errormsg="证件号码格式错误" {{if !empty($tenant)}}value="{{$tenant.idcard}}"{{/if}} name="idcard" jzf-orig="" class="ipt ipt-250 validInput" />
+						<span class="check-error check-error-ts check-error-auto"></span>
+					</div>
+				</div>
+				<div class="col-box">
+					<div class="jzf-col-l float-l">
+						<span class="ml16">来源渠道：</span>
+					</div>
+					<div class="jzf-col-r fl">
+						<div class="selectByM w25" hasevent="3">
+							<input type="text" name="from" class="selectByMT centralized_Ind_CuteType" readonly = 'readonly' selectVal = '0' value=""/>
+							<span class='jt_Ctr'><span class='jt_box'></span></span>
+							<div class="selectByMO">
+								<ul>
+                                    {{foreach from=$sysSouce key=k item=f}}
+											<li  {{if !empty($tenant) && $tenant.from == $k}} class="selectedLi" {{/if}} selectVal='{{$k}}'>{{$f}}</li>
+									{{/foreach}}
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+<!-- 				<div class="col-box"> -->
+<!-- 					<div class="jzf-col-l"> -->
+<!-- 						<span class="ml16">来源渠道：</span> -->
+<!-- 					</div> -->
+<!-- 					<div class="jzf-col-r"> -->
+<!-- 						<input type="text" name="" jzf-orig="" class="ipt ipt-250" placeholder="来源渠道" /> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+			</div>
+			<div class="jzf-col">
+				<div class="col-box">
+					<div class="jzf-col-l">
+						<span class="ml16">出生日期：</span>
+					</div>
+					<div class="jzf-col-r">
+						<input type="text" name="birthday" jzf-orig="" class="ipt ipt-250" {{if !empty($tenant)}}value="{{$tenant.birthday|date_format:'%Y-%m-%d'}}"{{/if}} disabled/>
+					</div>
+				</div>
+				<div class="col-box">
+					<div class="jzf-col-l">
+						<span class="ml16">民&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;族：</span>
+					</div>
+					<div class="jzf-col-r">
+						<input type="text" name="nation" jzf-orig="" {{if !empty($tenant)}}value="{{$tenant.nation}}"{{/if}} class="ipt ipt-250" />
+					</div>
+				</div>
+			</div>
+			<div class="jzf-col">
+				<div class="col-box">
+					<div class="jzf-col-l">
+						<span class="ml16">职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;业：</span>
+					</div>
+					<div class="jzf-col-r">
+						<input type="text" name="profession" jzf-orig="" {{if !empty($tenant)}}value="{{$tenant.profession}}"{{/if}} class="ipt ipt-250" />
+					</div>
+				</div>
+				<div class="col-box">
+					<div class="jzf-col-l">
+						<span class="ml16">工作单位：</span>
+					</div>
+					<div class="jzf-col-r">
+						<input type="text" name="work_place" jzf-orig="" {{if !empty($tenant)}}value="{{$tenant.work_place}}"{{/if}} class="ipt ipt-250" />
+					</div>
+				</div>
+			</div>
+			<div class="jzf-col">
+				<div class="col-box">
+					<div class="jzf-col-l">
+						<span class="ml16">家庭住址：</span>
+					</div>
+					<div class="jzf-col-r">
+						<input type="text" name="address" jzf-orig="" {{if !empty($tenant)}}value="{{$tenant.address}}"{{/if}} class="ipt ipt-250" />
+					</div>
+				</div>
+				<div class="col-box">
+					<div class="jzf-col-l">
+						<span class="ml16">电子邮箱：</span>
+					</div>
+					<div class="jzf-col-r">
+						<input type="text" name="email" jzf-orig="" {{if !empty($tenant)}}value="{{$tenant.email}}"{{/if}} class="ipt ipt-250" />
+					</div>
+				</div>
+			</div>
+			<div class="jzf-col">
+				<div class="col-box">
+					<div class="jzf-col-l">
+						<span class="ml16">紧急联系人：</span>
+					</div>
+					<div class="jzf-col-r">
+						<input type="text" name="emergency_contact" jzf-orig="" {{if !empty($tenant)}}value="{{$tenant.emergency_contact}}"{{/if}} class="ipt ipt-250" style="width: 215px;"/>
+					</div>
+				</div>
+				<div class="col-box">
+					<div class="jzf-col-l">
+						<span class="ml16">紧急联系电话：</span>
+					</div>
+					<div class="jzf-col-r">
+						<input type="text" name="emergency_phone" {{if !empty($tenant)}}value="{{$tenant.emergency_phone}}"{{/if}} class="ipt ipt-250" style="width: 201px;"/>
+					</div>
+				</div>
+			</div>
+			<div class="jzf-col">
+				<div class="jzf-col-l float-l">
+					<span class="ml16">备注信息：</span>
+				</div>
+				<div class="jzf-col-r fl">
+					<textarea name="remarks" jzf-orig="">{{if !empty($tenant)}}{{$tenant.remarks}}{{/if}}</textarea>
+				</div>
+			</div>
+			<div class="dpt-bot-grp">
+				<input type="hidden" name="tid" value="{{if !empty($tenant)}}{{$tenant.tenant_id}}{{/if}}" />
+				<a href="javascript:;" class="btn btn2" id="add_Customer">保存</a>
+				<!-- <a href="javascript:;" class="btn btn4 ml10" id="cancle_act">取消</a> -->
+			</div>
+		</form>
+	</div>
+</div>
+
+<!--遮罩评价记录模板-->
+<div id="custm-hideTemp" class="none">
+	<div class="crm-custm-wrap" style="height:auto;max-height:500px;overflow:auto;">
+		<div class="col-custm">
+			<ul class="lin-custm-basic clearfix mb10">
+				<li>
+					<span>租客姓名：</span>
+					<span class="gray">{{$tenant.name}}</span>
+				</li>
+				<li>
+					<span>联系电话：</span>
+					<span class="gray">{{$tenant.phone}}</span>
+				</li>
+				<li>
+					<span>证件号码：</span>
+					<span class="gray">{{$tenant.idcard}}</span>
+				</li>
+			</ul>
+			<ul class="lin-custm-score clearfix">
+				<li>
+					<span>评分次数：</span>
+					<span class="gray"><i id="cmt-total-count">{{$data.allComment|default:'0'}}</i>次</span>
+				</li>
+				<li>
+					<span>评价分数：</span>
+					{{if isset($data.avgscore)}}
+					   <span class="gray"><i>{{$data.avgscore|default:'0'}}</i></span>
+					{{else}}
+					   <span class="gray"><i>{{$smarty.get.avgscore|default:'0'}}</i></span>
+					{{/if}}
+				</li>
+			</ul>
+		</div>
+		<div class="jzf-pagination clearfix" style="display:none;">
+			<div class="pagination record_pagination"></div>
+			<div class="jump-to-page clearfix">
+				<span>跳转至</span>
+				<div class="jump-edit-box">
+		        	<input type="text" placeholder="页码">
+		        	<a href="javascript:;" class="p-btn btn btn4 get-record-trigger">GO</a>
+		        	<i class="page-unit">页</i>
+		        </div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--评分记录数据渲染-->
+<script type="text/html" id="data-temp-record">
+	<table class="lst_tb record-list-tb">
+	<tr>
+		<th class="th1">评价分数</th>
+		<th class="th2">备注说明</th>
+		<th>操作人</th>
+		<th>操作时间</th>
+	</tr>
+	{{'<% for (var i = 0; i < data.length; i ++) { %>'}}
+		<tr>
+			<td style="width:200px;">
+			{{'<%if((data[i].score/20) == 0) { %>'}}
+			  <div class="raty">
+				<img alt="1" src="web/js/Raty/images/star-off.png">
+				<img alt="2" src="web/js/Raty/images/star-off.png">
+				<img alt="3" src="web/js/Raty/images/star-off.png">
+				<img alt="4" src="web/js/Raty/images/star-off.png">
+				<img alt="5" src="web/js/Raty/images/star-off.png">
+			 </div>
+			{{'<%}%>'}}
+
+			{{'<%if((data[i].score/20) == 1) { %>'}}
+			  <div class="raty">
+				<img alt="1" src="web/js/Raty/images/star-on.png">
+				<img alt="2" src="web/js/Raty/images/star-off.png">
+				<img alt="3" src="web/js/Raty/images/star-off.png">
+				<img alt="4" src="web/js/Raty/images/star-off.png">
+				<img alt="5" src="web/js/Raty/images/star-off.png">
+			 </div>
+			{{'<%}%>'}}
+
+			{{'<%if((data[i].score/20) == 2) { %>'}}
+			  <div class="raty">
+				<img alt="1" src="web/js/Raty/images/star-on.png">
+				<img alt="2" src="web/js/Raty/images/star-on.png">
+				<img alt="3" src="web/js/Raty/images/star-off.png">
+				<img alt="4" src="web/js/Raty/images/star-off.png">
+				<img alt="5" src="web/js/Raty/images/star-off.png">
+			 </div>
+			{{'<%}%>'}}
+
+			{{'<%if((data[i].score/20) == 3) { %>'}}
+			  <div class="raty">
+				<img alt="1" src="web/js/Raty/images/star-on.png">
+				<img alt="2" src="web/js/Raty/images/star-on.png">
+				<img alt="3" src="web/js/Raty/images/star-on.png">
+				<img alt="4" src="web/js/Raty/images/star-off.png">
+				<img alt="5" src="web/js/Raty/images/star-off.png">
+			 </div>
+			{{'<%}%>'}}
+
+			{{'<%if((data[i].score/20) == 4) { %>'}}
+			  <div class="raty">
+				<img alt="1" src="web/js/Raty/images/star-on.png">
+				<img alt="2" src="web/js/Raty/images/star-on.png">
+				<img alt="3" src="web/js/Raty/images/star-on.png">
+				<img alt="4" src="web/js/Raty/images/star-on.png">
+				<img alt="5" src="web/js/Raty/images/star-off.png">
+			 </div>
+			{{'<%}%>'}}
+
+			{{'<%if((data[i].score/20) == 5) { %>'}}
+			  <div class="raty">
+				<img alt="1" src="web/js/Raty/images/star-on.png">
+				<img alt="2" src="web/js/Raty/images/star-on.png">
+				<img alt="3" src="web/js/Raty/images/star-on.png">
+				<img alt="4" src="web/js/Raty/images/star-on.png">
+				<img alt="5" src="web/js/Raty/images/star-on.png">
+			 </div>
+			{{'<%}%>'}}
+		</td>
+		<td>{{'<%=data[i].remark%>'}}</td>
+		<td>{{'<%=data[i].username%>'}}</td>
+		<td>{{'<%=data[i].create_time%>'}}</td>
+	</tr>
+{{'<%}%>'}}
+
+	</table>
+</script>

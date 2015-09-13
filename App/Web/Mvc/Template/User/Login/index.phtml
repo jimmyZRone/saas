@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http：//www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http：//www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=10,IE=9">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>九猪---长租公寓管理系统SaaS2.0</title>
+		<link rel="shortcut icon" href="{{$smarty.const.APP_WEB_STATIC_URL}}images/favicon.ico" type="image/x-icon" />
+		<script type="text/javascript">
+        	window.APP_WEB = window.APP_WEB || {};
+        	window.APP_WEB.CONST = window.APP_WEB.CONST || {};
+        	window.APP_WEB.CONST.VERSION = window.APP_WEB.CONST.VERSION || '{{$smarty.const.APP_WEB_VERSION}}';
+        </script>
+		<script type="text/javascript">
+        	window.APP_WEB = window.APP_WEB || {};
+        	window.APP_WEB.CONST = window.APP_WEB.CONST || {};
+        	window.APP_WEB.CONST.VERSION = window.APP_WEB.CONST.VERSION || '{{$smarty.const.APP_WEB_VERSION}}';
+        </script>
+		<meta name="Keywords" content="职业房东 | 品牌公寓 | SaaS服务系统 | 房态管理 | 租客管理 | 集中式公寓管理系统 | 分布式公寓管理系统 | 房屋出租管理软件 | 租房管理 | 住房租赁管理" />
+		<link rel="stylesheet" type="text/css" href="{{$smarty.const.APP_WEB_STATIC_URL}}css/view.css?v={{$smarty.const.APP_WEB_VERSION}}"/>
+		<link rel="stylesheet" type="text/css" href="{{$smarty.const.APP_WEB_STATIC_URL}}js/dialog/artDialog/ui-dialog.css?v={{$smarty.const.APP_WEB_VERSION}}"/>
+		<script src="{{$smarty.const.APP_WEB_STATIC_URL}}js/seajs/seajs/2.1.0/sea.js?v={{$smarty.const.APP_WEB_VERSION}}" type="text/javascript" charset="utf-8"></script>
+		<script src="{{$smarty.const.APP_WEB_STATIC_URL}}js/config.js?v={{$smarty.const.APP_WEB_VERSION}}" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			seajs.use("application_Js/loginJs");
+		</script>
+	</head>
+	<body>
+		
+		<!--背景 s-->
+		<div id="body-mask"></div>
+		<!--背景 e-->
+		
+		<!--内容 s-->
+		<div class="login">
+		    <div class="login-logo fl">
+		        <a href="#">
+		            <img src="{{$smarty.const.APP_WEB_STATIC_URL}}images/logo-big.png?v={{$smarty.const.APP_WEB_VERSION}}" />
+		        </a>
+		    </div>
+		    <div class="login-main fl">
+		        <form method="post" target="formIframe" class="login_form" action="{{'user-login/login/callback/'|cat:$callback|url}}">
+		        	<!--<p class="check-error">哎呀！账号输入错误了</p>-->
+		        	<div class="fm-col bl fm-user">
+		                <i class="ifont1">&#xf00ec;</i>
+		                <input type="text" nullmsg="请输入用户名或手机号" datatype="*" name="user" class="fm-ipt accountTxt" placeholder="请输入用户名或手机号" />
+		           		<div class="msgWrap">
+						<div class="ermsg-tip">
+							<i class="ico-arrow-l"></i>
+							<i class="msgTxt"></i>
+						</div>
+					</div>
+		            </div>
+		            <div class="fm-col bl">
+		                <i class="ifont1">&#xe618;</i>
+		                <input type="password" nullmsg="请输入登录密码" datatype="*" id="password" name="passwd" class="fm-ipt accountTxt" placeholder="请输入密码" />
+		            	<div class="msgWrap">
+						<div class="ermsg-tip">
+							<i class="ico-arrow-l"></i>
+							<i class="msgTxt"></i>
+						</div>
+					</div>
+		            </div>
+		            <div class="fm-col fm-login">
+		                <div class="check-box fl">
+							<label>
+								<input type="checkbox" name="autologin" value="1" />
+								<span>下次自动登录</span>
+							</label>
+						</div>
+						<a href="{{'user-retrieve'|url}}" class="forget-pwd fr">忘记密码？</a>
+		            </div>
+		            <div class="fm-col fm-btn mt5">
+		                <!--<a href="javascript:;" class="btn btn1 login_btn">登录</a>-->
+		                <input type="submit" value="登录" class="btn btn2 login_btn" />
+		            </div>
+		            <div class="fm-col fm-btn mt20">
+		                <a href="{{'user-register'|url}}" class="fm-jump register-btn">没有账号？立即注册</a>
+		            </div>
+		            <!--<div class="fm-col fm-edition mt20">
+		                <ul>
+		                	<li class="ios">
+			                	<i></i>
+			                	<span>IOS</span>
+			                	<img src="{{$smarty.const.APP_WEB_STATIC_URL}}images/code_03.png"/>
+			                </li>
+			                <li class="android">
+			                	<i></i>
+			                	<span>Android</span>
+			                	<img src="{{$smarty.const.APP_WEB_STATIC_URL}}images/code_03.png"/>
+			                </li>
+			                <li class="wechat">
+			                	<i></i>
+			                	<span>微信</span>
+			                	<img src="{{$smarty.const.APP_WEB_STATIC_URL}}images/code_03.png"/>
+			                </li>
+		                </ul>
+		            </div>-->
+		        </form>
+		        <iframe style="display: none;" name="formIframe"></iframe>
+	        </div>
+		</div>
+		<div class="login-footer">
+			<a href="javascript:;">© 久租网络</a>
+			<!--上线后，此链接到官网-->
+		</div>
+		<!--内容 s-->
+		<!--弹窗 s-->
+		<div class="pop-ups" style="display:none;"></div>
+		<div class="pu-shade" style="display:none;"></div>
+		<div class="pu-con pu-form" style="display:none;">
+			<i class="pu-con-close ifont">&#xf00b3;</i>
+			<div class="pu-con-title">
+				<b>内测邀请申请中</b>
+			</div>
+			<div class="pu-con-fm">
+				<ul>
+					<li>
+						<b>公寓名称：</b>
+						<input type="text" name="flat_name" class="ipt ipt-250" />
+					</li>
+					<li class="li-radio">
+						<div class="radio-box rb-centralize">
+							<label class="radio"><i class="ifont r-default" style="display: inline;">&#xe612;</i><i class="ifont r-select" style="display: none;">&#xe617;</i></label>
+							<input type="radio" name="type" value="2" />
+							<span>集中式公寓</span>
+						</div>
+						<div class="radio-box radio-type">
+							<label class="radio checked"><i class="ifont r-default" style="display: none;">&#xe612;</i><i class="ifont r-select" style="display: inline;">&#xe617;</i></label>
+							<input type="radio" name="type" value="1" checked="checked" />
+							<span>分散式公寓</span>
+						</div>
+					</li>
+					<li>
+						<b><span style="color: red;">*</span>所在城市：</b>
+						<input type="text" name="city_name" class="ipt ipt-250" />
+					</li>
+					<li>
+						<b style="letter-spacing:1px;"><span style="color: red;">*</span>联 系 人：</b>
+						<input type="text" name="contacts_name" class="ipt ipt-250" />
+					</li>
+					<li>
+						<b><span style="color: red;">*</span>联系电话：</b>
+						<input type="text" name="contacts_phone" class="ipt ipt-250" />
+					</li>
+				</ul>
+			</div>
+			<div class="pu-con-mark">
+				<p>温馨提示：（内测名额有限，内测时间1个月）</p>
+			</div>
+			<div class="pu-con-btn">
+				<a href="javascript:;" class="btn btn2">提交申请</a>
+			</div>
+		</div>
+		
+		<div class="pu-con pu-prompt" style="display:none;">
+			<i class="pu-con-close ifont">&#xf00b3;</i>
+			<div class="pu-con-title">
+				<b>内测邀请申请中</b>
+			</div>
+			<div class="pu-prompt-suc">
+				<i class="fl"></i>
+				<b class="fl">恭喜您申请成功！</b>
+			</div>
+			<div class="pu-prompt-mark">
+				<p>我们工作人员会在一个工作日内与您联系，请耐心等待！</p>
+			</div>
+		</div>
+		<!--弹窗 e-->
+		
+		<!-- //兼容ERP~~~ -->
+		<div style="display:none;">
+			<script type="text/javascript">
+				document.domain = document.URL.replace(/^http[s]?:\/\/([^/]+).*$/,'$1').replace(/^[^\.]+\.(.*)$/,'$1');
+				var window_login_code = false;
+				window.setCode = function(code){
+					window_login_code = code;
+				}
+				window.login_error_hook = function(json,dialog){//登录错误
+					if(window_login_code === false){
+						return false;
+					}
+					var self = $('#erp_iframe');
+					var erpform = self.contents().find('body .login-form');
+					var form = $('.login_form');
+					erpform.find('input[name=username]').val(form.find('input[name=user]').val());
+					erpform.find('input[name=password]').val(form.find('input[name=passwd]').val());
+					erpform.find('input[name=remember]')[0].checked = form.find('input[name=autologin]')[0].checked;
+					erpform.find('input[name=code]').remove();
+					erpform.append('<input type="hidden" name="code" value="'+window_login_code+'" />');
+					var action = erpform.attr('action');
+					if(action.indexOf('http') !== 0){//处理相对地址
+						var erpUrl = '{{$jooozo_erp_login}}'.replace(/^(http[s]?:\/\/[^\/]+).*$/,'$1');
+						action = erpUrl+action;
+					}
+					self[0].contentWindow.$.post(action,erpform.serialize(),function(data){
+						if(data.status != 1){
+							var d=dialog({
+								title: '提示',
+								content:json.message,
+								okValue: '确认',
+								ok: function () {
+									d.close();
+								}
+							});
+							d.showModal();
+						}else{
+							if(typeof data['url'] == 'string'){
+								top.window.location = data.url;
+							}else{
+								top.window.location = '{{$jooozo_erp_login}}';
+							}
+						}
+					},'json');
+					return true;
+				}
+			</script>
+			<iframe src="{{$jooozo_erp_login}}" id="erp_iframe"></iframe>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,183 @@
+	{{if $is_search==0}}
+		<!--业主管理-列表 s-->
+		<div class="manager_landlord_list list">
+			<!--搜索条件 s-->
+			<div class="list-con landlord-search">
+				<div class="list-col">
+					<b now_time="{{$smarty.now|date_format:'%Y-%m-%d'}}">到期时间：</b>
+					<input type="text" class="ipt ipt-100 date deal-time" readonly="readonly" name="term_start_time" />
+					<span class="ml5 mr5">--</span>
+					<input type="text" class="ipt ipt-100 date deal-times" readonly="readonly" name="term_end_time" />
+					<a href="javascript:;" class="ml20 list-col-cdn condition" data-type="1">今日到期</a>
+					<a href="javascript:;" class="list-col-cdn condition" data-type="2">一周内到期</a>
+					<a href="javascript:;" class="list-col-cdn condition" data-type="3">一个月内到期</a>
+				</div>
+				<div class="list-col">
+					<b>下次交租：</b>
+					<input type="text" class="ipt ipt-100 date deal-time" readonly="readonly" name="pay_start_time" />
+					<span class="ml5 mr5">--</span>
+					<input type="text" class="ipt ipt-100 date deal-times" readonly="readonly" name="pay_end_time" />
+					<a href="javascript:;" class="ml20 list-col-cdn condition" data-type="1">今日交租</a>
+					<a href="javascript:;" class="list-col-cdn condition" data-type="2">一周内交租</a>
+					<a href="javascript:;" class="list-col-cdn condition" data-type="3">一个月内交租</a>
+				</div>
+				<div class="list-col contract_type">
+					<b>合同状态：</b>
+					<a href="javascript:;" class="list-col-cdn conditions current" data-type="1">全选</a>
+					<a href="javascript:;" class="list-col-cdn conditions" data-type="2">正常</a>
+					<a href="javascript:;" class="list-col-cdn conditions" data-type="3">已退租</a>
+				</div>
+				{{if $user.company.pattern eq 11}}
+    				<div class="list-col house_type">
+    					<b>房源形态：</b>
+    					<a href="javascript:;" class="list-col-cdn conditions current" data-type="1">全选</a>
+    					<a href="javascript:;" class="list-col-cdn conditions" data-type="2">集中式公寓</a>
+    					<a href="javascript:;" class="list-col-cdn conditions" data-type="3">分散式公寓</a>
+    				</div>
+				{{/if}}
+				<div class="list-col">
+					<b>关键词：</b>
+					<div class="search">
+						<input type="text" class="ipt search-con" placeholder="房源名称/业主电话/业主姓名" />
+						<a href="javascript:;" class="ifont btn btn3 search-btn">&#xe645;</a>
+					</div>
+				</div>
+				<input type="hidden" count="{{$page_info.count}}" size="{{$page_info.size}}" class="list_NumCount">
+			</div>
+			<!--搜索条件 e-->
+
+			<!--操作工具 s-->
+			<div class="list-fun">
+				<a href="javascript:;" class="manager_landlord_list_CheckAll" style="padding-top: 5px;">
+					<i class="ifont"><span class="choose ifont1">&#xe60c;</span></i>
+					全选
+				</a>
+				<!--<a href="javascript:;" class="manager_landlord_list_remind red">
+					<i class="ifont2">&#xe604;</i>
+					向业主交租提醒
+				</a>-->
+				<a href="#{{'landlord-index/add'|url}}" class="blue manager_landlord_list_Add btn-auto-new">
+					<i class="ifont1">&#xe6d4;</i>
+					新增业主
+				</a>
+			<!-- 	<a href="javascript:;" class="manager_landlord_list_Print">
+					<i class="ifont1">&#xe65e;</i>
+					打印
+				</a> -->
+				<a href="javascript:;" url="{{'landlord-index/delete'|url}}"  class="manager_landlord_list_Delete" style="padding-top: 5px;">
+					<i class="ifont">&#xe675;</i>
+					删除
+				</a>
+				<a href="javascript:;" class="manager_landlord_list_OFF" style="padding-top: 5px;">
+					<i class="ifont">&#xe627;</i>
+					取消
+				</a>
+				<span class="rent-total" style="padding-top: 5px;">退租率：{{$rate}}</span>
+			</div>
+			<!--操作工具 e-->
+
+			<!--表格 s-->
+			<table class="lst_tb">
+				<tr>
+					<th>业主姓名</th>
+					<th>业主电话</th>
+					<th>房源名称</th>
+					<th>合同周期</th>
+					<th>合同状态</th>
+					<th>下次付款时间</th>
+					<th>下次付款金额</th>
+					<th>操作</th>
+				</tr>
+				{{/if}}
+{{if $is_search==1}}
+				{{foreach from=$landlordList key=k item=v}}
+				<tr contract_id="{{$v.contract_id}}" landlord_id="{{$v.landlord_id}}">
+					<td>
+						<label class="checkBox"><span class="choose ifont1">&#xe60c;</span></label>
+						<input type="checkbox"/>
+						<span>{{if $v.$k.name}}{{$v.$k.name}}{{else}}--{{/if}}</span>
+					</td>
+					<td>
+						<span>{{if $v.$k.phone}}{{$v.$k.phone}}{{else}}--{{/if}}</span>
+					</td>
+					<td>
+						<span>{{$v.hosue_name}}</span>
+					</td>
+					<td>
+						<span>{{$v.signing_time|date_format:'Y/m/d'}}-{{$v.dead_line|date_format:'Y/m/d'}}</span>
+					</td>
+					<td>
+						<span>{{if $v.is_stop eq 1}}终止{{else}}正常{{/if}}</span>
+					</td>
+					<td>
+						<span>
+						{{if $v.is_stop eq 1}}已终止{{elseif $v.next_pay_time gte $v.dead_line}}租金已付完{{elseif $v.next_pay_time neq 0}}{{$v.next_pay_time|date_format:'%Y-%m-%d'}}{{else}}--{{/if}}
+						</span>
+					</td>
+					<td>
+						<span>{{if $v.next_pay_money neq 0}}{{$v.next_pay_money}}元{{elseif $v.is_stop eq 1}}已终止{{else}}租金已付完{{/if}}</span>
+					</td>
+					<td>
+						<div class="edit-col">
+							<a href="#{{'landlord-index/info'|url|cat:'&'|cat:'contract_id'|cat:'='|cat:$v.contract_id}}">查看</a>
+							<em>|</em>
+							<!--<a href="javascrript:;">向业主交租提醒</a>
+							<em>|</em>-->
+							<a href="javascript:;" url="{{'landlord-index/delete'|url}}" class="spr-del-trig">删除</a>
+						</div>
+					</td>
+				</tr>
+			{{/foreach}}
+			{{/if}}
+		{{if $is_search==0}}
+			</table>
+			<!--表格 e-->
+
+			<!--分页 s-->
+			<div class="jzf-pagination clearfix">
+				<div class="pagination" id="landlord-page"></div>
+				<div class="jump-to-page clearfix">
+					<span>跳转至</span>
+					<div class="jump-edit-box">
+			        	<input type="text" class="page" placeholder="页码">
+			        	<a href="javascript:;" url="{{'landlord-index/index'|url|cat:'&'|cat:'is_search'|cat:'='|cat:1}}" class="p-btn btn btn4">GO</a>
+			        	<i class="page-unit">页</i>
+			        </div>
+				</div>
+			</div>
+			<!--分页 e-->
+			<!--多选删除遮罩模板-->
+			<div class="deletemoreauto none">
+				<div class="top">
+					<div class="top1">
+						<span class="fl">正在删除...</span>
+						<span class="fr">
+							<span class="num_cur">1</span>/<span class="num_total"></span>
+						</span>
+					</div>
+					<div class="top2">
+						<div class="top2a">
+							<div class="top2at"></div>
+						</div>
+					</div>
+				</div>
+				<div class="content">
+					<table>
+						<tr><th class="zb">房间名称</th><th class="yb">删除结果</th></tr>
+						<!--<tr><td class="zb">我是auto</td><td class="yb blue">删除成功</td></tr>-->
+					</table>
+				</div>
+			</div>
+		{{/if}}
+
+			<div class="raty"></div>
+            <div class="landlord_List none">
+                <div class="empty">
+                	<div class="empty-main">
+                		<img src="/web/images/03.png" />
+                		<p>当前页面没有任何数据，请<a href="#/index.php?c=landlord-index&a=add">点击这里添加</a>！</p>
+                	</div>
+                </div>
+            </div>
+		</div>
+		<!--业主管理-列表 e-->

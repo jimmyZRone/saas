@@ -1,0 +1,66 @@
+
+<div id="centralized_Manage">
+	<div class="centralized_Add">
+		<span class="fl a">
+			<a href="#{{'Centralized-Flat/add'|url}}" class="fl"><i class="ifont fl">&#xe62f;</i>添加公寓</a>
+		</span>
+	</div>
+	<div class="centralized_List">
+		<ul url="{{'Centralized-Flat/delete'|url}}">
+			{{foreach from=$list key=k item=v}}
+			<li flat-id={{$v.flat_id}}>
+				<div class="name">{{$v.flat_name}}</div> 
+					<span class="jt_Box"> 
+						<span class="fl op">操作</span>
+						<span class="jt"></span>
+						<div class="list_Menu">
+							<dl>
+								<dd>
+									<a href="#{{'Centralized-Flat/edit'|url|cat:'&'|cat:'flat_id'|cat:'='|cat:$v.flat_id}}" class="detail_auto">查看详细</a>
+								</dd>
+								<dd>
+									<a href="#{{'Centralized-Roomfocus/index'|url|cat:'&'|cat:'flat_id'|cat:'='|cat:$v.flat_id}}" class="manage_auto">房态管理</a>
+								</dd>
+								<dd>
+									<a href="javascript:;" class="flat-delete">删除公寓</a>
+								</dd>
+							</dl>
+						</div>
+					</span>
+					<div class="list_SomeDetail">
+						<dl>
+							<dd>
+								楼层总数：<span>{{$v.total_floor}}</span>
+							</dd>
+							<dd>
+								房源总数：<span>{{$v.CR}}</span>
+							</dd>
+							<dd>
+								已租间数：<span>{{$v.IR}}</span>
+							</dd>
+							<dd>
+								未租间数：<span>{{$v.NR}}</span>
+							</dd>
+							<dd>
+								预订间数：<span>{{$v.RC}}</span>
+							</dd>
+							<dd>
+								预退间数：<span>{{$v.TZ}}</span>
+							</dd>
+							<dd>
+								停用间数：<span>{{$v.SP}}</span>
+							</dd>
+						</dl>
+					</div>
+			</li> {{/foreach}}
+		</ul>
+	</div>
+	<div class="centralized_List_Date">
+		<div class="empty">
+			<div class="empty-main">
+				<img src="/web/images/03.png" />
+				<p>当前页面没有任何数据，请<a href="#/index.php?c=centralized-flat&a=add">点击这里添加</a>！</p>
+			</div>
+		</div>
+	</div>
+</div>

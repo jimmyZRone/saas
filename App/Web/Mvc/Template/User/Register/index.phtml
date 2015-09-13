@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http：//www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http：//www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=10,IE=9">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>注册</title>
+		<link rel="shortcut icon" href="{{$smarty.const.APP_WEB_STATIC_URL}}images/favicon.ico" type="image/x-icon" />
+		<script type="text/javascript">
+        	window.APP_WEB = window.APP_WEB || {};
+        	window.APP_WEB.CONST = window.APP_WEB.CONST || {};
+        	window.APP_WEB.CONST.VERSION = window.APP_WEB.CONST.VERSION || '{{$smarty.const.APP_WEB_VERSION}}';
+        </script>
+		<link rel="stylesheet" type="text/css" href="{{$smarty.const.APP_WEB_STATIC_URL}}css/view.css?v={{$smarty.const.APP_WEB_VERSION}}"/>
+		<link rel="stylesheet" type="text/css" href="{{$smarty.const.APP_WEB_STATIC_URL}}js/dialog/artDialog/ui-dialog.css?v={{$smarty.const.APP_WEB_VERSION}}"/>
+		<script src="{{$smarty.const.APP_WEB_STATIC_URL}}js/seajs/seajs/2.1.0/sea.js?v={{$smarty.const.APP_WEB_VERSION}}" type="text/javascript" charset="utf-8"></script>
+		<script src="{{$smarty.const.APP_WEB_STATIC_URL}}js/config.js?v={{$smarty.const.APP_WEB_VERSION}}" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			seajs.use("application_Js/registerJs");
+		</script>
+	</head>
+	<body>
+		
+		<!--背景 s-->
+		<div id="body-mask"></div>
+		<!--背景 e-->
+		
+		<!--内容 s-->
+		<div class="login register">
+		    <div class="login-logo fl">
+		        <a href="#">
+		            <img src="{{$smarty.const.APP_WEB_STATIC_URL}}images/logo-big.png?v={{$smarty.const.APP_WEB_VERSION}}" />
+		        </a>
+		    </div>
+		    <div class="login-main fl">
+			    <form class="register_form" action="{{'user-register/register'|url}}" target="formIframe">
+		        	<div class="fm-col bl fm-user">
+		                <input type="text" name="phone" id="phone" nullmsg="请输入手机号" errormsg="手机号格式错误" datatype="/^1\d{10}$/" class="accountTxt fm-ipt" placeholder="请输入手机号" url="{{'common-user/isexist'|url}}" />
+	            		<div class="msgWrap">
+							<div class="ermsg-tip">
+								<i class="ico-arrow-l"></i>
+								<i class="msgTxt"></i>
+							</div>
+						</div>
+		            </div>
+		            <div class="fm-col bl">
+		                <input type="text" id="img_code" name="img_code" nullmsg="请输入验证码"  datatype="*" class="accountTxt fm-ipt fm-ipt-spe fl" placeholder="验证码" />
+		                <div class="msgWrap">
+							<div class="ermsg-tip">
+								<i class="ico-arrow-l"></i>
+								<i class="msgTxt"></i>
+							</div>
+						</div>
+		                <a href="javascript:;" class="get-img-code">
+		                	<img src="{{'common-imagecaptcha/show/width/120/height/30'|url}}"/>
+		                </a>
+		                <!--<a href="javascript:;" class="get-code">60秒后重新获取</a>-->
+		            </div>
+		            <div class="fm-col bl">
+		                <input type="text" id="phone_code" name="phone_code" nullmsg="请输入手机校验码"  datatype="*" class="accountTxt fm-ipt fm-ipt-spe fl" placeholder="校验码" />
+		                <div class="msgWrap">
+							<div class="ermsg-tip">
+								<i class="ico-arrow-l"></i>
+								<i class="msgTxt"></i>
+							</div>
+						</div>
+		                <a href="javascript:;" class="get-code" url="{{'common-verification/sendtonotuser'|url}}">获取短信校验码</a>
+		                <!--<a href="javascript:;" class="get-code">60秒后重新获取</a>-->
+		            </div>
+		            <div class="fm-col bl">
+		                <input type="password" name="passwd" datatype="*6-16" nullmsg="请设置密码！" errormsg="密码范围在6~16位之间！" id="password" class="accountTxt fm-ipt" placeholder="请设置密码" />
+		            		<div class="msgWrap">
+							<div class="ermsg-tip">
+								<i class="ico-arrow-l"></i>
+								<i class="msgTxt"></i>
+							</div>
+						</div>
+		            </div>
+		            <div class="fm-col bl">
+		                <input type="password" name="cfm_passwd" datatype="*" recheck="passwd" nullmsg="请再输入一次密码！" errormsg="两次输入的密码不一致！" id="password1" class="accountTxt fm-ipt" placeholder="再次确认密码" />
+		            		<div class="msgWrap">
+							<div class="ermsg-tip">
+								<i class="ico-arrow-l"></i>
+								<i class="msgTxt"></i>
+							</div>
+						</div>
+		            </div>
+		            <!--<div class="fm-col fm-login">
+		                <input type="text" name="code" maxlength="4" nullmsg="请输入验证码" datatype="*"  class="accountTxt ipt ipt-200" placeholder="验证码" />
+		                <div class="msgWrap">
+							<div class="ermsg-tip">
+								<i class="ico-arrow-l"></i>
+								<i class="msgTxt"></i>
+							</div>
+						</div>
+		                <a href="javascript:;" class="code">
+							<img src="{{'common-imagecaptcha/show/width/115/height/40/domain/register'|url}}" />
+						</a>
+		            </div>-->
+		            <div class="fm-col fm-login">
+		                <div class="check-box fl">
+							<input type="checkbox" name="protocol" nullmsg="请先同意服务协议" checked value="1" />
+							<div class="msgWrap">
+								<div class="ermsg-tip">
+									<i class="ico-arrow-l"></i>
+									<i class="msgTxt"></i>
+								</div>
+							</div>
+							<span class="blue" id="agreement">我已阅读并接受久租服务条款</span>
+						</div>
+		            </div>
+		            <div class="fm-col fm-btn mt10">
+		                <!--<a href="javascript:;" class="btn btn1">注册</a>-->
+		                <input type="submit" class="btn btn2" value="注册" id="sub_reister" />
+		            </div>
+		            <div class="fm-col fm-btn mt20">
+		                <a href="{{'user-login'|url}}" class="fm-jump">已有账号？立即登录</a>
+		            </div>
+        		</form>
+				<iframe name="formIframe" style="display: none;"></iframe>
+		    </div>
+		</div>			
+		<div class="login-footer">
+			<a href="javascript:;">© 久租网络</a>
+			<!--上线后，此链接到官网-->
+		</div>
+		<!--内容 e-->
+		
+		<!--协议 s-->
+		<div class="agreement none">
+			<div class="agreement-con">
+				<ul>
+					<li>
+						<b>1、九猪SAAS服务条款的接受</b>
+						<p>通过完成九猪SAAS注册程序，用户便表明其接受了本服务协议的条款，并同意受本服务协议的约束；同时，用户保证其提交的信息真实、准确、及时和完整。 本服务协议所称的用户是指完全同意所有条款(以下简称"服务条款")并完成注册程序的服务接受者。</p>
+					</li>
+					<li>
+						<b>2、服务条款的变更和修改</b>
+						<p>九猪SAAS保留依其自主判断在将来的任何时间变更、修改、增加或删除本服务协议条款的权利。所有修改的协议均构成本服务协议的一部分。九猪SAAS有权随时对服务条款进行修改，一旦发生服务条款的变动，九猪SAAS将提示修改的内容；当用户使用九猪SAAS的特殊服务时，应接受九猪SAAS随时提供的与该特殊服务相关的规则或说明，并且此规则或说明均构成本服务条款的一部分。用户如果不同意服务条款的修改，可以主动取消已经获得的网络服务；如果用户继续享用网络服务，则视为用户已经接受服务条款的修改。</p>
+					</li>
+					<li>
+						<b>3、服务说明</b>
+						<p>九猪SAAS运用自己的操作系统通过国际互联网向用户提供丰富的网上资源，包括各种信息工具、个性化内容等(以下简称本服务)。除非另有明确规定，增强或强化目前服务的任何新功能，包括新产品，均无条件地适用本服务条款。 除非本协议中另有规定，否则九猪SAAS对网络服务不承担任何责任，即用户对网络服务的使用承担风险。九猪SAAS不保证服务一定会满足用户的使用要求，也不保证服务不会受中断，对服务的及时性、安全性、准确性也不作担保。</p>
+						<p>A. 为使用本服务，用户必须：</p>
+						<p>(1).自行配备进入国际互联网所必需的设备，包括计算机、数据机，其他存取装置或接受服务所需其它设备；</p>
+						<p>(2).自行支付与此服务有关的费用；</p>
+						<p>B. 用户接受本服务须同意：</p>
+						<p>(1).提供完整、真实、准确、最新的个人资料；</p>
+						<p>(2).不断更新注册资料。</p>
+						<p>若用户提供任何错误、不实、过时或不完整的资料，或者九猪SAAS有合理理由怀疑前述资料为错误、不实、过时或不完整，九猪SAAS有权暂停或终止用户的帐号，并拒绝其现在或将来使用本服务的全部或一部分。</p>
+						<p>九猪SAAS有权规定并修改使用本服务的一般措施，包括但不限于决定保留电子邮件讯息或其他上载内容的时间、限制本服务一个帐号可接收信息的数量等措施。如九猪SAAS未能储存或删除本服务的内容或其他讯息，九猪SAAS不负担任何责任。 由于用户经由本服务张贴或传送内容、与本服务连线、违反本服务条款或侵害其他人的任何权利导致任何第三方提出权利主张或使九猪SAAS遭受任何形式的罚款或处罚，用户同意以适当方式充分消除对九猪SAAS的不利影响，赔偿九猪SAAS及其分公司、关联公司、代理人或其他合作伙伴及员工的损失，并使其免受损害。</p>
+					</li>
+					<li>
+						<b>4、用户应遵守以下法律及法规</b>
+						<p>用户同意遵守中华人民共和国法律法规，尤其是《中华人民共和国保守国家秘密法》、《中华人民共和国计算机信息系统安全保护条例》、《计算机软件保护条例》等有关计算机及互联网的法律法规和实施办法。在任何情况下，如果九猪SAAS有合理理由认为用户的行为可能违反上述法律、法规，九猪SAAS可以在任何时候，不经事先通知终止向该用户提供服务。用户应了解国际互联网的无国界性，应特别注意遵守当地所有有关的法律和法规。</p></li>
+					<li>
+						<b>5、 用户隐私权</b>
+						<p>当用户注册九猪SAAS的服务时，用户须提供个人信息。九猪SAAS收集个人信息的目的是为用户提供尽可能多的个人化网上服务以及为广告商提供一个方便的途径来接触到适合的用户，并且可以发送相关的信息和广告。在此过程中，广告商绝对不会接触到用户的个人信息。</p>
+						<p>A. 九猪SAAS不会在未经合法用户授权时，公开、编辑或透露其个人信息及保存在九猪SAAS中的非公开内容，除非有下列情况：</p>
+						<p>(1).有关法律规定或九猪SAAS合法服务程序规定；</p>
+						<p>(2).在紧急情况下，为维护用户及公众的权益；</p>
+						<p>(3).为维护九猪SAAS的合法权益；</p>
+						<p>(4).其他需要公开、编辑或透露个人信息的情况。</p>
+						<p>B. 在以下(包括但不限于)几种情况下，九猪SAAS有权使用用户的个人信息： </p>
+						<p>(1).在进行促销或抽奖时，九猪SAAS可能会与赞助商共享用户的个人信息，在这些情况下九猪SAAS会在发送用户信息之前进行提示，并且用户可以通过不参与来终止传送过程；</p>
+						<p>(2).九猪SAAS可以将用户信息与第三方数据匹配；</p>
+						<p>(3).九猪SAAS会通过透露合计用户统计数据，向未来的合作伙伴、广告商及其他第三方以及为了其他合法目的而描述九猪SAAS的服务。</p>'
+						<p>九猪SAAS会向用户发送客户订制的信息或者九猪SAAS认为用户会感兴趣的其他信息。如果用户不希望收到这样的信息，只需在提供个人信息时或其他任何时候告知即可。另外，九猪SAAS会采取行业惯用措施保护用户信息的安全，但九猪SAAS不能确信或保证任何个人信息的安全性，用户须自己承担风险。比如用户联机公布可被公众访问的个人信息时，用户有可能会收到未经用户同意的信息；九猪SAAS的合作伙伴和可通过九猪SAAS访问的第三方因特网站点和服务；通过抽奖、促销等活动得知用户个人信息的第三方会进行独立的数据收集工作等活动。九猪SAAS对用户及其他任何第三方的上述行为，不承担任何责任。</p>'
+					</li>
+					<li>
+						<b>6、用户帐号、密码和安全</b>
+						<p>用户一旦注册成功，便成为九猪SAAS的合法用户，将得到一个密码和帐号。用户有义务保证密码和帐号的安全。用户对利用该密码和帐号所进行的一切活动负全部责任；因此所衍生的任何损失或损害，九猪SAAS无法也不承担任何责任。 用户的密码和帐号遭到未授权的使用或发生其他任何安全问题，用户可以立即通知九猪SAAS，并且用户在每次连线结束，应结束帐号使用，否则用户可能得不到九猪SAAS的安全保护。</p>
+					</li>
+					<li>
+						<b>7、对用户信息的存储和限制</b>
+						<p>九猪SAAS不对用户所发布信息的删除或储存失败负责。九猪SAAS有权判断用户的行为是否符合九猪SAAS服务条款规定的权利，如果九猪SAAS认为用户违背了服务条款的规定，九猪SAAS有权删除用户发布或发送的信息，乃至中断或终止向其提供网络服务。</p>
+					</li>
+					<li>
+			            <b>8、禁止用户从事以下行为：</b>
+			            <p>(1).上载、张贴、发送或传送任何非法、有害、淫秽、粗俗、猥亵的，胁迫、骚扰、中伤他人的，诽谤、侵害他人隐私或诋毁他人名誉或商誉的，种族歧视或其他不适当的信息或电子邮件，包括但不限于资讯、资料、文字、软件、音乐、照片、图形、信息或其他资料(以下简称内容)。</p>
+			            <p>(2).以任何方式危害未成年人。</p>
+			            <p>(3).冒充任何人或机构，或以虚伪不实的方式谎称或使人误认为与任何人或任何机构有关。</p>
+			            <p>(4).伪造标题或以其他方式操控识别资料，使人误认为该内容为九猪SAAS所传送。</p>
+			            <p>(5).上载、张贴、发送电子邮件或以其他方式传送无权传送的内容(例如内部资料、机密资料)。</p>
+			            <p>(6).上载、张贴、发送电子邮件或以其他方式传送侵犯任何人的专利、商标、著作权、商业秘密或其他专属权利之内容。</p>
+			            <p>(7).在九猪SAAS网站专供张贴广告的区域之外，上载、张贴、发送电子邮件或以其他方式传送广告函件、促销资料、"垃圾邮件"等。</p>
+			            <p>(8).上载、张贴、发送电子邮件或以其他方式传送有关干扰、破坏或限制任何计算机软件、硬件或通讯设备功能的软件病毒或其他计算机代码、档案和程序之资料。</p>
+			            <p>(9).干扰或破坏本服务或与本服务相连的服务器和网络，或不遵守本服务协议之规定。</p>
+			            <p>(10).故意或非故意违反任何相关的中国法律、法规、规章、条例等其他具有法律效力的规范。</p>
+			            <p>(11).跟踪或以其他方式骚扰他人。</p>
+			            <p>(12).其它被九猪SAAS视为不适当的行为。</p>
+			            <p>用户对经由本服务上载、张贴、发送电子邮件或传送的内容负全部责任；对于经由本服务而传送的内容，九猪SAAS不保证前述内容的正确性、完整性或品质。用户在接受本服务时，有可能会接触到令人不快、不适当或令人厌恶的内容。在任何情况下，九猪SAAS均不对任何内容负责，包括但不限于任何内容发生任何错误或纰漏以及衍生的任何损失或损害。九猪SAAS有权(但无义务)自行拒绝或删除经由本服务提供的任何内容。用户使用上述内容，应自行承担风险。 九猪SAAS有权利在下述情况下，对内容进行保存或披露：</p>'
+			            <p>(1).法律程序所规定；</p>
+			            <p>(2).本服务条款规定；</p>
+			            <p>(3).被侵害的第三人提出权利主张；</p>
+			            <p>(4).为保护九猪SAAS、其使用者及社会公众的权利、财产或人身安全。</p>
+			            <p>(5).其他九猪SAAS认为有必要的情况。</p>
+		        	</li>
+					<li>
+						<b>9、关于链接</b>
+						<p>本服务可能会提供与其他国际互联网网站或资源进行链接。对于前述网站或资源是否可以利用，九猪SAAS不予担保。因使用或依赖上述网站或资源所产生的损失或损害，九猪SAAS也不承担任何责任。</p>
+					</li>
+					<li>
+						<b>10、服务的修改和终止</b>
+						<p>九猪SAAS有权在任何时候，暂时或永久地修改或终止本服务或其中任何一部分，无论是否通知。九猪SAAS对本服务的修改或终止对用户和任何第三人不承担任何责任。九猪SAAS有权基于任何理由，终止用户的帐号、密码或拒绝其使用本服务，或删除、转移用户存储、发布在本服务的内容，九猪SAAS采取上述行为均不需通知，并且对用户和任何第三人不承担任何责任。</p></li>
+					<li>
+						<b>11、通知</b>
+						<p>九猪SAAS向用户发出的通知，可以采用电子邮件、页面公告、常规信件或九猪SAAS认为适合的形式。服务条款的修改或其他事项变更时，九猪SAAS将会以上述形式进行通知。</p>
+					</li>
+					<li>
+						<b>12、法律的适用和管辖</b>
+						<p>本服务条款的生效、履行、解释及争议的解决均适用中华人民共和国法律，发生的争议提交仲裁委员会，其仲裁裁决是终局的。如果本服务协议中某项条款因与中华人民共和国现行法律相抵触而导致无效，将不影响其他部分的效力。</p>
+					</li>
+					<li>
+						<b>13、生效条件</b>
+						<p>除非另行通知，本协议自2014年12月15日起生效。</p>
+					</li>
+				</ul>
+			</div>
+			<!--<div class="agreement-footer">
+				<a href="javascript:;" class="btn btn1">已阅读并同意条款</a>
+			</div>-->
+		</div>
+		<!--协议 e-->
+		
+		<!--注册成功弹窗 s-->
+		<div class="hide-register-suc" style="display: none;">
+			<div class="dialog-reg-suc">
+				<div class="drs-img">
+					<img src="{{$smarty.const.APP_WEB_STATIC_URL}}images/50_03.png"/>
+				</div>
+				<p class="drs-head">尊敬的用户，您好！</p>
+				<p>您已经注册成功！为了保证我们系统的良好运转，我们的工作人员将在工作日</p>
+				<p>的2小时之内联系您，进行基本的用户审核，请耐心等待。</p>
+				<p>审核通过之后即可使用SAAS2.0的全部功能！</p>
+			</div>
+		</div>
+		<!--注册成功弹窗 e-->
+		
+	</body>
+	<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?2f0fecfbd3388afddc169dbc1e823e10";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</html>

@@ -1,0 +1,66 @@
+
+<div class="center-dpt-hnb jzf-form center-dpt" isEditpage="0" method="post" subWay="ajax" ajaxUrl="http://www.baidu.com" hasform="true">
+	<div class="center-dpt-top">
+		<span class="iblue">{{{{$flat_name}}}}</span> <span class="dpt-floors">[共<i>{{$floor_num}}</i>层]
+		</span>
+	</div>
+	<div class="center-dpt-body">
+		<div class="center-dpt-seprate">
+			<div class="jzf-col">
+				<div class="jzf-col-l">
+					<span>屏蔽编号</span>
+				</div>
+				<div class="jzf-col-r">
+					<div class="dpt-sp-item">
+						<span> <label class="checkBox"><i class="choose ifont1">&#xe60c;</i></label> 
+						<input type="checkbox" value="4" /> <i>4</i>
+						</span> 
+						<span> <label class="checkBox"><i class="choose ifont1">&#xe60c;</i></label> 
+						<input type="checkbox" value="7" /> <i>7</i>
+						</span> 
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="center-dpt-nav clearfix">
+		{{foreach from=$house_number_data key=hkey item=hval}}
+			<a href="javascript:;" {{if $hkey eq 1}}class="current"{{/if}}><span>{{$hkey}}</span><i class="unit">楼</i></a>
+		{{/foreach}}
+		</div>
+		<div class="center-dpt-row">
+			
+			<table class="dpt-floor-rooms lr-tb lr-tb-auto1">
+				<tr class="lr-tb-h">
+					<td>当前楼层</td>
+					<td>当前编号</td>
+					<td>修改编号</td>
+				</tr>
+			</table>
+			<div class="center-dpt-row center-dpt-row-auto">
+				<table class="dpt-floor-rooms lr-tb lr-tb-auto2">
+				{{if $is_edit eq 1}}
+					{{foreach from=$house_data key=hkey item=hval}}
+						<tr floor_num="{{$hval.floor}}">
+							<td>第{{$hval.floor}}层</td>
+							<td>{{$hval.num}}</td>
+							<td><input type="text" class="ipt" value="{{$hval.num}}" datatype="zf8" nullmsg="请填写房源编号" errormsg="房源编号应为8位内大于0正整数"><span class="check-error check-error-ts"></span></td>
+						</tr>
+					{{/foreach}}
+				{{else}}
+					{{foreach from=$house_number_data_f key=tvkey item=tvval}}
+						<tr floor_num="{{$tvval.floor}}">
+							<td>第{{$tvval.floor}}层</td>
+							<td>{{$tvval.number}}</td>
+							<td><input type="text" class="ipt" value="{{$tvval.number}}" datatype="zf8" nullmsg="请填写房源编号" errormsg="房源编号应为8位内大于0正整数"/><span class="check-error check-error-ts"></span></td>
+						</tr>
+					{{/foreach}}
+				{{/if}}
+				</table>
+			</div>
+		</div>
+		<div class="dpt-bot-grp">
+			<a href="javascript:;" url="{{'Centralized-Flat/housenumber'|url}}" class="btn btn2">保存</a> <a
+				href="javascript:;" class="btn btn4 ml10 btn-cancel">取消</a>
+		</div>
+	</div>
+</div>
