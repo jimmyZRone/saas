@@ -1,9 +1,0 @@
-AddDefaultCharset utf-8
-DirectoryIndex api.php index.php
-
-RewriteEngine on
-RewriteBase /
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-
-RewriteRule ^([a-z-A-Z-0-9]+)/([a-z-A-Z]+)/([a-z-A-Z]+)/?(.*)$ /api.php?api_version=$1&c=$2&a=$3&$4 [QSA]
